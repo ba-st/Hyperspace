@@ -1,6 +1,6 @@
 Class {
 	#name : #BaselineOfHyperspace,
-	#superclass : #Object,
+	#superclass : #BaselineOf,
 	#category : #BaselineOfHyperspace
 }
 

@@ -10,8 +10,9 @@ BaselineOfHyperspace >> baseline: spec [
 	<baseline>
 	spec
 		for: #pharo
-		do: [ 
-			self setUpPackages: spec.
+		do: [ self
+				setUpDependencies: spec;
+				setUpPackages: spec.
 			spec
 				group: 'CI' with: 'Tests';
 				group: 'Development' with: 'Tests'
@@ -25,10 +26,18 @@ BaselineOfHyperspace >> projectClass [
 ]
 
 { #category : #initialization }
+BaselineOfHyperspace >> setUpDependencies: spec [
+
+	spec
+		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v5/source' ];
+		project: 'Buoy-Deployment' copyFrom: 'Buoy' with: [ spec loads: 'Deployment' ]
+]
+
+{ #category : #initialization }
 BaselineOfHyperspace >> setUpPackages: spec [
 
 	spec
-		package: 'Hyperspace-Model';
+		package: 'Hyperspace-Model' with: [ spec requires: 'Buoy-Deployment' ];
 		group: 'Deployment' with: 'Hyperspace-Model'.
 	spec
 		package: 'Hyperspace-Model-Tests' with: [ spec requires: #('Hyperspace-Model') ];

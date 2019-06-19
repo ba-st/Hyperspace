@@ -16,6 +16,12 @@ ZnETagTest >> testAsEtag [
 ]
 
 { #category : #tests }
+ZnETagTest >> testAsString [ 
+	
+	self 	assert: (ZnETag with: '12345') asString equals: '"12345"'
+]
+
+{ #category : #tests }
 ZnETagTest >> testFromString [
 
 	self

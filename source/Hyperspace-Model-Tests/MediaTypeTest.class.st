@@ -4,7 +4,7 @@ I'm a test for media type extensions
 Class {
 	#name : #MediaTypeTest,
 	#superclass : #TestCase,
-	#category : #'Hyperspace-Model-Tests-Zinc'
+	#category : #'Hyperspace-Model-Tests-Extensions'
 }
 
 { #category : #tests }

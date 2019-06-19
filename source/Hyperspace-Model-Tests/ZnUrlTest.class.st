@@ -4,7 +4,7 @@ I'm a test for extensions on ZnUrl
 Class {
 	#name : #ZnUrlTest,
 	#superclass : #TestCase,
-	#category : #'Hyperspace-Model-Tests-Zinc'
+	#category : #'Hyperspace-Model-Tests-Extensions'
 }
 
 { #category : #tests }

@@ -14,6 +14,20 @@ ZnLinkTest >> googleUrl [
 ]
 
 { #category : #tests }
+ZnLinkTest >> testAccessing [
+
+	| link |
+
+	link := ( ZnLink to: self googleUrl )
+		rel: 'search';
+		yourself.
+
+	self
+		assert: link url equals: self googleUrl;
+		assert: link rel equals: 'search'
+]
+
+{ #category : #tests }
 ZnLinkTest >> testComparing [
 
 	| googleLink other |

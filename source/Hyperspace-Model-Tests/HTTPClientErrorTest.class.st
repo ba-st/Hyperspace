@@ -102,6 +102,32 @@ HTTPClientErrorTest >> testNotFound [
 ]
 
 { #category : #tests }
+HTTPClientErrorTest >> testPreconditionFailed [
+
+	self
+		should: [ HTTPClientError preconditionFailed signal ]
+		raise: HTTPClientError
+		withExceptionDo: [ :signal | 
+			self
+				assert: signal code equals: 412;
+				assert: signal messageText equals: 'Precondition Failed'
+			]
+]
+
+{ #category : #tests }
+HTTPClientErrorTest >> testPreconditionRequired [
+
+	self
+		should: [ HTTPClientError preconditionRequired signal ]
+		raise: HTTPClientError
+		withExceptionDo: [ :signal | 
+			self
+				assert: signal code equals: 428;
+				assert: signal messageText equals: 'Precondition Required'
+			]
+]
+
+{ #category : #tests }
 HTTPClientErrorTest >> testSignalingCustomCode [
 
 	self
@@ -129,5 +155,27 @@ HTTPClientErrorTest >> testUnprocessableEntity [
 			self
 				assert: signal code equals: 422;
 				assert: signal messageText equals: 'Cannot be processed'
+			]
+]
+
+{ #category : #tests }
+HTTPClientErrorTest >> testUnsupportedMediaType [
+
+	self
+		should: [ HTTPClientError unsupportedMediaType signal ]
+		raise: HTTPClientError
+		withExceptionDo: [ :signal | 
+			self
+				assert: signal code equals: 415;
+				assert: signal messageText equals: 'Unsupported Media Type'
+			].
+
+	self
+		should: [ HTTPClientError notFound signal: 'Object not found' ]
+		raise: HTTPClientError
+		withExceptionDo: [ :signal | 
+			self
+				assert: signal code equals: 404;
+				assert: signal messageText equals: 'Object not found'
 			]
 ]

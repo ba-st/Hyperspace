@@ -42,6 +42,12 @@ HTTPClientError class >> preconditionFailed [
 ]
 
 { #category : #'instance creation' }
+HTTPClientError class >> preconditionRequired [
+
+	^self code: 428
+]
+
+{ #category : #'instance creation' }
 HTTPClientError class >> unprocessableEntity [
 
 	^ self code: 422

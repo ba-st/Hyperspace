@@ -16,7 +16,19 @@ BaselineOfHyperspace >> baseline: spec [
 			spec
 				group: 'CI' with: 'Tests';
 				group: 'Development' with: 'Tests'
-			]
+			].
+
+	spec
+		for: #'pharo6.x'
+		do: [ self initializeHTTPStatusCodes ]
+]
+
+{ #category : #'private - baselines' }
+BaselineOfHyperspace >> initializeHTTPStatusCodes [
+
+	"Some constants are missing, reinitialize to fix that"
+
+	^ ZnConstants initializeHTTPStatusCodes
 ]
 
 { #category : #accessing }

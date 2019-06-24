@@ -16,7 +16,17 @@ BaselineOfHyperspace >> baseline: spec [
 			spec
 				group: 'CI' with: 'Tests';
 				group: 'Development' with: 'Tests'
-			]
+			].
+
+	spec for: #'pharo6.x' do: [ spec postLoadDoIt: #postload:package: ]
+]
+
+{ #category : #'private - baselines' }
+BaselineOfHyperspace >> postload: loader package: packageSpec [
+
+	"Some constants are missing, reinitialize to fix that"
+
+	ZnConstants initializeHTTPStatusCodes
 ]
 
 { #category : #accessing }

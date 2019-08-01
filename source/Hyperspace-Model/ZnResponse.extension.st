@@ -28,3 +28,10 @@ ZnResponse >> setEntityTag: aStringORETag [
 
 	self headers at: 'ETag' put: aStringORETag asETag asString
 ]
+
+{ #category : #'*Hyperspace-Model' }
+ZnResponse >> withEntityTagDo: foundBlock ifAbsent: absentBlock [
+
+	self headers at: 'ETag' ifPresent: [ :headerValue | ^ foundBlock cull: headerValue asETag ].
+	^ absentBlock value
+]

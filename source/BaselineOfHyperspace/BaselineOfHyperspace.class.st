@@ -9,6 +9,19 @@ BaselineOfHyperspace >> baseline: spec [
 
 	<baseline>
 	spec
+		for: #'pharo6.x'
+		do: [ spec
+				package: 'Hyperspace-Pharo-6';
+				group: 'Deployment' with: 'Hyperspace-Pharo-6'.
+			spec postLoadDoIt: #postload:package:
+			].
+	spec
+		for: #'pharo7.x'
+		do: [ spec
+				package: 'Hyperspace-Pharo-6';
+				group: 'Deployment' with: 'Hyperspace-Pharo-6'
+			].
+	spec
 		for: #pharo
 		do: [ self
 				setUpDependencies: spec;
@@ -16,9 +29,7 @@ BaselineOfHyperspace >> baseline: spec [
 			spec
 				group: 'CI' with: 'Tests';
 				group: 'Development' with: 'Tests'
-			].
-
-	spec for: #'pharo6.x' do: [ spec postLoadDoIt: #postload:package: ]
+			]
 ]
 
 { #category : #'private - baselines' }

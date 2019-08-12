@@ -15,5 +15,5 @@ ZnMimeTypeExtensionsTest >> testComparingWithParameters [
 	self
 		assert: mimeType equals: equalMimeType;
 		assert: mimeType hash equals: equalMimeType hash;
-		deny: mimeType equals: ZnMimeType applicationJson
+		deny: mimeType = ZnMimeType applicationJson
 ]

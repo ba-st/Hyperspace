@@ -1,7 +1,7 @@
 Class {
 	#name : #ZnRequestExtensionsTest,
 	#superclass : #TestCase,
-	#category : #'Hyperspace-Model-Tests-Extensions'
+	#category : #'Hyperspace-Model-Tests-Zinc'
 }
 
 { #category : #tests }

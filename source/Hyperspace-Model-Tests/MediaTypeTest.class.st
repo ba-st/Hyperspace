@@ -4,7 +4,7 @@ I'm a test for media type extensions
 Class {
 	#name : #MediaTypeTest,
 	#superclass : #TestCase,
-	#category : #'Hyperspace-Model-Tests-Extensions'
+	#category : #'Hyperspace-Model-Tests-Zinc'
 }
 
 { #category : #tests }
@@ -26,6 +26,16 @@ MediaTypeTest >> testAccepts [
 	self
 		deny: (mediaType accepts: 'text/*' asMediaType);
 		deny: (mediaType accepts: 'application/xml' asMediaType)
+]
+
+{ #category : #tests }
+MediaTypeTest >> testAsMediaType [
+
+	| mediaType |
+
+	mediaType := 'application/vnd.stargate.pet+json' asMediaType version: '1.0.0'.
+
+	self assert: mediaType asMediaType identicalTo: mediaType
 ]
 
 { #category : #tests }

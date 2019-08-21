@@ -35,7 +35,7 @@ MediaTypeTest >> testAsMediaType [
 
 	mediaType := 'application/vnd.stargate.pet+json' asMediaType version: '1.0.0'.
 
-	self assert: mediaType asMediaType identicalTo: mediaType
+	self assert: mediaType asMediaType == mediaType
 ]
 
 { #category : #tests }

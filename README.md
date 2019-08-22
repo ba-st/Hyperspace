@@ -1,7 +1,7 @@
 <p align="center"><img src="assets/logos/128x128.png">
  <h1 align="center">Hyperspace</h1>
   <p align="center">
-    What is this thing? “the motto”, the goals, the vision.
+    A couple of facilities on top of <a href="https://github.com/svenvc/zinc">Zinc HTTP Components</a>
     <br>
     <a href="docs/"><strong>Explore the docs »</strong></a>
     <br>
@@ -15,8 +15,6 @@
 [![GitHub release](https://img.shields.io/github/release/ba-st/Hyperspace.svg)](https://github.com/ba-st/Hyperspace/releases/latest)
 [![Build Status](https://travis-ci.com/ba-st/Hyperspace.svg?branch=release-candidate)](https://travis-ci.com/ba-st/Hyperspace)
 [![Coverage Status](https://coveralls.io/repos/github/ba-st/Hyperspace/badge.svg?branch=release-candidate)](https://coveralls.io/github/ba-st/Hyperspace?branch=release-candidate)
-
-Why would I care about this thing? When to use it? For whom is it designed? When not to use it?
 
 ## License
 

@@ -44,7 +44,9 @@ ZnResponseExtensionsTest >> testEntityTag [
 		setEntityTag: entityTag;
 		yourself.
 
-	self assert: response entityTag equals: entityTag
+	self assert: response entityTag equals: entityTag.
+
+	self should: [ ZnResponse noContent entityTag ] raise: KeyNotFound
 ]
 
 { #category : #tests }

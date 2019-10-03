@@ -11,21 +11,18 @@ Class {
 ZnUrlTest >> testAsHostedAt [
 
 	self
-		assert:
-			( 'https://api.example.com:1122/pets?name=fidus' asUrl
-				asHostedAt: 'http://alternative.server.org:4874' asUrl )
-			equals: 'https://alternative.server.org:4874/pets?name=fidus' asUrl;
-		assert:
-			( 'https://api.example.com/pets?name=fidus' asUrl
-				asHostedAt: 'http://alternative.server.org:4874' asUrl )
-			equals: 'https://alternative.server.org:4874/pets?name=fidus' asUrl;
-		assert:
-			( 'https://api.example.com:1122/pets?name=fidus' asUrl
-				asHostedAt: 'http://alternative.server.org' asUrl )
-			equals: 'https://alternative.server.org/pets?name=fidus' asUrl;
-		assert:
-			( 'https://api.example.com/pets?name=fidus' asUrl asHostedAt: 'http://alternative.server.org' asUrl )
-			equals: 'https://alternative.server.org/pets?name=fidus' asUrl
+		assert: ( 'http://api.example.com/resource' asUrl asHostedAt: 'http://alternative.org' asUrl )
+			equals: 'http://alternative.org/resource' asUrl;
+		assert: ( 'http://api.example.com/resource' asUrl asHostedAt: 'https://alternative.org' asUrl )
+			equals: 'https://alternative.org/resource' asUrl;
+		assert: ( 'http://api.example.com:1111/resource' asUrl asHostedAt: 'http://alternative.org' asUrl )
+			equals: 'http://alternative.org/resource' asUrl;
+		assert: ( 'http://api.example.com/resource' asUrl asHostedAt: 'http://alternative.org:2222' asUrl )
+			equals: 'http://alternative.org:2222/resource' asUrl;
+		assert: ( 'http://api.example.com:1111/resource' asUrl asHostedAt: 'http://alternative.org:2222' asUrl )
+			equals: 'http://alternative.org:2222/resource' asUrl;
+		assert: ( 'http://api.example.com:1111/resource' asUrl asHostedAt: 'https://alternative.org:2222' asUrl )
+			equals: 'https://alternative.org:2222/resource' asUrl
 ]
 
 { #category : #tests }

@@ -70,3 +70,20 @@ HTTPClientError >> handles: aSignal [
 
 	^(self class handles: aSignal) and: [aSignal tag = tag]
 ]
+
+{ #category : #printing }
+HTTPClientError >> printOn: stream [
+
+	stream
+		nextPutAll: self class name asString;
+		nextPutAll: '[';
+		nextPutAll: self code asString;
+		nextPutAll: ']'.
+	self messageText
+		ifNotNil: [ :message | 
+			stream
+				nextPutAll: ':';
+				space;
+				nextPutAll: message
+			]
+]

@@ -8,6 +8,16 @@ Class {
 }
 
 { #category : #tests }
+ZnUrlTest >> testAsHostedAt [
+
+	self
+		assert:
+			( 'https://api.example.com:1122/pets?name=fidus' asUrl
+				asHostedAt: 'http://alternative.server.org:4874/reference?no=true' asUrl )
+		equals: 'https://alternative.server.org:4874/pets?name=fidus' asUrl
+]
+
+{ #category : #tests }
 ZnUrlTest >> testQueryAtPutUrl [
 
 	self

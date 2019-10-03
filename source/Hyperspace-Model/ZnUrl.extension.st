@@ -1,6 +1,15 @@
 Extension { #name : #ZnUrl }
 
 { #category : #'*Hyperspace-Model' }
+ZnUrl >> asHostedAt: aBaseUrl [
+
+	^ self copy
+		host: aBaseUrl host;
+		port: aBaseUrl port;
+		yourself
+]
+
+{ #category : #'*Hyperspace-Model' }
 ZnUrl >> queryAt: aKey putUrl: anUnencodedUrl [
 
 	| encodedUrl |

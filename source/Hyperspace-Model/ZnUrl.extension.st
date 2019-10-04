@@ -4,6 +4,7 @@ Extension { #name : #ZnUrl }
 ZnUrl >> asHostedAt: aBaseUrl [
 
 	^ self copy
+		scheme: aBaseUrl scheme;
 		host: aBaseUrl host;
 		port: aBaseUrl port;
 		yourself

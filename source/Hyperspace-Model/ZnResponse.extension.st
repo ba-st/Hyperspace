@@ -7,6 +7,17 @@ ZnResponse >> addLink: aLink [
 ]
 
 { #category : #'*Hyperspace-Model' }
+ZnResponse >> cachingDirectives [
+
+	| directives |
+
+	directives := self headers at: 'Cache-Control' ifAbsent: [ ^ #() ].
+	^ directives isCollection
+		ifTrue: [ directives ]
+		ifFalse: [ Array with: directives ]
+]
+
+{ #category : #'*Hyperspace-Model' }
 ZnResponse >> entityTag [
 
 	^ (self headers at: 'ETag') asETag

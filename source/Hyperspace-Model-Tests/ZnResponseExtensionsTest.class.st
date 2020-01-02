@@ -34,6 +34,20 @@ ZnResponseExtensionsTest >> testAddSeveralLinks [
 ]
 
 { #category : #tests }
+ZnResponseExtensionsTest >> testCachingDirectives [
+
+	| response |
+
+	response := ZnResponse noContent.
+
+	response addCachingDirective: 'public'.
+	self assert: response cachingDirectives equals: #('public').
+
+	response addCachingDirective: 'Max-Age=60'.
+	self assert: response cachingDirectives equals: #('public' 'Max-Age=60')
+]
+
+{ #category : #tests }
 ZnResponseExtensionsTest >> testEntityTag [
 
 	| response entityTag |

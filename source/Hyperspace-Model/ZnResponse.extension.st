@@ -1,9 +1,26 @@
 Extension { #name : #ZnResponse }
 
 { #category : #'*Hyperspace-Model' }
+ZnResponse >> addCachingDirective: aDirective [
+
+	self headers at: 'Cache-Control' add: aDirective
+]
+
+{ #category : #'*Hyperspace-Model' }
 ZnResponse >> addLink: aLink [
 
 	self headers at: 'Link' add: aLink
+]
+
+{ #category : #'*Hyperspace-Model' }
+ZnResponse >> cachingDirectives [
+
+	| directives |
+
+	directives := self headers at: 'Cache-Control' ifAbsent: [ ^ #() ].
+	^ directives isArray
+		ifTrue: [ directives ]
+		ifFalse: [ Array with: directives ]
 ]
 
 { #category : #'*Hyperspace-Model' }
@@ -18,7 +35,7 @@ ZnResponse >> links [
 	| links |
 
 	links := self headers at: 'Link' ifAbsent: [ ^ #() ].
-	^ links isCollection
+	^ links isArray
 		ifTrue: [ links ]
 		ifFalse: [ Array with: links ]
 ]

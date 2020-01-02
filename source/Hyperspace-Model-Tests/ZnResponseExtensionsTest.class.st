@@ -40,10 +40,10 @@ ZnResponseExtensionsTest >> testCachingDirectives [
 
 	response := ZnResponse noContent.
 
-	response headers at: 'Cache-Control' add: 'public'.
-	self assert: response cachingDirectives equals: 'public'.
+	response addCachingDirective: 'public'.
+	self assert: response cachingDirectives equals: #('public').
 
-	response headers at: 'Cache-Control' add: 'Max-Age=60'.
+	response addCachingDirective: 'Max-Age=60'.
 	self assert: response cachingDirectives equals: #('public' 'Max-Age=60')
 ]
 

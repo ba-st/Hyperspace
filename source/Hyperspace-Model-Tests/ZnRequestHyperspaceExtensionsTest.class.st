@@ -1,17 +1,17 @@
 Class {
-	#name : #ZnRequestExtensionsTest,
+	#name : #ZnRequestHyperspaceExtensionsTest,
 	#superclass : #TestCase,
 	#category : #'Hyperspace-Model-Tests-Zinc'
 }
 
 { #category : #tests }
-ZnRequestExtensionsTest >> googleUrl [
+ZnRequestHyperspaceExtensionsTest >> googleUrl [
 
 	^ 'https://google.com' asZnUrl
 ]
 
 { #category : #tests }
-ZnRequestExtensionsTest >> testIfMatch [
+ZnRequestHyperspaceExtensionsTest >> testIfMatch [
 
 	| request |
 
@@ -23,7 +23,7 @@ ZnRequestExtensionsTest >> testIfMatch [
 ]
 
 { #category : #tests }
-ZnRequestExtensionsTest >> testIfNoneMatch [
+ZnRequestHyperspaceExtensionsTest >> testIfNoneMatch [
 
 	| request |
 

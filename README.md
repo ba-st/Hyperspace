@@ -15,6 +15,9 @@
 [![GitHub release](https://img.shields.io/github/release/ba-st/Hyperspace.svg)](https://github.com/ba-st/Hyperspace/releases/latest)
 [![Build Status](https://travis-ci.com/ba-st/Hyperspace.svg?branch=release-candidate)](https://travis-ci.com/ba-st/Hyperspace)
 [![Coverage Status](https://coveralls.io/repos/github/ba-st/Hyperspace/badge.svg?branch=release-candidate)](https://coveralls.io/github/ba-st/Hyperspace?branch=release-candidate)
+[![Pharo 6.1](https://img.shields.io/badge/Pharo-6.1-informational)](https://pharo.org)
+[![Pharo 7.0](https://img.shields.io/badge/Pharo-7.0-informational)](https://pharo.org)
+[![Pharo 8.0](https://img.shields.io/badge/Pharo-8.0-informational)](https://pharo.org)
 
 ## License
 

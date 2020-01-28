@@ -1,11 +1,11 @@
 Class {
-	#name : #ZnClientExtensionsTest,
+	#name : #ZnClientHyperspaceExtensionsTest,
 	#superclass : #TestCase,
 	#category : #'Hyperspace-Model-Tests-Zinc'
 }
 
 { #category : #tests }
-ZnClientExtensionsTest >> testSetAccept [
+ZnClientHyperspaceExtensionsTest >> testSetAccept [
 
 	| client |
 
@@ -17,7 +17,7 @@ ZnClientExtensionsTest >> testSetAccept [
 ]
 
 { #category : #tests }
-ZnClientExtensionsTest >> testSetIfMatchTo [
+ZnClientHyperspaceExtensionsTest >> testSetIfMatchTo [
 
 	| client |
 

@@ -2,13 +2,13 @@
 I'm a test for extensions on ZnUrl
 "
 Class {
-	#name : #ZnUrlTest,
+	#name : #ZnUrlHyperspaceExtensionsTest,
 	#superclass : #TestCase,
 	#category : #'Hyperspace-Model-Tests-Zinc'
 }
 
 { #category : #tests }
-ZnUrlTest >> testAsHostedAt [
+ZnUrlHyperspaceExtensionsTest >> testAsHostedAt [
 
 	self
 		assert: ( 'http://api.example.com/resource' asUrl asHostedAt: 'http://alternative.org' asUrl )
@@ -26,7 +26,7 @@ ZnUrlTest >> testAsHostedAt [
 ]
 
 { #category : #tests }
-ZnUrlTest >> testQueryAtPutUrl [
+ZnUrlHyperspaceExtensionsTest >> testQueryAtPutUrl [
 
 	self
 		assert:
@@ -37,7 +37,7 @@ ZnUrlTest >> testQueryAtPutUrl [
 ]
 
 { #category : #tests }
-ZnUrlTest >> testStartLimit [
+ZnUrlHyperspaceExtensionsTest >> testStartLimit [
 
 	self
 		assert: ( 'https://api.example.com/pets' asUrl start: 1 limit: 10 )

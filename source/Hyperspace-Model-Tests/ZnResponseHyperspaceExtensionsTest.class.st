@@ -1,23 +1,23 @@
 Class {
-	#name : #ZnResponseExtensionsTest,
+	#name : #ZnResponseHyperspaceExtensionsTest,
 	#superclass : #TestCase,
 	#category : #'Hyperspace-Model-Tests-Zinc'
 }
 
 { #category : #tests }
-ZnResponseExtensionsTest >> amazonUrl [
+ZnResponseHyperspaceExtensionsTest >> amazonUrl [
 
 	^ 'https://amazon.com' asZnUrl
 ]
 
 { #category : #tests }
-ZnResponseExtensionsTest >> googleUrl [
+ZnResponseHyperspaceExtensionsTest >> googleUrl [
 
 	^ 'https://google.com' asZnUrl
 ]
 
 { #category : #tests }
-ZnResponseExtensionsTest >> testAddSeveralLinks [
+ZnResponseHyperspaceExtensionsTest >> testAddSeveralLinks [
 
 	| response |
 
@@ -34,7 +34,7 @@ ZnResponseExtensionsTest >> testAddSeveralLinks [
 ]
 
 { #category : #tests }
-ZnResponseExtensionsTest >> testCachingDirectives [
+ZnResponseHyperspaceExtensionsTest >> testCachingDirectives [
 
 	| response |
 
@@ -48,7 +48,7 @@ ZnResponseExtensionsTest >> testCachingDirectives [
 ]
 
 { #category : #tests }
-ZnResponseExtensionsTest >> testEntityTag [
+ZnResponseHyperspaceExtensionsTest >> testEntityTag [
 
 	| response entityTag |
 
@@ -64,7 +64,7 @@ ZnResponseExtensionsTest >> testEntityTag [
 ]
 
 { #category : #tests }
-ZnResponseExtensionsTest >> testLink [
+ZnResponseHyperspaceExtensionsTest >> testLink [
 
 	| response |
 
@@ -76,7 +76,7 @@ ZnResponseExtensionsTest >> testLink [
 ]
 
 { #category : #tests }
-ZnResponseExtensionsTest >> testWithEntityTagDo [
+ZnResponseHyperspaceExtensionsTest >> testWithEntityTagDo [
 
 	| response entityTag wasFound |
 
@@ -97,7 +97,7 @@ ZnResponseExtensionsTest >> testWithEntityTagDo [
 ]
 
 { #category : #tests }
-ZnResponseExtensionsTest >> testWithEntityTagDoNotFound [
+ZnResponseHyperspaceExtensionsTest >> testWithEntityTagDoNotFound [
 
 	| response headerWasNotFound |
 

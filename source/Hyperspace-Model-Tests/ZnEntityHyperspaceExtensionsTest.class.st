@@ -2,19 +2,19 @@
 I'm a test case for Hyperspace's ZnEntity extensions
 "
 Class {
-	#name : #ZnEntityExtensionsTest,
+	#name : #ZnEntityHyperspaceExtensionsTest,
 	#superclass : #TestCase,
 	#category : #'Hyperspace-Model-Tests-Zinc'
 }
 
 { #category : #tests }
-ZnEntityExtensionsTest >> applicationJson [
+ZnEntityHyperspaceExtensionsTest >> applicationJson [
 
 	^ 'application/json' asMediaType
 ]
 
 { #category : #tests }
-ZnEntityExtensionsTest >> testJsonExtension [
+ZnEntityHyperspaceExtensionsTest >> testJsonExtension [
 
 	| entity |
 
@@ -25,7 +25,7 @@ ZnEntityExtensionsTest >> testJsonExtension [
 ]
 
 { #category : #tests }
-ZnEntityExtensionsTest >> testWithOfTypeExtension [
+ZnEntityHyperspaceExtensionsTest >> testWithOfTypeExtension [
 
 	| entity |
 

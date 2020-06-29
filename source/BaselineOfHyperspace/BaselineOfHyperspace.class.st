@@ -15,7 +15,14 @@ BaselineOfHyperspace >> baseline: spec [
 				setUpPackages: spec.
 			spec
 				group: 'CI' with: 'Tests';
-				group: 'Development' with: 'Tests' ]
+				group: 'Development' with: 'Tests' ].
+	spec
+		for: #'pharo7.x'
+		do: [ spec
+				package: 'Hyperspace-Pharo-7';
+				group: 'Tests' with: 'Hyperspace-Pharo-7';
+				group: 'Deployment' with: 'Hyperspace-Pharo-7'
+			]
 ]
 
 { #category : #accessing }

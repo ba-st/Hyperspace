@@ -15,31 +15,14 @@ BaselineOfHyperspace >> baseline: spec [
 				setUpPackages: spec.
 			spec
 				group: 'CI' with: 'Tests';
-				group: 'Development' with: 'Tests'
-			].
-	spec
-		for: #'pharo6.x'
-		do: [ spec
-				package: 'Hyperspace-Pharo-6';
-				group: 'Tests' with: 'Hyperspace-Pharo-6';
-				group: 'Deployment' with: 'Hyperspace-Pharo-6'.
-			spec postLoadDoIt: #postload:package:
-			].
+				group: 'Development' with: 'Tests' ].
 	spec
 		for: #'pharo7.x'
 		do: [ spec
-				package: 'Hyperspace-Pharo-6';
-				group: 'Tests' with: 'Hyperspace-Pharo-6';
-				group: 'Deployment' with: 'Hyperspace-Pharo-6'
+				package: 'Hyperspace-Pharo-7';
+				group: 'Tests' with: 'Hyperspace-Pharo-7';
+				group: 'Deployment' with: 'Hyperspace-Pharo-7'
 			]
-]
-
-{ #category : #'private - baselines' }
-BaselineOfHyperspace >> postload: loader package: packageSpec [
-
-	"Some constants are missing, reinitialize to fix that"
-
-	ZnConstants initializeHTTPStatusCodes
 ]
 
 { #category : #accessing }
@@ -52,7 +35,7 @@ BaselineOfHyperspace >> projectClass [
 BaselineOfHyperspace >> setUpDependencies: spec [
 
 	spec
-		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v5/source' ];
+		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v6/source' ];
 		project: 'Buoy-Deployment' copyFrom: 'Buoy' with: [ spec loads: 'Deployment' ]
 ]
 

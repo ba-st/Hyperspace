@@ -41,7 +41,7 @@ ZnLinkTest >> testComparing [
 
 	other rel: 'next'.
 
-	self deny: googleLink = other
+	self deny: googleLink equals: other
 ]
 
 { #category : #tests }

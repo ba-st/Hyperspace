@@ -40,7 +40,9 @@ ZnETag class >> with: anETagValue [
 { #category : #comparing }
 ZnETag >> = anObject [
 
-	^ self class = anObject class and: [ value = anObject value ]
+	^ self equalityChecker
+		compare: #value;
+		checkAgainst: anObject
 ]
 
 { #category : #converting }

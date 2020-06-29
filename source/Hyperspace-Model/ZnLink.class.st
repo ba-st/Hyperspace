@@ -24,9 +24,12 @@ ZnLink class >> to: aUrl [
 ]
 
 { #category : #comparing }
-ZnLink >> = other [
+ZnLink >> = anObject [
 
-	^ self class == other class and: [ self url = other url and: [ self hasSameParametersAs: other ] ]
+	^ self equalityChecker
+		compare: #url;
+		compareWith: [ :myself :other | myself hasSameParametersAs: other ];
+		checkAgainst: anObject
 ]
 
 { #category : #converting }
@@ -53,12 +56,9 @@ ZnLink >> hasSameParametersAs: aLink [
 { #category : #comparing }
 ZnLink >> hash [
 
-	| hash |
-
-	hash := self url hash.
-	self hasParameters
-		ifTrue: [ hash := hash bitXor: self parameters hash ].
-	^ hash
+	^ self hasParameters
+		then: [ self equalityHashCombinator combineHashOf: self url with: self parameters ]
+		otherwise: [ self url hash ]
 ]
 
 { #category : #'initialize - release' }

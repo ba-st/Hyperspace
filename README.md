@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/logos/128x128.png">
+<p align="center">
  <h1 align="center">Hyperspace</h1>
   <p align="center">
     A couple of facilities on top of <a href="https://github.com/svenvc/zinc">Zinc HTTP Components</a>
@@ -13,9 +13,8 @@
 </p>
 
 [![GitHub release](https://img.shields.io/github/release/ba-st/Hyperspace.svg)](https://github.com/ba-st/Hyperspace/releases/latest)
-[![Build Status](https://travis-ci.com/ba-st/Hyperspace.svg?branch=release-candidate)](https://travis-ci.com/ba-st/Hyperspace)
-[![Coverage Status](https://coveralls.io/repos/github/ba-st/Hyperspace/badge.svg?branch=release-candidate)](https://coveralls.io/github/ba-st/Hyperspace?branch=release-candidate)
-[![Pharo 6.1](https://img.shields.io/badge/Pharo-6.1-informational)](https://pharo.org)
+[![Build Status](https://github.com/ba-st/Hyperspace/workflows/Build/badge.svg?branch=release-candidate)](https://github.com/ba-st/Hyperspace/actions?query=workflow%3ABuild)
+[![Coverage Status](https://codecov.io/github/ba-st/Hyperspace/coverage.svg?branch=release-candidate)](https://codecov.io/gh/ba-st/Hyperspace/branch/release-candidate)
 [![Pharo 7.0](https://img.shields.io/badge/Pharo-7.0-informational)](https://pharo.org)
 [![Pharo 8.0](https://img.shields.io/badge/Pharo-8.0-informational)](https://pharo.org)
 
@@ -23,12 +22,6 @@
 
 - The code is licensed under [MIT](LICENSE).
 - The documentation is licensed under [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/).
-
-## Quick Start
-
-- Download the latest [Pharo 32](https://get.pharo.org/) or [64 bits VM](https://get.pharo.org/64/).
-- Download a ready to use image from the [release page](https://github.com/ba-st/Hyperspace/releases/latest)
-- Explore the [documentation](docs/)
 
 ## Installation
 

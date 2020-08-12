@@ -23,7 +23,7 @@ ZnLinkTest >> testAccessing [
 		yourself.
 
 	self
-		assert: link url equals: self googleUrl;
+		assertUrl: link url equals: self googleUrl;
 		assert: link rel equals: 'search'
 ]
 
@@ -82,12 +82,12 @@ ZnLinkTest >> testParameters [
 { #category : #tests }
 ZnLinkTest >> testPrinting [
 
-	self assert: (ZnLink to: self googleUrl) printString equals: '<https://google.com/>'.
+	self assert: ( ZnLink to: self googleUrl ) printString equals: '<https://google.com/>'.
 
 	self
 		assert:
-			((ZnLink to: self googleUrl)
+			( ( ZnLink to: self googleUrl )
 				rel: 'search';
-				yourself) printString
+				yourself ) printString
 		equals: '<https://google.com/>;rel=search'
 ]

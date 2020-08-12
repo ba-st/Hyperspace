@@ -13,6 +13,7 @@ BaselineOfHyperspace >> baseline: spec [
 		do: [ self
 				setUpDependencies: spec;
 				setUpPackages: spec.
+				
 			spec
 				group: 'CI' with: 'Tests';
 				group: 'Development' with: 'Tests' ].
@@ -44,8 +45,14 @@ BaselineOfHyperspace >> setUpPackages: spec [
 
 	spec
 		package: 'Hyperspace-Model' with: [ spec requires: 'Buoy-Deployment' ];
-		group: 'Deployment' with: 'Hyperspace-Model'.
+		group: 'Deployment' with: 'Hyperspace-Model';
+		package: 'Hyperspace-Model-Tests'
+			with: [ spec requires: #('Hyperspace-Model' 'Dependent-SUnit-Extensions') ];
+		group: 'Tests' with: 'Hyperspace-Model-Tests'.
+
 	spec
-		package: 'Hyperspace-Model-Tests' with: [ spec requires: #('Hyperspace-Model') ];
-		group: 'Tests' with: 'Hyperspace-Model-Tests'
+		package: 'Hyperspace-SUnit-Model';
+		group: 'Dependent-SUnit-Extensions' with: 'Hyperspace-SUnit-Model';
+		package: 'Hyperspace-SUnit-Tests' with: [ spec requires: 'Hyperspace-SUnit-Model' ];
+		group: 'Tests' with: 'Hyperspace-SUnit-Tests'
 ]

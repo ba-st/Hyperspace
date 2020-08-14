@@ -37,7 +37,8 @@ BaselineOfHyperspace >> setUpDependencies: spec [
 
 	spec
 		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v6/source' ];
-		project: 'Buoy-Deployment' copyFrom: 'Buoy' with: [ spec loads: 'Deployment' ]
+		project: 'Buoy-Deployment' copyFrom: 'Buoy' with: [ spec loads: 'Deployment' ];
+		project: 'Buoy-SUnit' copyFrom: 'Bouy' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
 ]
 
 { #category : #initialization }
@@ -53,6 +54,7 @@ BaselineOfHyperspace >> setUpPackages: spec [
 	spec
 		package: 'Hyperspace-SUnit-Model';
 		group: 'Dependent-SUnit-Extensions' with: 'Hyperspace-SUnit-Model';
-		package: 'Hyperspace-SUnit-Model-Tests' with: [ spec requires: 'Hyperspace-SUnit-Model' ];
+		package: 'Hyperspace-SUnit-Model-Tests'
+			with: [ spec requires: #('Hyperspace-SUnit-Model' 'Buoy-SUnit') ];
 		group: 'Tests' with: 'Hyperspace-SUnit-Model-Tests'
 ]

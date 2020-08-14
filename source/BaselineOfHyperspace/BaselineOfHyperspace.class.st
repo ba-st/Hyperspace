@@ -53,6 +53,6 @@ BaselineOfHyperspace >> setUpPackages: spec [
 	spec
 		package: 'Hyperspace-SUnit-Model';
 		group: 'Dependent-SUnit-Extensions' with: 'Hyperspace-SUnit-Model';
-		package: 'Hyperspace-SUnit-Tests' with: [ spec requires: 'Hyperspace-SUnit-Model' ];
-		group: 'Tests' with: 'Hyperspace-SUnit-Tests'
+		package: 'Hyperspace-SUnit-Model-Tests' with: [ spec requires: 'Hyperspace-SUnit-Model' ];
+		group: 'Tests' with: 'Hyperspace-SUnit-Model-Tests'
 ]

@@ -38,7 +38,7 @@ BaselineOfHyperspace >> setUpDependencies: spec [
 	spec
 		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v6/source' ];
 		project: 'Buoy-Deployment' copyFrom: 'Buoy' with: [ spec loads: 'Deployment' ];
-		project: 'Buoy-SUnit' copyFrom: 'Bouy' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
+		project: 'Buoy-SUnit' copyFrom: 'Buoy' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
 ]
 
 { #category : #initialization }

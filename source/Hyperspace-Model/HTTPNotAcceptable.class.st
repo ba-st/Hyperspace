@@ -23,8 +23,7 @@ Class {
 { #category : #'instance creation' }
 HTTPNotAcceptable class >> messageText: aMessageText accepting: allowedMediaTypes [
 
-	^ self new
-		tag: 406;
+	^ ( self code: 406 )
 		messageText: aMessageText;
 		allowedMediaTypes: allowedMediaTypes asArray;
 		yourself

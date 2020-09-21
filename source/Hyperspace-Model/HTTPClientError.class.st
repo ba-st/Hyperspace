@@ -4,6 +4,9 @@ I'm an exception expecting to be raised when someone makes an incorrect HTTP req
 Class {
 	#name : #HTTPClientError,
 	#superclass : #Error,
+	#instVars : [
+		'code'
+	],
 	#category : #'Hyperspace-Model-Exceptions'
 }
 
@@ -18,7 +21,7 @@ HTTPClientError class >> code: aCode [
 
 	| instance |
 
-	instance := self new tag: aCode.
+	instance := self new code: aCode.
 	ZnConstants httpStatusCodes at: aCode ifPresent: [ :message | instance messageText: message ].
 	^ instance
 ]
@@ -62,13 +65,19 @@ HTTPClientError class >> unsupportedMediaType [
 { #category : #accessing }
 HTTPClientError >> code [
 
-	^self tag
+	^ code
+]
+
+{ #category : #accessing }
+HTTPClientError >> code: anErrorCode [
+
+	code := anErrorCode
 ]
 
 { #category : #'error handling' }
 HTTPClientError >> handles: aSignal [
 
-	^(self class handles: aSignal) and: [aSignal tag = tag]
+	^ ( self class handles: aSignal ) and: [ aSignal code = self code ]
 ]
 
 { #category : #printing }

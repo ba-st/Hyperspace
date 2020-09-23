@@ -52,9 +52,8 @@ BaselineOfHyperspace >> setUpPackages: spec [
 		group: 'Tests' with: 'Hyperspace-Model-Tests'.
 
 	spec
-		package: 'Hyperspace-SUnit-Model';
+		package: 'Hyperspace-SUnit-Model' with: [ spec requires: 'Buoy-SUnit' ];
 		group: 'Dependent-SUnit-Extensions' with: 'Hyperspace-SUnit-Model';
-		package: 'Hyperspace-SUnit-Model-Tests'
-			with: [ spec requires: #('Hyperspace-SUnit-Model' 'Buoy-SUnit') ];
+		package: 'Hyperspace-SUnit-Model-Tests' with: [ spec requires: 'Hyperspace-SUnit-Model' ];
 		group: 'Tests' with: 'Hyperspace-SUnit-Model-Tests'
 ]

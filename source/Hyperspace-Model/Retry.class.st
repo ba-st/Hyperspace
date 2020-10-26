@@ -25,11 +25,13 @@ Class {
 	#name : #Retry,
 	#superclass : #Object,
 	#instVars : [
-		'exceptionsToRetry',
 		'maximumNumberOfAttempts',
 		'waitActionBetweenRetries',
 		'exceptionsToIgnore',
-		'retryCondition'
+		'retryCondition',
+		'conditionBasedActionBetweenRetries',
+		'exceptionBasedActionBetweenRetries',
+		'exceptionToRetry'
 	],
 	#category : #'Hyperspace-Model-Resilience'
 }
@@ -99,7 +101,9 @@ Retry >> initializeConfiguredBy: configurationAction [
 
 	maximumNumberOfAttempts := self class defaultMaximumNumberOfAttempts.
 	waitActionBetweenRetries := [  ].
-	exceptionsToRetry := ExceptionSet new.
+	conditionBasedActionBetweenRetries := [  ].
+	exceptionBasedActionBetweenRetries := [  ].
+	exceptionToRetry := ExceptionSet new.
 	exceptionsToIgnore := ExceptionSet new.
 	self when: [ :result | false ].
 	configurationAction value: self
@@ -108,7 +112,14 @@ Retry >> initializeConfiguredBy: configurationAction [
 { #category : #configuring }
 Retry >> on: anException [
 
-	exceptionsToRetry := exceptionsToRetry , anException
+	exceptionToRetry := anException
+]
+
+{ #category : #configuring }
+Retry >> on: anException evaluating: aDyadicBlock [
+
+	exceptionToRetry := anException.
+	exceptionBasedActionBetweenRetries := aDyadicBlock
 ]
 
 { #category : #configuring }
@@ -138,19 +149,30 @@ Retry >> value: aNyladicBlock [
 
 	1 to: maximumNumberOfAttempts - 1 do: [ :tryCount | 
 		[ | result |
-			result := aNyladicBlock value.
-			[ ^ result ] unless: ( retryCondition value: result )
-		] on: exceptionsToRetry 
+			result := aNyladicBlock cull: tryCount.
+			[ ^ result ] unless: ( retryCondition value: result ).
+			conditionBasedActionBetweenRetries cull: tryCount cull: result.
+		] on: exceptionToRetry 
 		  except: exceptionsToIgnore 
-		  do: [ :exception | exception return ].
+		  do: [ :exception | 
+			exceptionBasedActionBetweenRetries cull: tryCount cull: exception.
+			exception return ].
+		
 		waitActionBetweenRetries cull: tryCount
 		].
 
-	^ aNyladicBlock value
+	^ aNyladicBlock cull: maximumNumberOfAttempts
 ]
 
 { #category : #configuring }
 Retry >> when: aCondition [
 
 	retryCondition := aCondition
+]
+
+{ #category : #configuring }
+Retry >> when: aCondition evaluating: aDyadicBlock [
+
+	retryCondition := aCondition.
+	conditionBasedActionBetweenRetries := aDyadicBlock
 ]

@@ -130,6 +130,106 @@ RetryTest >> testExponentialBackoffWithDefaultRandomGenerator [
 	self assert: count equals: 3
 ]
 
+{ #category : #tests }
+RetryTest >> testHooksOnRetries [
+
+	| count exceptionsDrivingRetries resultsDrivingRetries |
+
+	count := 0.
+	exceptionsDrivingRetries := OrderedCollection new.
+	resultsDrivingRetries := OrderedCollection new.
+
+	Retry
+		value: [ 
+			count := count + 1.
+			count even then: [ 
+				self expectedError
+					tag: count;
+					signal
+				].
+			count
+			]
+		configuredBy: [ :retry | 
+			retry
+				when: [ :result | result < 4 ] evaluating: [ :attemptNumber :result | 
+					self assert: attemptNumber equals: result.
+					resultsDrivingRetries add: result
+					];
+				on: self expectedError evaluating: [ :attemptNumber :exception | 
+					self assert: attemptNumber equals: exception tag.
+					exceptionsDrivingRetries add: exception
+					];
+				upTo: 10
+			].
+
+	self
+		assert: count equals: 5;
+		assertCollection: ( exceptionsDrivingRetries collect: #tag ) hasSameElements: #( 2 4 );
+		assertCollection: resultsDrivingRetries hasSameElements: #( 1 3 )
+]
+
+{ #category : #'tests - configuring condition' }
+RetryTest >> testHooksOnRetriesDueToCondition [
+
+	| count resultsDrivingRetries |
+
+	count := 0.
+	resultsDrivingRetries := OrderedCollection new.
+
+	Retry
+		value: [ :attemptNumber | 
+			count := attemptNumber.
+			count
+			]
+		configuredBy: [ :retry | 
+			retry
+				when: [ :result | result < 4 ] evaluating: [ :attemptNumber :result | 
+					self assert: attemptNumber equals: result.
+					resultsDrivingRetries add: result
+					];
+				upTo: 10
+			].
+
+	self
+		assert: count equals: 4;
+		assertCollection: resultsDrivingRetries hasSameElements: #( 1 2 3 )
+]
+
+{ #category : #'tests - configuring errors' }
+RetryTest >> testHooksOnRetriesDueToExpectedErrorRaised [
+
+	| count exceptionsDrivingRetries |
+
+	count := 0.
+	exceptionsDrivingRetries := OrderedCollection new.
+
+	self shouldRaiseExpectedError: [ 
+		Retry
+			value: [ 
+				count := count + 1.
+				self expectedError
+					tag: count;
+					signal: 'Too bad'
+				]
+			configuredBy: [ :retry | 
+				retry
+					on: self expectedError evaluating: [ :attemptNumber :exception | 
+						self assert: attemptNumber equals: exception tag.
+						exceptionsDrivingRetries add: exception
+						];
+					upTo: 1
+				]
+		].
+
+	self
+		assert: count equals: 2;
+		withTheOnlyOneIn: exceptionsDrivingRetries do: [ :exception | 
+			self
+				assert: exception tag equals: 1;
+				assert: ( self expectedError handles: exception )
+			]
+]
+
 { #category : #'tests - configuring errors' }
 RetryTest >> testIgnoreWhenExpectedErrorIsRaised [
 
@@ -247,8 +347,7 @@ RetryTest >> testOnWhenExpectedErrorIsRaisedAndSeveralErrorsHandled [
 				]
 			configuredBy: [ :retry | 
 				retry
-					on: AssertionFailed;
-					on: self expectedError;
+					on: AssertionFailed , self expectedError;
 					upTo: 1
 				]
 		].
@@ -264,8 +363,7 @@ RetryTest >> testOnWhenExpectedErrorIsRaisedAndSeveralErrorsHandled [
 					]
 				configuredBy: [ :retry | 
 					retry
-						on: AssertionFailed;
-						on: self expectedError;
+						on: AssertionFailed , self expectedError;
 						upTo: 1
 					]
 			]

@@ -62,6 +62,15 @@ HTTPClientError class >> unsupportedMediaType [
 	^self code: 415
 ]
 
+{ #category : #'error handling' }
+HTTPClientError >> - anotherException [
+
+	^ ExceptionSetWithExclusions new
+		  add: self;
+		  addExclusion: anotherException;
+		  yourself
+]
+
 { #category : #accessing }
 HTTPClientError >> code [
 

@@ -59,6 +59,30 @@ Retry class >> value: aNiladycBlock configuredBy: configurationAction [
 ]
 
 { #category : #configuring }
+Retry >> backoffExponentiallyWithTimeSlot: aDuration [
+
+	self backoffExponentiallyWithTimeSlot: aDuration using: [ :integer | integer atRandom ]
+]
+
+{ #category : #configuring }
+Retry >> backoffExponentiallyWithTimeSlot: aDuration using: aRandomizingAction [
+
+	"This strategy implements [Exponential Backoff](https://en.wikipedia.org/wiki/Exponential_backoff).
+	
+	`aRandomizingAction` must provide a randomization block that will be evaluated with an integer value 
+	and must answer a random integer between 1 and that value"
+
+	waitActionBetweenRetries := [ :currentAttemptCount | 
+	                            | timeSlotCount |
+	                            "We are applying the randomization function before subtracting one because #atRandom on an integer works in the range [1,self].
+										In other case you will never get a zero time slot"
+	                            timeSlotCount := ( aRandomizingAction value:
+		                                               ( 2 raisedTo: currentAttemptCount ) ) - 1.
+	                            ( aDuration * timeSlotCount ) wait
+	                            ]
+]
+
+{ #category : #configuring }
 Retry >> every: aDuration [
 
 	waitActionBetweenRetries := [ aDuration wait ]

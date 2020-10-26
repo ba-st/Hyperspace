@@ -80,6 +80,56 @@ RetryTest >> testEvery [
 		assert: runtime milliSeconds > 200 milliSeconds
 ]
 
+{ #category : #'tests - configuring wait time' }
+RetryTest >> testExponentialBackoff [
+
+	| count runtime |
+
+	count := 0.
+
+	runtime := Time millisecondsToRun: [ 
+		           self shouldRaiseExpectedError: [ 
+			           Retry
+				           value: [ 
+					           count := count + 1.
+					           self signalExpectedError
+					           ]
+				           configuredBy: [ :retry | 
+					           retry
+						           onException;
+						           backoffExponentiallyWithTimeSlot: 50 milliSeconds using: [ :integer | integer ]
+					           ]
+			           ]
+		           ].
+
+	self
+		assert: count equals: 3;
+		assert: runtime milliSeconds > ( 50 + 100 ) milliSeconds
+]
+
+{ #category : #'tests - configuring wait time' }
+RetryTest >> testExponentialBackoffWithDefaultRandomGenerator [
+
+	| count |
+
+	count := 0.
+
+	self shouldRaiseExpectedError: [ 
+		Retry
+			value: [ 
+				count := count + 1.
+				self signalExpectedError
+				]
+			configuredBy: [ :retry | 
+				retry
+					onException;
+					backoffExponentiallyWithTimeSlot: 50 milliSeconds
+				]
+		].
+
+	self assert: count equals: 3
+]
+
 { #category : #'tests - configuring errors' }
 RetryTest >> testIgnoreWhenExpectedErrorIsRaised [
 

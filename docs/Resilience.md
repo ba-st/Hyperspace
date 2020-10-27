@@ -15,14 +15,14 @@ Retry
  configuredBy: [:retry | "configuration options" ]
 ```
 
-The block to be evaluated can optionally receive the current number of attempt in a block argument. 
+The block to be evaluated can optionally receive the current attempt  number in a block argument. 
 
 ### Configuration Options
-This options are sent to the `retry` instance provided in the second block.
+These options are sent to the `retry` instance provided in the second block.
 
 -	`upTo: retryCount` : The maximum number of retries. Defaults to 2.
--	`every: duration` : Wait a time duration between retry attempts. By default don't wait.
-- `backoffExponentiallyWithTimeSlot: duration` : Wait a time duration between retry attempts determined by using the [exponential backoff algorithm](https://en.wikipedia.org/wiki/Exponential_backoff) with a `duration` time slot.
+-	`every: duration` : Wait time duration between retry attempts. By default don't wait.
+- `backoffExponentiallyWithTimeSlot: duration` : Wait time duration between retry attempts determined by using the [exponential backoff algorithm](https://en.wikipedia.org/wiki/Exponential_backoff) with a `duration` time slot.
 - `when: condition` : Evaluate the condition with the current execution result, if met retry the execution.
 - `when: condition evaluating: action` : Like the previous one but `action` will be evaluated when a retry is made due to the condition. `action` is a block receiving as optional arguments the `attemptNumber` and the current `result`.
 -	`on: exceptionSelector` : Retry the execution if an exception handled by `exceptionSelector` is raised.

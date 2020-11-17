@@ -8,6 +8,51 @@ Class {
 }
 
 { #category : #tests }
+HTTPServerErrorTest >> testConvenienceHandler [
+
+	self
+		should: [ HTTPServerError serviceUnavailable signal ]
+		raise: HTTPServerError serviceUnavailable
+		withExceptionDo: [ :signal | 
+			self
+				assert: signal code equals: 503;
+				assert: signal messageText equals: 'Service Unavailable'
+			]
+]
+
+{ #category : #tests }
+HTTPServerErrorTest >> testConvenienceHandlerUsingAnotherSignal [
+
+	self
+		should: [ [ HTTPServerError serviceUnavailable signal ]
+				on: HTTPServerError internalServerError
+				do: [ :signal | self fail ]
+			]
+		raise: HTTPServerError serviceUnavailable
+		withExceptionDo: [ :signal | self assert: signal code equals: 503 ]
+]
+
+{ #category : #tests }
+HTTPServerErrorTest >> testExceptionExclusion [
+
+	self
+		should: [ [ HTTPServerError serviceUnavailable signal ]
+				on: HTTPServerError - HTTPServerError serviceUnavailable
+				do: [ :signal | self fail ]
+			]
+		raise: HTTPServerError
+		withExceptionDo: [ :signal | self assert: signal code equals: 503 ].
+
+	self
+		should: [ [ HTTPServerError serviceUnavailable signal ]
+				on: HTTPServerError internalServerError - HTTPServerError serviceUnavailable
+				do: [ :signal | self fail ]
+			]
+		raise: HTTPServerError
+		withExceptionDo: [ :signal | self assert: signal code equals: 503 ]
+]
+
+{ #category : #tests }
 HTTPServerErrorTest >> testInternalServerError [
 
 	self

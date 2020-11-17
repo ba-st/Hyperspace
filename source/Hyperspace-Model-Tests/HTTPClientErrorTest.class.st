@@ -152,6 +152,20 @@ HTTPClientErrorTest >> testSignalingCustomCode [
 ]
 
 { #category : #tests }
+HTTPClientErrorTest >> testTooManyRequests [
+
+	self
+		should: [ HTTPClientError tooManyRequests signal ]
+		raise: HTTPClientError
+		withExceptionDo: [ :signal | 
+			self
+				assert: signal code equals: 429;
+				assert: signal messageText equals: 'Too Many Requests';
+				assert: signal printString equals: 'HTTPClientError[429]: Too Many Requests'
+			]
+]
+
+{ #category : #tests }
 HTTPClientErrorTest >> testUnprocessableEntity [
 
 	self

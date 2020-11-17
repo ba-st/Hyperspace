@@ -12,22 +12,9 @@ The server MAY send a Retry-After header field1 to suggest an appropriate amount
 "
 Class {
 	#name : #HTTPServerError,
-	#superclass : #Error,
-	#instVars : [
-		'code'
-	],
+	#superclass : #HTTPError,
 	#category : #'Hyperspace-Model-Exceptions'
 }
-
-{ #category : #'instance creation' }
-HTTPServerError class >> code: aCode [
-
-	| instance |
-
-	instance := self new code: aCode.
-	ZnConstants httpStatusCodes at: aCode ifPresent: [ :message | instance messageText: message ].
-	^ instance
-]
 
 { #category : #'instance creation' }
 HTTPServerError class >> internalServerError [
@@ -45,33 +32,4 @@ HTTPServerError class >> serviceUnavailable [
 HTTPServerError class >> signalInternalServerError: aMessageText [
 
 	^ self internalServerError signal: aMessageText
-]
-
-{ #category : #accessing }
-HTTPServerError >> code [
-
-	^ code
-]
-
-{ #category : #accessing }
-HTTPServerError >> code: anErrorCode [
-
-	code := anErrorCode
-]
-
-{ #category : #printing }
-HTTPServerError >> printOn: stream [
-
-	stream
-		nextPutAll: self class name asString;
-		nextPutAll: '[';
-		nextPutAll: self code asString;
-		nextPutAll: ']'.
-	self messageText
-		ifNotNil: [ :message | 
-			stream
-				nextPutAll: ':';
-				space;
-				nextPutAll: message
-			]
 ]

@@ -20,18 +20,18 @@ ZnETag class >> fromString: aString [
 		raising: InstanceCreationFailed;
 		checking: [ :asserter | 
 			asserter
-				refuse: [ aString isEmpty]
-					because: 'Empty ETag values are invalid.';
-				enforce: [ aString isAsciiString ]
-					because: 'ETags only allows ASCII characters.' ];
+				refuse: [ aString isEmpty ] because: 'Empty ETag values are invalid.';
+				enforce: [ aString isAsciiString ] because: 'ETags only allows ASCII characters.'
+			];
 		buildAndCheck.
-	^ aString first = $W
-		ifTrue: [ self weakValidatedFromString: aString ]
-		ifFalse: [ self strongValidatedFromString: aString ]
+
+	^ [ self parseStrongETagFromString: aString ]
+		unless: ( aString beginsWith: 'W' )
+		inWhichCase: [ self parseWeakETagFromString: aString ]
 ]
 
-{ #category : #'instance creation - private' }
-ZnETag class >> strongValidatedFromString: aString [
+{ #category : #'private - instance creation' }
+ZnETag class >> parseStrongETagFromString: aString [
 
 	AssertionCheckerBuilder new
 		raising: InstanceCreationFailed;
@@ -47,8 +47,8 @@ ZnETag class >> strongValidatedFromString: aString [
 	^ self with: (aString copyFrom: 2 to: aString size - 1)
 ]
 
-{ #category : #'instance creation - private' }
-ZnETag class >> weakValidatedFromString: aString [
+{ #category : #'private - instance creation' }
+ZnETag class >> parseWeakETagFromString: aString [
 
 	AssertionCheckerBuilder new
 		raising: InstanceCreationFailed;
@@ -61,11 +61,11 @@ ZnETag class >> weakValidatedFromString: aString [
 				enforce: [ aString last = $" ]
 					because: 'ETags must be enclosed in ".' ];
 		buildAndCheck.
-	^ self weakValidatedWith: (aString copyFrom: 4 to: aString size - 1)
+	^ self weakWith: (aString copyFrom: 4 to: aString size - 1)
 ]
 
 { #category : #'instance creation' }
-ZnETag class >> weakValidatedWith: anETagValue [
+ZnETag class >> weakWith: anETagValue [
 
 	^ self with: anETagValue suffixedBy: 'W/'
 ]
@@ -76,7 +76,7 @@ ZnETag class >> with: anETagValue [
 	^ self with: anETagValue suffixedBy: ''
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'private - instance creation' }
 ZnETag class >> with: anETagValue suffixedBy: aSuffix [
 
 	^ self new initializeWith: anETagValue suffixedBy: aSuffix

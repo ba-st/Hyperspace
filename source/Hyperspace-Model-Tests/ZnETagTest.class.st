@@ -19,7 +19,7 @@ ZnETagTest >> testAsEtag [
 ZnETagTest >> testAsString [ 
 	
 	self 	assert: (ZnETag with: '12345') asString equals: '"12345"'.
-	self 	assert: (ZnETag weakValidatedWith: '12345') asString equals: 'W/"12345"'.
+	self 	assert: (ZnETag weakWith: '12345') asString equals: 'W/"12345"'.
 ]
 
 { #category : #tests }
@@ -35,8 +35,9 @@ ZnETagTest >> testFromString [
 		should: [ ZnETag fromString: 'W/""' ] raise: InstanceCreationFailed;
 		should: [ ZnETag fromString: 'Q/"11"' ] raise: InstanceCreationFailed;
 		should: [ ZnETag fromString: 'W*""' ] raise: InstanceCreationFailed;
-		should: [ ZnETag fromString: 'W"1"' ] raise: InstanceCreationFailed
-
+		should: [ ZnETag fromString: 'W"1"' ] raise: InstanceCreationFailed;
+		should: [ ZnETag fromString: 'WW"1"' ] raise: InstanceCreationFailed;
+		should: [ ZnETag fromString: 'w/"1"' ] raise: InstanceCreationFailed
 ]
 
 { #category : #tests }

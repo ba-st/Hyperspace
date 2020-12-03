@@ -28,6 +28,20 @@ ZnLinkTest >> testAccessing [
 ]
 
 { #category : #tests }
+ZnLinkTest >> testAsByteArray [
+
+	self
+		assert: (ZnLink to: self googleUrl) asByteArray
+		equals: '<https://google.com/>' asByteArray.
+	self
+		assert:
+			((ZnLink to: self googleUrl)
+				rel: 'search';
+				yourself) asByteArray
+		equals: '<https://google.com/>;rel=search' asByteArray
+]
+
+{ #category : #tests }
 ZnLinkTest >> testComparing [
 
 	| googleLink other |

@@ -7,7 +7,8 @@ Class {
 	#name : #ZnETag,
 	#superclass : #Object,
 	#instVars : [
-		'value'
+		'value',
+		'validationIdentifierKey'
 	],
 	#category : #'Hyperspace-Model-Zinc'
 }
@@ -19,22 +20,60 @@ ZnETag class >> fromString: aString [
 		raising: InstanceCreationFailed;
 		checking: [ :asserter | 
 			asserter
-				enforce: [ aString size >= 3 ]
-					because: 'Empty ETag values are invalid.'
-					onSuccess: [ :successAsserter | 
-					successAsserter
-						enforce: [ aString first = $" ] because: 'ETags must be enclosed in ".';
-						enforce: [ aString last = $" ] because: 'ETags must be enclosed in ".' ];
-				enforce: [ aString isAsciiString ] because: 'ETags only allows ASCII characters.' ];
+				refuse: [ aString isEmpty]
+					because: 'Empty ETag values are invalid.';
+				enforce: [ aString isAsciiString ]
+					because: 'ETags only allows ASCII characters.' ];
 		buildAndCheck.
+	^ aString first = $W
+		ifTrue: [ self weekValidatedFromString: aString ]
+		ifFalse: [ self strongValidatedFromString: aString ]
+]
 
+{ #category : #'instance creation - private' }
+ZnETag class >> strongValidatedFromString: aString [
+
+	AssertionCheckerBuilder new
+		raising: InstanceCreationFailed;
+		checking: [ :asserter | 
+			asserter
+				enforce: [ aString size >= 3 ]
+					because: 'Empty ETag values are invalid.';
+				enforce: [ aString first = $" ]
+					because: 'ETags must be enclosed in ".';
+				enforce: [ aString last = $" ]
+					because: 'ETags must be enclosed in ".' ];
+		buildAndCheck.
 	^ self with: (aString copyFrom: 2 to: aString size - 1)
+]
+
+{ #category : #'instance creation - private' }
+ZnETag class >> weekValidatedFromString: aString [
+
+	AssertionCheckerBuilder new
+		raising: InstanceCreationFailed;
+		checking: [ :asserter | 
+			asserter
+				enforce: [ aString size >= 5 ]
+					because: 'Empty ETag values are invalid.';
+				enforce: [ aString beginsWith: 'W/"' ]
+					because: 'Week ETags must be enclosed in W/".';
+				enforce: [ aString last = $" ]
+					because: 'ETags must be enclosed in ".' ];
+		buildAndCheck.
+	^ self weekValidatedWith: (aString copyFrom: 4 to: aString size - 1)
+]
+
+{ #category : #'instance creation' }
+ZnETag class >> weekValidatedWith: anETagValue [
+
+	^ self new initializeWith: anETagValue validatedAs: #week
 ]
 
 { #category : #'instance creation' }
 ZnETag class >> with: anETagValue [
 
-	^ self new initializeWith: anETagValue
+	^ self new initializeWith: anETagValue validatedAs: #strong
 ]
 
 { #category : #comparing }
@@ -63,15 +102,25 @@ ZnETag >> hash [
 	^ value hash
 ]
 
-{ #category : #initialization }
-ZnETag >> initializeWith: anETagValue [
+{ #category : #'private ' }
+ZnETag >> ifWeekValidatedDo: aWeekBlock else: anotherBlock [
 
-	value := anETagValue
+	validationIdentifierKey = #week
+		ifTrue: aWeekBlock
+		ifFalse: anotherBlock
+]
+
+{ #category : #initialization }
+ZnETag >> initializeWith: anETagValue validatedAs: aValidationIdentifierKey [ 
+
+	value := anETagValue.
+	validationIdentifierKey := aValidationIdentifierKey
 ]
 
 { #category : #printing }
 ZnETag >> printOn: aStream [
 
+	self ifWeekValidatedDo: [ aStream nextPutAll: 'W/' ] else: [  ].
 	aStream
 		nextPut: $";
 		nextPutAll: value;

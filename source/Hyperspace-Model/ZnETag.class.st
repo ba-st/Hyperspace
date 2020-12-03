@@ -7,7 +7,8 @@ Class {
 	#name : #ZnETag,
 	#superclass : #Object,
 	#instVars : [
-		'value'
+		'value',
+		'suffix'
 	],
 	#category : #'Hyperspace-Model-Zinc'
 }
@@ -19,22 +20,66 @@ ZnETag class >> fromString: aString [
 		raising: InstanceCreationFailed;
 		checking: [ :asserter | 
 			asserter
-				enforce: [ aString size >= 3 ]
-					because: 'Empty ETag values are invalid.'
-					onSuccess: [ :successAsserter | 
-					successAsserter
-						enforce: [ aString first = $" ] because: 'ETags must be enclosed in ".';
-						enforce: [ aString last = $" ] because: 'ETags must be enclosed in ".' ];
-				enforce: [ aString isAsciiString ] because: 'ETags only allows ASCII characters.' ];
+				refuse: [ aString isEmpty ] because: 'Empty ETag values are invalid.';
+				enforce: [ aString isAsciiString ] because: 'ETags only allows ASCII characters.'
+			];
 		buildAndCheck.
 
+	^ [ self parseStrongETagFromString: aString ]
+		unless: ( aString beginsWith: 'W' )
+		inWhichCase: [ self parseWeakETagFromString: aString ]
+]
+
+{ #category : #'private - instance creation' }
+ZnETag class >> parseStrongETagFromString: aString [
+
+	AssertionCheckerBuilder new
+		raising: InstanceCreationFailed;
+		checking: [ :asserter | 
+			asserter
+				enforce: [ aString size >= 3 ]
+					because: 'Empty ETag values are invalid.';
+				enforce: [ aString first = $" ]
+					because: 'ETags must be enclosed in ".';
+				enforce: [ aString last = $" ]
+					because: 'ETags must be enclosed in ".' ];
+		buildAndCheck.
 	^ self with: (aString copyFrom: 2 to: aString size - 1)
+]
+
+{ #category : #'private - instance creation' }
+ZnETag class >> parseWeakETagFromString: aString [
+
+	AssertionCheckerBuilder new
+		raising: InstanceCreationFailed;
+		checking: [ :asserter | 
+			asserter
+				enforce: [ aString size >= 5 ]
+					because: 'Empty ETag values are invalid.';
+				enforce: [ aString beginsWith: 'W/"' ]
+					because: 'Week ETags must be enclosed in W/".';
+				enforce: [ aString last = $" ]
+					because: 'ETags must be enclosed in ".' ];
+		buildAndCheck.
+	^ self weakWith: (aString copyFrom: 4 to: aString size - 1)
+]
+
+{ #category : #'instance creation' }
+ZnETag class >> weakWith: anETagValue [
+
+	^ self with: anETagValue suffixedBy: 'W/'
 ]
 
 { #category : #'instance creation' }
 ZnETag class >> with: anETagValue [
 
-	^ self new initializeWith: anETagValue
+	^ self with: anETagValue suffixedBy: ''
+]
+
+{ #category : #'private - instance creation' }
+ZnETag class >> with: anETagValue suffixedBy: aSuffix [
+
+	^ self new initializeWith: anETagValue suffixedBy: aSuffix
 ]
 
 { #category : #comparing }
@@ -64,15 +109,17 @@ ZnETag >> hash [
 ]
 
 { #category : #initialization }
-ZnETag >> initializeWith: anETagValue [
+ZnETag >> initializeWith: anETagValue suffixedBy: aSuffix [ 
 
-	value := anETagValue
+	value := anETagValue.
+	suffix := aSuffix
 ]
 
 { #category : #printing }
 ZnETag >> printOn: aStream [
 
 	aStream
+		nextPutAll: suffix;
 		nextPut: $";
 		nextPutAll: value;
 		nextPut: $"

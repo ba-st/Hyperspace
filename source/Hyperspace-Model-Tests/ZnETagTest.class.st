@@ -23,6 +23,15 @@ ZnETagTest >> testAsString [
 ]
 
 { #category : #tests }
+ZnETagTest >> testCaseSensitiveWeakEtagCreation [
+
+	self
+		assert: (ZnETag fromString: 'W/"12345"') value equals: '12345';
+		should: [ ZnETag fromString: 'w/"12345"' ]
+			raise: InstanceCreationFailed
+]
+
+{ #category : #tests }
 ZnETagTest >> testFromString [
 
 	self

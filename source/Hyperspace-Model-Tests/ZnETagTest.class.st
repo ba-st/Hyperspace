@@ -19,7 +19,7 @@ ZnETagTest >> testAsEtag [
 ZnETagTest >> testAsString [ 
 	
 	self 	assert: (ZnETag with: '12345') asString equals: '"12345"'.
-	self 	assert: (ZnETag weekValidatedWith: '12345') asString equals: 'W/"12345"'.
+	self 	assert: (ZnETag weakValidatedWith: '12345') asString equals: 'W/"12345"'.
 ]
 
 { #category : #tests }

@@ -8,7 +8,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'value',
-		'validationIdentifierKey'
+		'suffix'
 	],
 	#category : #'Hyperspace-Model-Zinc'
 }
@@ -26,7 +26,7 @@ ZnETag class >> fromString: aString [
 					because: 'ETags only allows ASCII characters.' ];
 		buildAndCheck.
 	^ aString first = $W
-		ifTrue: [ self weekValidatedFromString: aString ]
+		ifTrue: [ self weakValidatedFromString: aString ]
 		ifFalse: [ self strongValidatedFromString: aString ]
 ]
 
@@ -48,7 +48,7 @@ ZnETag class >> strongValidatedFromString: aString [
 ]
 
 { #category : #'instance creation - private' }
-ZnETag class >> weekValidatedFromString: aString [
+ZnETag class >> weakValidatedFromString: aString [
 
 	AssertionCheckerBuilder new
 		raising: InstanceCreationFailed;
@@ -61,19 +61,25 @@ ZnETag class >> weekValidatedFromString: aString [
 				enforce: [ aString last = $" ]
 					because: 'ETags must be enclosed in ".' ];
 		buildAndCheck.
-	^ self weekValidatedWith: (aString copyFrom: 4 to: aString size - 1)
+	^ self weakValidatedWith: (aString copyFrom: 4 to: aString size - 1)
 ]
 
 { #category : #'instance creation' }
-ZnETag class >> weekValidatedWith: anETagValue [
+ZnETag class >> weakValidatedWith: anETagValue [
 
-	^ self new initializeWith: anETagValue validatedAs: #week
+	^ self with: anETagValue suffixedBy: 'W/'
 ]
 
 { #category : #'instance creation' }
 ZnETag class >> with: anETagValue [
 
-	^ self new initializeWith: anETagValue validatedAs: #strong
+	^ self with: anETagValue suffixedBy: ''
+]
+
+{ #category : #'instance creation' }
+ZnETag class >> with: anETagValue suffixedBy: aSuffix [
+
+	^ self new initializeWith: anETagValue suffixedBy: aSuffix
 ]
 
 { #category : #comparing }
@@ -102,26 +108,18 @@ ZnETag >> hash [
 	^ value hash
 ]
 
-{ #category : #'private ' }
-ZnETag >> ifWeekValidatedDo: aWeekBlock else: anotherBlock [
-
-	validationIdentifierKey = #week
-		ifTrue: aWeekBlock
-		ifFalse: anotherBlock
-]
-
 { #category : #initialization }
-ZnETag >> initializeWith: anETagValue validatedAs: aValidationIdentifierKey [ 
+ZnETag >> initializeWith: anETagValue suffixedBy: aSuffix [ 
 
 	value := anETagValue.
-	validationIdentifierKey := aValidationIdentifierKey
+	suffix := aSuffix
 ]
 
 { #category : #printing }
 ZnETag >> printOn: aStream [
 
-	self ifWeekValidatedDo: [ aStream nextPutAll: 'W/' ] else: [  ].
 	aStream
+		nextPutAll: suffix;
 		nextPut: $";
 		nextPutAll: value;
 		nextPut: $"

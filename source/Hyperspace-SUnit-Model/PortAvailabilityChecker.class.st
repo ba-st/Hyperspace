@@ -22,18 +22,16 @@ PortAvailabilityChecker class >> on: aPortNumber [
 { #category : #checking }
 PortAvailabilityChecker >> checkIfAvailableDo: ifAvailableBlock ifNot: ifNotBlock [
 
-	[ | socketPortNumber socket |
+	[ 
+	| socketPortNumber socket |
 
 	"If port is not available, Pharo gives you a random one"
 	socket := ZnNetworkingUtils serverSocketOn: portNumber.
-	socketPortNumber := socket localPort.
-	socket close.
+	socketPortNumber := [ socket localPort ] ensure: [ socket destroy ].
 
-	socketPortNumber == portNumber
-		ifTrue: ifAvailableBlock
+	socketPortNumber == portNumber ifTrue: ifAvailableBlock
 		ifFalse: [ ifNotBlock cull: self reason ]
-	]
-		on: Error
+	] on: Error
 		do: [ :signal | ifNotBlock cull: self reason ]
 ]
 

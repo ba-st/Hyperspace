@@ -36,16 +36,20 @@ HTTPServerErrorTest >> testConvenienceHandlerUsingAnotherSignal [
 HTTPServerErrorTest >> testExceptionExclusion [
 
 	self
-		should: [ [ HTTPServerError serviceUnavailable signal ]
-				on: HTTPServerError - HTTPServerError serviceUnavailable
+		should: [ 
+			[ HTTPServerError serviceUnavailable signal ] 
+				on: HTTPServerError
+				except: HTTPServerError serviceUnavailable
 				do: [ :signal | self fail ]
 			]
 		raise: HTTPServerError
 		withExceptionDo: [ :signal | self assert: signal code equals: 503 ].
 
 	self
-		should: [ [ HTTPServerError serviceUnavailable signal ]
-				on: HTTPServerError internalServerError - HTTPServerError serviceUnavailable
+		should: [ 
+			[ HTTPServerError serviceUnavailable signal ] 
+				on: HTTPServerError internalServerError
+				except: HTTPServerError serviceUnavailable
 				do: [ :signal | self fail ]
 			]
 		raise: HTTPServerError

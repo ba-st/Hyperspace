@@ -9,33 +9,34 @@ PortAvailabilityCheckerTest >> openSocketOn: aPortNumber during: aBlock [
 
 	| socket |
 
-	[ socket := ZnNetworkingUtils serverSocketOn: 9999.
-	aBlock value
-	]
-		ensure: [ socket close ]
+	socket := ZnNetworkingUtils serverSocketOn: aPortNumber.
+	aBlock ensure: [ socket destroy ]
 ]
 
 { #category : #tests }
 PortAvailabilityCheckerTest >> testIsAvailable [
 
-	| check |
+	| checker wasEvaluated |
 
-	check := PortAvailabilityChecker on: 9999.
-	check checkIfAvailableDo: [  ] ifNot: [ self fail ]
+	wasEvaluated := false.
+	checker := PortAvailabilityChecker on: self freeListeningTCPPort.
+	checker checkIfAvailableDo: [ wasEvaluated := true ] ifNot: [ self fail ].
+	self assert: wasEvaluated
 ]
 
 { #category : #tests }
 PortAvailabilityCheckerTest >> testIsNotAvailable [
 
-	self
-		openSocketOn: 9999
-		during: [ | check |
+	| port |
 
-			check := PortAvailabilityChecker on: 9999.
-			check
-				checkIfAvailableDo: [ self fail ]
-				ifNot: [ :reason | self assert: reason equals: 'Port 9999 is not available' ]
-			]
+	port := self freeListeningTCPPort.
+	self openSocketOn: port during: [ 
+		| checker |
+		checker := PortAvailabilityChecker on: port.
+		checker checkIfAvailableDo: [ self fail ]
+			ifNot: [ :reason | 
+			self assert: reason equals: ( 'Port <1p> is not available' expandMacrosWith: port ) ]
+		]
 ]
 
 { #category : #tests }

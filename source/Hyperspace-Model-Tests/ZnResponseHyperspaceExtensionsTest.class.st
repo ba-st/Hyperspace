@@ -64,6 +64,14 @@ ZnResponseHyperspaceExtensionsTest >> testEntityTag [
 ]
 
 { #category : #tests }
+ZnResponseHyperspaceExtensionsTest >> testHasLocation [
+
+	self
+		deny: ZnResponse noContent hasLocation;
+		assert: ( ZnResponse created: 'https://api.example.com/123' ) hasLocation
+]
+
+{ #category : #tests }
 ZnResponseHyperspaceExtensionsTest >> testLink [
 
 	| response |

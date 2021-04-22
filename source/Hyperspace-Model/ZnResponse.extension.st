@@ -30,6 +30,12 @@ ZnResponse >> entityTag [
 ]
 
 { #category : #'*Hyperspace-Model' }
+ZnResponse >> hasLocation [
+
+	^ self headers includesKey: 'Location'
+]
+
+{ #category : #'*Hyperspace-Model' }
 ZnResponse >> links [
 
 	| links |

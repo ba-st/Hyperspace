@@ -25,7 +25,8 @@ Quick links
 
 ## Installation
 
-To load the project in a Pharo image or declare it as a dependency of your project follow this [instructions](docs/Installation.md).
+To load the project in a Pharo image or declare it as a dependency of your
+project follow this [instructions](docs/Installation.md).
 
 ## Contributing
 

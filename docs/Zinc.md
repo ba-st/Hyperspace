@@ -50,9 +50,12 @@
 ## Zn*Server
 
 - `logLevel` provides access to the server current log level
-- `setLogLevelAtLeastTo:` sets the server log level at least to the provided level
+- `setLogLevelAtLeastTo:` sets the server log level at least to the provided
+  level
 
 ## ZnEntity
 
 - `ZnEntity class>>#json:` provides an easy way to create a JSON entity
-- `ZnEntity class>>#with:ofType:` provides a way to create an entity given a target media type automatically selecting the better entity representation (string or byte-based)
+- `ZnEntity class>>#with:ofType:` provides a way to create an entity given a
+  target media type automatically selecting the better entity representation
+  (string or byte-based)

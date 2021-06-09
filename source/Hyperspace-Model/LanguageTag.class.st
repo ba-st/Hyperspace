@@ -99,7 +99,7 @@ LanguageTag >> hash [
 { #category : #initialization }
 LanguageTag >> initializeFrom: aSubtagCollection [
 
-	subtags := aSubtagCollection asArray.
+	subtags := Array withAll: aSubtagCollection.
 	self
 		initializeLanguageCode;
 		initializeScript;

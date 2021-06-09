@@ -3,13 +3,15 @@
 ## Basic Installation
 
 You can load **Hyperspace** evaluating:
+
 ```smalltalk
 Metacello new
-	baseline: 'Hyperspace';
-	repository: 'github://ba-st/Hyperspace:release-candidate/source';
-	load.
+  baseline: 'Hyperspace';
+  repository: 'github://ba-st/Hyperspace:release-candidate';
+  load.
 ```
->  Change `release-candidate` to some released version if you want a pinned version
+
+> Change `release-candidate` to some released version if you want a pinned version
 
 ## Using as dependency
 
@@ -18,23 +20,24 @@ In order to include **Hyperspace** as part of your project, you should reference
 ```smalltalk
 setUpDependencies: spec
 
-	spec
-		baseline: 'Hyperspace'
-			with: [ spec
-				repository: 'github://ba-st/Hyperspace:v{XX}/source';
-				loads: #('Deployment') ];
-		import: 'Hyperspace'.
+  spec
+    baseline: 'Hyperspace'
+      with: [ spec
+        repository: 'github://ba-st/Hyperspace:v{XX}';
+        loads: #('Deployment') ];
+    import: 'Hyperspace'.
 ```
+
 > Replace `{XX}` with the version you want to depend on
 
 ```smalltalk
 baseline: spec
 
-	<baseline>
-	spec
-		for: #common
-		do: [ self setUpDependencies: spec.
-			spec package: 'My-Package' with: [ spec requires: #('Hyperspace') ] ]
+  <baseline>
+  spec
+    for: #common
+    do: [ self setUpDependencies: spec.
+    spec package: 'My-Package' with: [ spec requires: #('Hyperspace') ] ]
 ```
 
 ## Provided groups

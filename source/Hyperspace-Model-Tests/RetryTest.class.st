@@ -77,7 +77,7 @@ RetryTest >> testEvery [
 
 	self
 		assert: count equals: 3;
-		assert: runtime milliSeconds > 200 milliSeconds
+		assert: runtime milliSeconds >= 200 milliSeconds
 ]
 
 { #category : #'tests - configuring wait time' }
@@ -490,7 +490,7 @@ RetryTest >> testUpToTimesEvery [
 
 	self
 		assert: count equals: 4;
-		assert: runtime milliSeconds > 300 milliSeconds
+		assert: runtime milliSeconds >= 300 milliSeconds
 ]
 
 { #category : #'tests - configuring condition' }

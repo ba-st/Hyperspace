@@ -50,7 +50,10 @@ These options are sent to the `retry` instance provided in the second block.
    configuredBy: [:retry |
       retry
         when: [:result | result isError ]
-        evaluating: [:attemptNumber :result | self log: ('Attempt #<1p> failed due to <2s>' expandMacrosWith: attemptNumber with: result errorDescription) ] ]
+        evaluating: [:attemptNumber :result |
+          self log: ('Attempt #<1p> failed due to <2s>'
+            expandMacrosWith: attemptNumber
+            with: result errorDescription) ] ]  
   ```
 
 - `on: exceptionSelector` : Retry the execution if an exception handled by
@@ -66,7 +69,10 @@ These options are sent to the `retry` instance provided in the second block.
   configuredBy: [:retry |
       retry
         on: NetworkError
-        evaluating: [:attemptNumber :error | self log: ('Attempt #<1p> failed due to <2s>' expandMacrosWith: attemptNumber with: error messageText) ] ]
+        evaluating: [:attemptNumber :error |
+          self log: ('Attempt #<1p> failed due to <2s>'
+            expandMacrosWith: attemptNumber
+            with: error messageText) ] ]
   ```
 
 - `ignore: exceptionSelector` : Scope the previous method ignoring the

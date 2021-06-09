@@ -2,20 +2,27 @@
 
 ## ZnMimeType
 
-- `accepts:` returns a boolean indicating if the receiving accepts the media type provided as parameter, for example:
+- `accepts:` returns a boolean indicating if the receiving
+  accepts the media type provided as parameter, for example:
   - `'application/json' asMediaType accepts: '*/*' asMediaType` yields true
   - `'application/json' asMediaType accepts: 'text/*' asMediaType` yields false
-- `quality` returns a float with the corresponding quality value or 1.0 (the default) if the parameter is missing.
+- `quality` returns a float with the corresponding quality value or 1.0
+  (the default) if the parameter is missing.
 - `version:` is just a shortcut to set a `version` parameter.
 
 ## ZnUrl
 
-- `queryAt:putUrl:` allows to set a query parameter containing an URL that will be URL-encoded
-- `start:limit:` allows to set two query parameters (`start` and `limit`) usually used in pagination schemes.
-- `asHostedAt:` provides a copy of the URL using as host, scheme, and port the ones in the parameter.
+- `queryAt:putUrl:` allows to set a query parameter containing an URL that
+  will be URL-encoded
+- `start:limit:` allows to set two query parameters (`start` and `limit`)
+  usually used in pagination schemes.
+- `asHostedAt:` provides a copy of the URL using as host, scheme, and port
+  the ones in the parameter.
 
   ```smalltalk
-  'http://api.example.com:1111/resource' asUrl asHostedAt: 'https://alternative.org' asUrl "==> 'https://alternative.org/resource'"
+  'http://api.example.com:1111/resource' asUrl
+    asHostedAt: 'https://alternative.org' asUrl
+    "==> 'https://alternative.org/resource'"
   ```
 
 ## ZnClient

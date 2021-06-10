@@ -4,16 +4,40 @@ Class {
 	#category : #'Hyperspace-Model-Tests-Zinc'
 }
 
-{ #category : #tests }
+{ #category : #private }
 ZnResponseHyperspaceExtensionsTest >> amazonUrl [
 
 	^ 'https://amazon.com' asZnUrl
 ]
 
-{ #category : #tests }
+{ #category : #private }
+ZnResponseHyperspaceExtensionsTest >> encodeAndDecode: response [
+
+	^ ZnResponse
+		readFrom: ( ByteArray streamContents: [ :stream | response writeOn: stream ] ) readStream
+]
+
+{ #category : #private }
 ZnResponseHyperspaceExtensionsTest >> googleUrl [
 
 	^ 'https://google.com' asZnUrl
+]
+
+{ #category : #tests }
+ZnResponseHyperspaceExtensionsTest >> testAddContentLanguageTags [
+
+	| response |
+
+	response := ( ZnResponse ok: ( ZnEntity text: 'Ok' ) )
+		addContentLanguage: ( LanguageTag fromString: 'en' );
+		addContentLanguage: ( LanguageTag fromString: 'es-ar' );
+		yourself.
+
+	self
+		assert: response contentLanguageTags
+		equals:
+			{( LanguageTag fromString: 'en' ).
+			( LanguageTag fromString: 'es-AR' )}
 ]
 
 { #category : #tests }
@@ -45,6 +69,51 @@ ZnResponseHyperspaceExtensionsTest >> testCachingDirectives [
 
 	response addCachingDirective: 'Max-Age=60'.
 	self assert: response cachingDirectives equals: #('public' 'Max-Age=60')
+]
+
+{ #category : #'tests - encoding' }
+ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithContentLanguageHeaders [
+
+	| response decodedResponse |
+
+	response := ( ZnResponse ok: ( ZnEntity text: 'Ok' ) )
+		addContentLanguage: ( LanguageTag fromString: 'en' );
+		addContentLanguage: ( LanguageTag fromString: 'es-ar' );
+		yourself.
+
+	decodedResponse := self encodeAndDecode: response.
+
+	self assert: decodedResponse contentLanguageTags equals: response contentLanguageTags
+]
+
+{ #category : #'tests - encoding' }
+ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithEntityTag [
+
+	| response entityTag decodedResponse |
+
+	entityTag := ZnETag with: '1234'.
+	response := ZnResponse noContent
+		setEntityTag: entityTag;
+		yourself.
+
+	decodedResponse := self encodeAndDecode: response.
+	decodedResponse
+		withEntityTagDo: [ :foundEntityTag | self assert: foundEntityTag equals: entityTag ]
+		ifAbsent: [ self fail ]
+]
+
+{ #category : #'tests - encoding' }
+ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithLinkHeaders [
+
+	| response decodedResponse |
+
+	response := ZnResponse noContent
+		addLink: ( ZnLink to: self amazonUrl );
+		yourself.
+
+	decodedResponse := self encodeAndDecode: response.
+
+	self assert: decodedResponse links equals: response links
 ]
 
 { #category : #tests }

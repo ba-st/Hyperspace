@@ -4,7 +4,7 @@ I'm a test case for ZnETag
 Class {
 	#name : #ZnETagTest,
 	#superclass : #TestCase,
-	#category : #'Hyperspace-Model-Tests-Zinc'
+	#category : #'Hyperspace-Model-Tests-IETF'
 }
 
 { #category : #tests }

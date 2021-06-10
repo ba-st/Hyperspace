@@ -10,7 +10,7 @@ Class {
 		'value',
 		'suffix'
 	],
-	#category : #'Hyperspace-Model-Zinc'
+	#category : #'Hyperspace-Model-IETF'
 }
 
 { #category : #'instance creation' }

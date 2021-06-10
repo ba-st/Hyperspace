@@ -7,6 +7,12 @@ ZnResponse >> addCachingDirective: aDirective [
 ]
 
 { #category : #'*Hyperspace-Model' }
+ZnResponse >> addContentLanguage: aLanguageTag [
+
+	self headers at: 'Content-Language' add: aLanguageTag
+]
+
+{ #category : #'*Hyperspace-Model' }
 ZnResponse >> addLink: aLink [
 
 	self headers at: 'Link' add: aLink
@@ -24,6 +30,17 @@ ZnResponse >> cachingDirectives [
 ]
 
 { #category : #'*Hyperspace-Model' }
+ZnResponse >> contentLanguageTags [
+
+	| headerValue |
+
+	headerValue := self headers at: 'Content-Language' ifAbsent: [ ^ #() ].
+	^ headerValue isArray
+		ifTrue: [ headerValue collect: #asLanguageTag ]
+		ifFalse: [ Array with: headerValue asLanguageTag ]
+]
+
+{ #category : #'*Hyperspace-Model' }
 ZnResponse >> entityTag [
 
 	^ (self headers at: 'ETag') asETag
@@ -38,12 +55,12 @@ ZnResponse >> hasLocation [
 { #category : #'*Hyperspace-Model' }
 ZnResponse >> links [
 
-	| links |
+	| headerValue |
 
-	links := self headers at: 'Link' ifAbsent: [ ^ #() ].
-	^ links isArray
-		ifTrue: [ links ]
-		ifFalse: [ Array with: links ]
+	headerValue := self headers at: 'Link' ifAbsent: [ ^ #() ].
+	^ headerValue isArray
+		ifTrue: [ headerValue collect: #asWebLink ]
+		ifFalse: [ Array with: headerValue asWebLink ]
 ]
 
 { #category : #'*Hyperspace-Model' }

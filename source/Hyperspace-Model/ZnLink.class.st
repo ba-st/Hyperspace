@@ -14,8 +14,58 @@ Class {
 		'parameters',
 		'url'
 	],
-	#category : #'Hyperspace-Model-Zinc'
+	#category : #'Hyperspace-Model-IETF'
 }
+
+{ #category : #'private - preconditions' }
+ZnLink class >> assertFormatIsValidAndParseParameters: linkParts [
+
+	| parameters |
+
+	AssertionCheckerBuilder new
+		raising: InstanceCreationFailed;
+		failFast;
+		checking: [ :asserter | 
+			asserter
+				enforce: [ linkParts notEmpty ]
+				because: 'Missing "<".'
+				onSuccess: [ :successAsserter | 
+					successAsserter
+						enforce: [ linkParts first beginsWith: '<' ] because: 'Missing "<".';
+						enforce: [ linkParts first endsWith: '>' ] because: 'Missing ">".'.
+
+					parameters := linkParts withoutFirst collect: [ :candidate | candidate substrings: '=' ].
+					parameters
+						do:
+							[ :parameter | successAsserter enforce: [ parameter size = 2 ] because: 'Invalid parameter format.' ]
+					]
+			];
+		buildAndCheck.
+	^ parameters
+]
+
+{ #category : #'instance creation' }
+ZnLink class >> fromString: aString [
+
+	| linkParts urlCandidate parameters url link |
+
+	"A string representing a link is something like <https://google.com/>;rel=search.
+	So we need to split on ; and then parse the first element as a URL and the others
+	as parameters splitted by = "
+
+	linkParts := aString substrings: ';'.
+	parameters := self assertFormatIsValidAndParseParameters: linkParts.
+
+	urlCandidate := linkParts first.
+	"Trim < > tags"
+	url := ( urlCandidate copyFrom: 2 to: urlCandidate size - 1 ) asUrl.
+
+	link := self to: url.
+
+	parameters do: [ :parameter | link parameterAt: parameter first put: parameter last ].
+
+	^ link
+]
 
 { #category : #'instance creation' }
 ZnLink class >> to: aUrl [
@@ -36,6 +86,12 @@ ZnLink >> = anObject [
 ZnLink >> asByteArray [
 
 	^ self printString asByteArray
+]
+
+{ #category : #converting }
+ZnLink >> asWebLink [
+
+	^ self
 ]
 
 { #category : #testing }

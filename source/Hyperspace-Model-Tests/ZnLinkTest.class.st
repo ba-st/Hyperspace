@@ -4,7 +4,7 @@ I'm a test case for ZnLink
 Class {
 	#name : #ZnLinkTest,
 	#superclass : #TestCase,
-	#category : #'Hyperspace-Model-Tests-Zinc'
+	#category : #'Hyperspace-Model-Tests-IETF'
 }
 
 { #category : #support }
@@ -77,6 +77,21 @@ ZnLinkTest >> testCopying [
 ]
 
 { #category : #tests }
+ZnLinkTest >> testFromString [
+
+	| link parsedLink |
+
+	link := ( ZnLink to: self googleUrl )
+		rel: 'search';
+		parameterAt: 'lang' put: 'en-US';
+		yourself.
+
+	parsedLink := ZnLink fromString: link printString.
+
+	self assert: link equals: parsedLink
+]
+
+{ #category : #tests }
 ZnLinkTest >> testParameters [
 
 	| link |
@@ -91,6 +106,37 @@ ZnLinkTest >> testParameters [
 	link removeParameter: 'bar'.
 	self should: [ link parameterAt: 'foo' ] raise: KeyNotFound.
 	self assert: (link parameterAt: 'foo' ifAbsent: [ #none ]) equals: #none
+]
+
+{ #category : #tests }
+ZnLinkTest >> testParsingErrors [
+
+	self
+		should: [ 'https://example.com>' asWebLink ]
+			raise: InstanceCreationFailed
+			withMessageText: 'Missing "<".';
+		should: [ '<https://example.com' asWebLink ]
+			raise: InstanceCreationFailed
+			withMessageText: 'Missing ">".';
+		should: [ '' asWebLink ] raise: InstanceCreationFailed withMessageText: 'Missing "<".';
+		should: [ '<http://foo:8080/foo%%bar>' asWebLink ]
+			raise: ZnCharacterEncodingError
+			withMessageText: 'hex digit expected';
+		should: [ '<https://google.com>;rel' asWebLink ]
+			raise: InstanceCreationFailed
+			withMessageText: 'Invalid parameter format.';
+		should: [ '<https://google.com>;=search' asWebLink ]
+			raise: InstanceCreationFailed
+			withMessageText: 'Invalid parameter format.';
+		should: [ '<https://google.com>;rel=' asWebLink ]
+			raise: InstanceCreationFailed
+			withMessageText: 'Invalid parameter format.';
+		should: [ '<https://google.com>;=' asWebLink ]
+			raise: InstanceCreationFailed
+			withMessageText: 'Invalid parameter format.';
+		should: [ '<https://google.com>;rel=search;=' asWebLink ]
+			raise: InstanceCreationFailed
+			withMessageText: 'Invalid parameter format.'
 ]
 
 { #category : #tests }

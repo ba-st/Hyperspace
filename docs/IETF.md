@@ -38,9 +38,8 @@ a request.
 
 ## ZnLink
 
-A `ZnLink` instance represents a Link Header. 
-The Link entity-header field provides a means for serializing one or more links
-in HTTP headers.
+A `ZnLink` instance represents a Link Header. The Link entity-header field
+provides a means for serializing one or more links in HTTP headers.
 
 It is semantically equivalent to the `<LINK>` element in HTML, as well as the
 `atom:link` feed-level element in Atom.

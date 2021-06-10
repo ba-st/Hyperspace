@@ -38,7 +38,7 @@ a request.
 
 ## ZnLink
 
-I represent a Link Header.
+A `ZnLink` instance represents a Link Header. 
 The Link entity-header field provides a means for serializing one or more links
 in HTTP headers.
 

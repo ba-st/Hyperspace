@@ -7,7 +7,7 @@ Class {
 { #category : #private }
 ZnResponseHyperspaceExtensionsTest >> amazonUrl [
 
-	^ 'https://amazon.com' asZnUrl
+	^ 'https://amazon.com' asUrl
 ]
 
 { #category : #private }
@@ -20,7 +20,7 @@ ZnResponseHyperspaceExtensionsTest >> encodeAndDecode: response [
 { #category : #private }
 ZnResponseHyperspaceExtensionsTest >> googleUrl [
 
-	^ 'https://google.com' asZnUrl
+	^ 'https://google.com' asUrl
 ]
 
 { #category : #tests }

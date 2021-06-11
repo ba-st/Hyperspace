@@ -4,10 +4,10 @@ Class {
 	#category : #'Hyperspace-Model-Tests-Zinc'
 }
 
-{ #category : #tests }
+{ #category : #private }
 ZnRequestHyperspaceExtensionsTest >> googleUrl [
 
-	^ 'https://google.com' asZnUrl
+	^ 'https://google.com' asUrl
 ]
 
 { #category : #tests }
@@ -19,7 +19,23 @@ ZnRequestHyperspaceExtensionsTest >> testAcceptLanguage [
 		setAcceptLanguage: 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5';
 		yourself.
 
-	self assert: request acceptLanguage equals: 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5'
+	self assert: request acceptLanguage equals: 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5'.
+
+	self should: [ ( ZnRequest get: self googleUrl ) acceptLanguage ] raise: KeyNotFound
+]
+
+{ #category : #tests }
+ZnRequestHyperspaceExtensionsTest >> testHasLanguageProrityList [
+
+	| request |
+
+	request := ( ZnRequest get: self googleUrl )
+		setAcceptLanguage: 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5';
+		yourself.
+
+	self
+		assert: request hasLanguageProrityList;
+		deny: ( ZnRequest get: self googleUrl ) hasLanguageProrityList
 ]
 
 { #category : #tests }

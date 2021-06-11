@@ -116,6 +116,21 @@ ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithLinkHeaders [
 	self assert: decodedResponse links equals: response links
 ]
 
+{ #category : #'tests - encoding' }
+ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithVaryHeaders [
+
+	| response decodedResponse |
+
+	response := ZnResponse noContent
+		addToVary: 'Accept';
+		addToVary: 'Accept-Language';
+		yourself.
+
+	decodedResponse := self encodeAndDecode: response.
+
+	self assert: decodedResponse varyHeaderNames equals: response varyHeaderNames
+]
+
 { #category : #tests }
 ZnResponseHyperspaceExtensionsTest >> testEntityTag [
 
@@ -150,6 +165,25 @@ ZnResponseHyperspaceExtensionsTest >> testLink [
 		yourself.
 		
 	self assert: response links equals: { ZnLink to: self googleUrl }
+]
+
+{ #category : #tests }
+ZnResponseHyperspaceExtensionsTest >> testVary [
+
+	| response |
+
+	response := ZnResponse noContent
+		addToVary: 'Accept';
+		yourself.
+
+	self assert: response varyHeaderNames equals: #('Accept').
+
+	response := ZnResponse noContent
+		addToVary: 'Accept';
+		addToVary: 'Accept-Language';
+		yourself.
+
+	self assert: response varyHeaderNames equals: #('Accept' 'Accept-Language')
 ]
 
 { #category : #tests }

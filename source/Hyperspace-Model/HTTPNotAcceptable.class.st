@@ -22,7 +22,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-HTTPNotAcceptable class >> messageText: aMessageText accepting: allowedMediaTypes and: allowedLanguageTags [
+HTTPNotAcceptable class >> messageText: aMessageText accepting: allowedMediaTypes inAnyOf: allowedLanguageTags [
 
 	^ ( self code: 406 )
 		messageText: aMessageText;
@@ -34,13 +34,13 @@ HTTPNotAcceptable class >> messageText: aMessageText accepting: allowedMediaType
 { #category : #signalling }
 HTTPNotAcceptable class >> signal: aMessageText accepting: allowedMediaTypes [
 
-	^ self signal: aMessageText accepting: allowedMediaTypes and: #()
+	^ self signal: aMessageText accepting: allowedMediaTypes inAnyOf: #()
 ]
 
 { #category : #signalling }
-HTTPNotAcceptable class >> signal: aMessageText accepting: allowedMediaTypes and: allowedLanguageTags [
+HTTPNotAcceptable class >> signal: aMessageText accepting: allowedMediaTypes inAnyOf: allowedLanguageTags [
 
-	^ ( self messageText: aMessageText accepting: allowedMediaTypes and: allowedLanguageTags ) signal
+	^ ( self messageText: aMessageText accepting: allowedMediaTypes inAnyOf: allowedLanguageTags ) signal
 ]
 
 { #category : #accessing }

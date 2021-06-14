@@ -15,24 +15,44 @@ Class {
 	#name : #HTTPNotAcceptable,
 	#superclass : #HTTPClientError,
 	#instVars : [
-		'allowedMediaTypes'
+		'allowedMediaTypes',
+		'allowedLanguageTags'
 	],
 	#category : #'Hyperspace-Model-Exceptions'
 }
 
 { #category : #'instance creation' }
-HTTPNotAcceptable class >> messageText: aMessageText accepting: allowedMediaTypes [
+HTTPNotAcceptable class >> messageText: aMessageText accepting: allowedMediaTypes inAnyOf: allowedLanguageTags [
 
 	^ ( self code: 406 )
 		messageText: aMessageText;
 		allowedMediaTypes: allowedMediaTypes asArray;
+		allowedLanguageTags: allowedLanguageTags asArray;
 		yourself
 ]
 
 { #category : #signalling }
 HTTPNotAcceptable class >> signal: aMessageText accepting: allowedMediaTypes [
 
-	^ (self messageText: aMessageText accepting: allowedMediaTypes asArray) signal
+	^ self signal: aMessageText accepting: allowedMediaTypes inAnyOf: #()
+]
+
+{ #category : #signalling }
+HTTPNotAcceptable class >> signal: aMessageText accepting: allowedMediaTypes inAnyOf: allowedLanguageTags [
+
+	^ ( self messageText: aMessageText accepting: allowedMediaTypes inAnyOf: allowedLanguageTags ) signal
+]
+
+{ #category : #accessing }
+HTTPNotAcceptable >> allowedLanguageTags [
+
+	^ allowedLanguageTags
+]
+
+{ #category : #accessing }
+HTTPNotAcceptable >> allowedLanguageTags: anArray [
+
+	 allowedLanguageTags := anArray
 ]
 
 { #category : #accessing }

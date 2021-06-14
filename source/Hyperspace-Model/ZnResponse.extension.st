@@ -19,6 +19,12 @@ ZnResponse >> addLink: aLink [
 ]
 
 { #category : #'*Hyperspace-Model' }
+ZnResponse >> addToVary: headerName [
+
+	self headers at: 'Vary' add: headerName
+]
+
+{ #category : #'*Hyperspace-Model' }
 ZnResponse >> cachingDirectives [
 
 	| directives |
@@ -67,6 +73,17 @@ ZnResponse >> links [
 ZnResponse >> setEntityTag: aStringORETag [
 
 	self headers at: 'ETag' put: aStringORETag asETag asString
+]
+
+{ #category : #'*Hyperspace-Model' }
+ZnResponse >> varyHeaderNames [
+
+	| headerValue |
+
+	headerValue := self headers at: 'Vary' ifAbsent: [ ^ #() ].
+	^ headerValue isArray
+		ifTrue: [ headerValue ]
+		ifFalse: [ Array with: headerValue ]
 ]
 
 { #category : #'*Hyperspace-Model' }

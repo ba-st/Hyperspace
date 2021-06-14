@@ -23,6 +23,7 @@ HTTPNotAcceptableTest >> testSignaling [
 				assertCollection: signal allowedMediaTypes
 					hasSameElements:
 					{'application/json' asMediaType.
-					'plain/text' asMediaType}
+					'plain/text' asMediaType};
+				assert: signal allowedLanguageTags isEmpty
 			]
 ]

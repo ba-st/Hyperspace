@@ -11,6 +11,12 @@ ZnUrl >> asHostedAt: aBaseUrl [
 ]
 
 { #category : #'*Hyperspace-Model' }
+ZnUrl >> asWebLink [
+
+	^ WebLink to: self
+]
+
+{ #category : #'*Hyperspace-Model' }
 ZnUrl >> queryAt: aKey putUrl: anUnencodedUrl [
 
 	| encodedUrl |

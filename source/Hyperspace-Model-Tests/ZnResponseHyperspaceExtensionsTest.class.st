@@ -46,15 +46,15 @@ ZnResponseHyperspaceExtensionsTest >> testAddSeveralLinks [
 	| response |
 
 	response := ZnResponse noContent
-		addLink: ( ZnLink to: self googleUrl );
-		addLink: ( ZnLink to: self amazonUrl );
+		addLink: ( WebLink to: self googleUrl );
+		addLink: ( WebLink to: self amazonUrl );
 		yourself.
 
 	self
 		assert: response links
 		equals:
-			{ ZnLink to: self googleUrl .
-			  ZnLink to: self amazonUrl }
+			{ WebLink to: self googleUrl .
+			  WebLink to: self amazonUrl }
 ]
 
 { #category : #tests }
@@ -108,7 +108,7 @@ ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithLinkHeaders [
 	| response decodedResponse |
 
 	response := ZnResponse noContent
-		addLink: ( ZnLink to: self amazonUrl );
+		addLink: ( WebLink to: self amazonUrl );
 		yourself.
 
 	decodedResponse := self encodeAndDecode: response.
@@ -161,10 +161,10 @@ ZnResponseHyperspaceExtensionsTest >> testLink [
 	| response |
 
 	response := ZnResponse noContent
-		addLink: ( ZnLink to: self googleUrl );
+		addLink: ( WebLink to: self googleUrl );
 		yourself.
 		
-	self assert: response links equals: { ZnLink to: self googleUrl }
+	self assert: response links equals: { WebLink to: self googleUrl }
 ]
 
 { #category : #tests }

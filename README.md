@@ -1,6 +1,6 @@
 # Hyperspace
 
-A couple of facilities on top of [Zinc HTTP Components](https://github.com/svenvc/zinc)
+Building blocks for Internet technologies on top of [Zinc HTTP Components](https://github.com/svenvc/zinc)
 
 [![Unit Tests](https://github.com/ba-st/Hyperspace/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/ba-st/Hyperspace/actions/workflows/unit-tests.yml)
 [![Coverage Status](https://codecov.io/github/ba-st/Hyperspace/coverage.svg?branch=release-candidate)](https://codecov.io/gh/ba-st/Hyperspace/branch/release-candidate)

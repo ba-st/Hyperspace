@@ -21,5 +21,5 @@ String >> asMediaType [
 { #category : #'*Hyperspace-Model' }
 String >> asWebLink [
 
-	^ ZnLink fromString: self
+	^ WebLink fromString: self
 ]

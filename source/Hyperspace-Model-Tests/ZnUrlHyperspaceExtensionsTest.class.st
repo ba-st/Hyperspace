@@ -26,6 +26,15 @@ ZnUrlHyperspaceExtensionsTest >> testAsHostedAt [
 ]
 
 { #category : #tests }
+ZnUrlHyperspaceExtensionsTest >> testAsWebLink [
+
+	| url |
+
+	url := 'https://api.example.com/pets' asUrl.
+	self assert: url asWebLink equals: ( WebLink to: url )
+]
+
+{ #category : #tests }
 ZnUrlHyperspaceExtensionsTest >> testQueryAtPutUrl [
 
 	self

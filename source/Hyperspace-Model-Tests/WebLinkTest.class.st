@@ -1,5 +1,5 @@
 "
-I'm a test case for ZnLink
+I'm a test case for WebLink
 "
 Class {
 	#name : #WebLinkTest,

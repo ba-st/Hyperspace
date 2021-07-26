@@ -37,7 +37,7 @@ ZnClientHyperspaceExtensionsTest >> testSetIfMatchTo [
 	client := ZnClient new.
 
 	self should: [ client request headers at: #'If-Match' ] raise: KeyNotFound.
-	client setIfMatchTo: ( ZnETag with: '12345' ).
+	client setIfMatchTo: ( EntityTag with: '12345' ).
 	self assert: ( client request headers at: #'If-Match' ) equals: '"12345"'
 ]
 
@@ -49,7 +49,7 @@ ZnClientHyperspaceExtensionsTest >> testSetIfNoneMatchTo [
 	client := ZnClient new.
 
 	self should: [ client request headers at: #'If-None-Match' ] raise: KeyNotFound.
-	client setIfNoneMatchTo: ( ZnETag with: '12345' ).
+	client setIfNoneMatchTo: ( EntityTag with: '12345' ).
 	self assert: ( client request headers at: #'If-None-Match' ) equals: '"12345"'
 ]
 

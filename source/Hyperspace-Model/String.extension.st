@@ -1,9 +1,9 @@
 Extension { #name : #String }
 
 { #category : #'*Hyperspace-Model' }
-String >> asETag [
+String >> asEntityTag [
 
-	^ ZnETag fromString: self
+	^ EntityTag fromString: self
 ]
 
 { #category : #'*Hyperspace-Model' }

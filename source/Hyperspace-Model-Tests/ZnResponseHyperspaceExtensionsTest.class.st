@@ -91,7 +91,7 @@ ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithEntityTag [
 
 	| response entityTag decodedResponse |
 
-	entityTag := ZnETag with: '1234'.
+	entityTag := EntityTag with: '1234'.
 	response := ZnResponse noContent
 		setEntityTag: entityTag;
 		yourself.
@@ -136,7 +136,7 @@ ZnResponseHyperspaceExtensionsTest >> testEntityTag [
 
 	| response entityTag |
 
-	entityTag := ZnETag with: '1234'.
+	entityTag := EntityTag with: '1234'.
 
 	response := ZnResponse noContent
 		setEntityTag: entityTag;
@@ -191,7 +191,7 @@ ZnResponseHyperspaceExtensionsTest >> testWithEntityTagDo [
 
 	| response entityTag wasFound |
 
-	entityTag := ZnETag with: '1234'.
+	entityTag := EntityTag with: '1234'.
 	response := ZnResponse noContent
 		setEntityTag: entityTag;
 		yourself.

@@ -1,5 +1,5 @@
 "
-I represent a Link Header value. 
+I represent a web link.
 The Link entity-header field provides a means for serialising one or more links in HTTP headers.  
 It is semantically equivalent to the <LINK> element in HTML, as well as the atom:link feed-level element in Atom.
 

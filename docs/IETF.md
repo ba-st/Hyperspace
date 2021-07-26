@@ -36,9 +36,9 @@ a request.
   ZnETag fromString: '"12345"'
   ```
 
-## ZnLink
+## Web Links
 
-A `ZnLink` instance represents a Link Header. The Link entity-header field
+A `WebLink` instance represents a Link Header. The Link entity-header field
 provides a means for serializing one or more links in HTTP headers.
 
 It is semantically equivalent to the `<LINK>` element in HTML, as well as the
@@ -46,17 +46,31 @@ It is semantically equivalent to the `<LINK>` element in HTML, as well as the
 
 **References:** [RFC 5988](https://tools.ietf.org/html/rfc5988#page-6)
 
-`ZnLink` instances are always attached to some URL, so to create a new link you
+`WebLink` instances are always attached to some URL, so to create a new link you
 must send the message `to:`, for example:
 
 ```smalltalk
-ZnLink to: 'https://www.google.com' asUrl
+WebLink to: 'https://www.google.com' asUrl
 ```
 
-Optionally links allow configuring the relation type using the `rel:` message.
+or send `asWebLink` to a URL:
+
+```smalltalk
+'https://www.google.com' asUrl asWebLink
+```
+
+Optionally links allow configuring parameters. Well known parameters
+are provided as configuration methods:
+
+- `relationType:` corresponding to the `rel` parameter
+- `title:` corresponding to the `title` parameter
+- `mediaTypeHint:` corresponding to the `type` parameter
+- `mediaQueryHint:` corresponding to the `media` parameter
+- `addLanguageHint:` corresponding to the `hreflang` parameter whose value can
+  be multiple
 
 `ZnResponse` instances allow adding one or more links via `addLink:` receiving
-a `ZnLink` instance or access the link collection by sending `links`.
+a `WebLink` instance or access the link collection by sending `links`.
 
 ## Language Tags and Ranges
 

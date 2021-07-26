@@ -25,6 +25,8 @@
     "==> 'https://alternative.org/resource'"
   ```
 
+- `asWebLink` creates a Web Link targeting the URL.
+
 ## ZnClient
 
 - `logLevel` provides access to the client current log level

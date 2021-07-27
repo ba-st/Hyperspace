@@ -44,7 +44,7 @@ ZnRequestHyperspaceExtensionsTest >> testIfMatch [
 	| request |
 
 	request := ( ZnRequest get: self googleUrl )
-		setIfMatchTo: ( ZnETag with: '12345' );
+		setIfMatchTo: ( EntityTag with: '12345' );
 		yourself.
 
 	self assert: ( request headers at: #'If-Match' ) equals: '"12345"'
@@ -56,7 +56,7 @@ ZnRequestHyperspaceExtensionsTest >> testIfNoneMatch [
 	| request |
 
 	request := ( ZnRequest get: self googleUrl )
-		setIfNoneMatchTo: ( ZnETag with: '12345' );
+		setIfNoneMatchTo: ( EntityTag with: '12345' );
 		yourself.
 		
 	self assert: (request headers at: #'If-None-Match') equals: '"12345"'

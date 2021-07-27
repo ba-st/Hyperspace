@@ -49,7 +49,7 @@ ZnResponse >> contentLanguageTags [
 { #category : #'*Hyperspace-Model' }
 ZnResponse >> entityTag [
 
-	^ (self headers at: 'ETag') asETag
+	^ (self headers at: 'ETag') asEntityTag
 ]
 
 { #category : #'*Hyperspace-Model' }
@@ -70,9 +70,9 @@ ZnResponse >> links [
 ]
 
 { #category : #'*Hyperspace-Model' }
-ZnResponse >> setEntityTag: aStringORETag [
+ZnResponse >> setEntityTag: aStringOrEntityTag [
 
-	self headers at: 'ETag' put: aStringORETag asETag asString
+	self headers at: 'ETag' put: aStringOrEntityTag asEntityTag asString
 ]
 
 { #category : #'*Hyperspace-Model' }
@@ -89,6 +89,6 @@ ZnResponse >> varyHeaderNames [
 { #category : #'*Hyperspace-Model' }
 ZnResponse >> withEntityTagDo: foundBlock ifAbsent: absentBlock [
 
-	self headers at: 'ETag' ifPresent: [ :headerValue | ^ foundBlock cull: headerValue asETag ].
+	self headers at: 'ETag' ifPresent: [ :headerValue | ^ foundBlock cull: headerValue asEntityTag ].
 	^ absentBlock value
 ]

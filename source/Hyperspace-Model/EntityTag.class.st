@@ -1,10 +1,15 @@
 "
+An entity-tag is an opaque validator for differentiating between multiple representations of the same resource, regardless of whether those multiple representations are due to resource state changes over time, content negotiation resulting in multiple representations being valid at the same time, or both.  An entity-tag consists of an opaque quoted string, possibly prefixed by a weakness indicator.
+
 The ETag HTTP response header is an identifier for a specific version of a resource. It allows caches to be more efficient, and saves bandwidth, as a web server does not need to send a full response if the content has not changed. On the other side, if the content has changed, etags are useful to help prevent simultaneous updates of a resource from overwriting each other (""mid-air collisions"").
 
 If the resource at a given URL changes, a new Etag value must be generated. Etags are therefore similar to fingerprints and might also be used for tracking purposes by some servers. A comparison of them allows to quickly determine whether two representations of a resource are the same, but they might also be set to persist indefinitely by a tracking server.
+
+References: 
+- [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232#section-2.3)
 "
 Class {
-	#name : #ZnETag,
+	#name : #EntityTag,
 	#superclass : #Object,
 	#instVars : [
 		'value',
@@ -14,7 +19,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-ZnETag class >> fromString: aString [
+EntityTag class >> fromString: aString [
 
 	AssertionCheckerBuilder new
 		raising: InstanceCreationFailed;
@@ -31,7 +36,7 @@ ZnETag class >> fromString: aString [
 ]
 
 { #category : #'private - instance creation' }
-ZnETag class >> parseStrongETagFromString: aString [
+EntityTag class >> parseStrongETagFromString: aString [
 
 	AssertionCheckerBuilder new
 		raising: InstanceCreationFailed;
@@ -48,7 +53,7 @@ ZnETag class >> parseStrongETagFromString: aString [
 ]
 
 { #category : #'private - instance creation' }
-ZnETag class >> parseWeakETagFromString: aString [
+EntityTag class >> parseWeakETagFromString: aString [
 
 	AssertionCheckerBuilder new
 		raising: InstanceCreationFailed;
@@ -65,25 +70,25 @@ ZnETag class >> parseWeakETagFromString: aString [
 ]
 
 { #category : #'instance creation' }
-ZnETag class >> weakWith: anETagValue [
+EntityTag class >> weakWith: anETagValue [
 
 	^ self with: anETagValue suffixedBy: 'W/'
 ]
 
 { #category : #'instance creation' }
-ZnETag class >> with: anETagValue [
+EntityTag class >> with: anETagValue [
 
 	^ self with: anETagValue suffixedBy: ''
 ]
 
 { #category : #'private - instance creation' }
-ZnETag class >> with: anETagValue suffixedBy: aSuffix [
+EntityTag class >> with: anETagValue suffixedBy: aSuffix [
 
 	^ self new initializeWith: anETagValue suffixedBy: aSuffix
 ]
 
 { #category : #comparing }
-ZnETag >> = anObject [
+EntityTag >> = anObject [
 
 	^ self equalityChecker
 		compare: #value;
@@ -91,32 +96,32 @@ ZnETag >> = anObject [
 ]
 
 { #category : #converting }
-ZnETag >> asETag [
+EntityTag >> asEntityTag [
 
 	^ self
 ]
 
 { #category : #printing }
-ZnETag >> asString [
+EntityTag >> asString [
 
 	^self printString
 ]
 
 { #category : #comparing }
-ZnETag >> hash [
+EntityTag >> hash [
 
 	^ value hash
 ]
 
 { #category : #initialization }
-ZnETag >> initializeWith: anETagValue suffixedBy: aSuffix [ 
+EntityTag >> initializeWith: anETagValue suffixedBy: aSuffix [ 
 
 	value := anETagValue.
 	suffix := aSuffix
 ]
 
 { #category : #printing }
-ZnETag >> printOn: aStream [
+EntityTag >> printOn: aStream [
 
 	aStream
 		nextPutAll: suffix;
@@ -126,7 +131,7 @@ ZnETag >> printOn: aStream [
 ]
 
 { #category : #evaluating }
-ZnETag >> value [
+EntityTag >> value [
 
 	^ value
 ]

@@ -1,6 +1,13 @@
 # IETF related abstractions
 
-## ZnETag
+## Entity Tags
+
+An entity-tag is an opaque validator for differentiating between multiple
+representations of the same resource, regardless of whether those multiple
+representations are due to resource state changes over time, content negotiation
+resulting in multiple representations being valid at the same time, or both.
+An entity-tag consists of an opaque quoted string, possibly prefixed by a
+weakness indicator.
 
 The ETag HTTP response header is an identifier for a specific version of a
 resource. It allows caches to be more efficient, and saves bandwidth, as a web
@@ -15,25 +22,25 @@ purposes by some servers. A comparison of them allows to quickly determine
 whether two representations of a resource are the same, but they might also be
 set to persist indefinitely by a tracking server.
 
-`ZnETag` instances represent the HTTP header and can be set as the entity tag
+`EntityTag` instances represent the HTTP header and can be set as the entity tag
 in `ZnResponse` sending the message `setEntityTag:` and can be accessed sending
 `entityTag`.
 
 `ZnResponse` instances also provide a method to cope with the possible absence
 of an ETag Header: `withEntityTagDo:ifAbsent:`
 
-ETags can also be used in `ZnRequest` as parameters of `setIfMatchTo:` and
+Entity tags can also be used in `ZnRequest` as parameters of `setIfMatchTo:` and
 `setIfNoneMatchTo:` to configure the `If-Match` and `If-None-Match` headers on
 a request.
 
-`ZnETag` instances can be created by:
+`EntityTag` instances can be created by:
 
 - providing the ETag value
 - parsing it from its string representation
 
   ```smalltalk
-  ZnETag with: '12345'.
-  ZnETag fromString: '"12345"'
+  EntityTag with: '12345'.
+  EntityTag fromString: '"12345"'
   ```
 
 ## Web Links

@@ -2,7 +2,8 @@
 
 ## HTTPClientError
 
-This is an exception expecting to be raised when someone makes an incorrect HTTP request.
+This is an exception expecting to be raised when someone makes an incorrect HTTP
+request.
 
 It allows to handle any kind of HTTP client errors by doing something like:
 

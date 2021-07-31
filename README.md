@@ -1,5 +1,7 @@
 # Hyperspace
 
+![Logo](assets/logo/logo.svg)
+
 Building blocks for Internet technologies on top of [Zinc HTTP Components](https://github.com/svenvc/zinc)
 
 [![Unit Tests](https://github.com/ba-st/Hyperspace/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/ba-st/Hyperspace/actions/workflows/unit-tests.yml)
@@ -31,3 +33,7 @@ project follow this [instructions](docs/Installation.md).
 ## Contributing
 
 Check the [Contribution Guidelines](CONTRIBUTING.md)
+
+---
+
+> *Icons by icons8.com*

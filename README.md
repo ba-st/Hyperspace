@@ -36,4 +36,4 @@ Check the [Contribution Guidelines](CONTRIBUTING.md)
 
 ---
 
-> *Icons by icons8.com*
+> *Icons by [Icons8](https://icons8.com)*

@@ -17,6 +17,18 @@ ZnUrl >> asWebLink [
 ]
 
 { #category : #'*Hyperspace-Model' }
+ZnUrl >> hasValidOrigin [
+
+	^ WebOrigin hasValidOrigin: self
+]
+
+{ #category : #'*Hyperspace-Model' }
+ZnUrl >> origin [
+
+	^ WebOrigin basedOn: self 
+]
+
+{ #category : #'*Hyperspace-Model' }
 ZnUrl >> queryAt: aKey putUrl: anUnencodedUrl [
 
 	| encodedUrl |

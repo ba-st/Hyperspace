@@ -7,6 +7,36 @@ Class {
 	#category : #'Hyperspace-Development-Tools'
 }
 
+{ #category : #'class initialization' }
+HTTPStatusReference class >> initialize [
+
+	ReferenceByCode := Dictionary new.
+	self
+		initializeBadRequest;
+		initializeConflict;
+		initializeForbidden;
+		initializeMethodNotAllowed;
+		initializeNotAcceptable;
+		initializeNotFound;
+		initializePreconditionFailed;
+		initializePreconditionRequired;
+		initializeRequestTimeout;
+		initializeTooManyRequests;
+		initializeUnauthorized;
+		initializeUnprocessableEntity;
+		initializeUnsupportedMediaType.
+
+	self
+		initializeInternalServerError;
+		initializeServiceUnavailable.
+
+	self
+		initializeOk;
+		initializeAccepted;
+		initializeCreated;
+		initializeNoContent
+]
+
 { #category : #initialization }
 HTTPStatusReference class >> initializeAccepted [
 

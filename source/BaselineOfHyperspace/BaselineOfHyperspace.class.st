@@ -40,14 +40,17 @@ BaselineOfHyperspace >> setUpDependencies: spec [
 		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v6' ];
 		project: 'Buoy-Deployment' copyFrom: 'Buoy' with: [ spec loads: 'Deployment' ];
 		project: 'Buoy-SUnit' copyFrom: 'Buoy' with: [ spec loads: 'Dependent-SUnit-Extensions' ];
-		project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ]
+		project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ].
+	spec
+		baseline: 'ZincHTTPComponents' with: [ spec repository: 'github://svenvc/zinc' ];
+		project: 'Zinc-Core' copyFrom: 'ZincHTTPComponents' with: [ spec loads: 'Core' ]
 ]
 
 { #category : #initialization }
 BaselineOfHyperspace >> setUpPackages: spec [
 
 	spec
-		package: 'Hyperspace-Model' with: [ spec requires: 'Buoy-Deployment' ];
+		package: 'Hyperspace-Model' with: [ spec requires: #('Buoy-Deployment' 'Zinc-Core')];
 		group: 'Deployment' with: 'Hyperspace-Model';
 		package: 'Hyperspace-Model-Tests'
 		with: [ spec requires: #( 'Hyperspace-Model' 'Dependent-SUnit-Extensions' ) ];

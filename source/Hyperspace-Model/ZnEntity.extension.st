@@ -1,12 +1,6 @@
 Extension { #name : #ZnEntity }
 
 { #category : #'*Hyperspace-Model' }
-ZnEntity class >> json: json [
-
-	^ self stringEntityClass json: json
-]
-
-{ #category : #'*Hyperspace-Model' }
 ZnEntity class >> with: anObject ofType: aMimeType [
 
 	| entity |

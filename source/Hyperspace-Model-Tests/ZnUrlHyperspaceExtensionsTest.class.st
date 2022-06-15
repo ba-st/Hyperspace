@@ -8,6 +8,25 @@ Class {
 }
 
 { #category : #tests }
+ZnUrlHyperspaceExtensionsTest >> testAsAbsoluteUrl [
+
+	self
+		assertUrl: 'http://api.example.com/resource' asAbsoluteUrl
+		equals: 'http://api.example.com/resource' asUrl;
+		assertUrl: 'http://api.example.com/resource' asAbsoluteUrl
+		equals: 'http://api.example.com/resource' asUrl asAbsoluteUrl;
+		assertUrl: 'http://api.example.com' asAbsoluteUrl
+		equals: 'http://api.example.com' asUrl;
+		assertUrl: 'http://api.example.com:1111/resource' asAbsoluteUrl
+		equals: 'http://api.example.com:1111/resource' asUrl.
+
+	self
+		should: [ '/resource' asAbsoluteUrl ]
+		raise: InstanceCreationFailed
+		withMessageText: '/resource is a relative URL'
+]
+
+{ #category : #tests }
 ZnUrlHyperspaceExtensionsTest >> testAsHostedAt [
 
 	self

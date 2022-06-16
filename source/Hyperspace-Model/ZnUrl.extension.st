@@ -1,6 +1,17 @@
 Extension { #name : #ZnUrl }
 
 { #category : #'*Hyperspace-Model' }
+ZnUrl >> asAbsoluteUrl [
+
+	AssertionChecker
+		enforce: [ self isAbsolute ]
+		because: [ '<1p> is a relative URL' expandMacrosWith: self ]
+		raising: InstanceCreationFailed.
+
+	^ self
+]
+
+{ #category : #'*Hyperspace-Model' }
 ZnUrl >> asHostedAt: aBaseUrl [
 
 	^ self copy

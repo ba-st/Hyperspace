@@ -1,6 +1,12 @@
 Extension { #name : #String }
 
 { #category : #'*Hyperspace-Model' }
+String >> asAbsoluteUrl [
+
+	^ self asUrl asAbsoluteUrl
+]
+
+{ #category : #'*Hyperspace-Model' }
 String >> asEntityTag [
 
 	^ EntityTag fromString: self

@@ -138,7 +138,7 @@ LanguageRange fromString: 'es-AR'.
 For example:
 
 ```smalltalk
-(LanguangeRage fromString: 'es') matches: 'es-AR' asLanguageTag "==> true"
+(LanguageRange fromString: 'es') matches: 'es-AR' asLanguageTag "==> true"
 ```
 
 **References:**

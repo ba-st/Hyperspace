@@ -18,7 +18,7 @@ Retry
  configuredBy: [:retry | "configuration options" ]
 ```
 
-The block to be evaluated can optionally receive the current attempt  number in
+The block to be evaluated can optionally receive the current attempt number in
 a block argument:
 
 ```smalltalk
@@ -32,8 +32,8 @@ Retry
 These options are sent to the `retry` instance provided in the second block.
 
 - `upTo: retryCount` : The maximum number of retries. Defaults to 2.
-- `every: duration` : Wait for a time duration between retry attempts. By
-  default don't wait.
+- `every: duration` : Wait for a time duration between retry attempts. By default,
+  don't wait.
 - `backoffExponentiallyWithTimeSlot: duration` : Wait for a time duration
   between retry attempts determined by using the [exponential backoff algorithm](https://en.wikipedia.org/wiki/Exponential_backoff)
   with a `duration` time slot.

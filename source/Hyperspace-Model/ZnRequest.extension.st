@@ -13,6 +13,18 @@ ZnRequest >> hasLanguageProrityList [
 ]
 
 { #category : #'*Hyperspace-Model' }
+ZnRequest class >> query: urlObject [
+
+	^ self supportQUERYDuring: [ self method: #QUERY url: urlObject ]
+]
+
+{ #category : #'*Hyperspace-Model' }
+ZnRequest >> readFrom: stream [
+
+	^ self class supportQUERYDuring: [ super readFrom: stream ]
+]
+
+{ #category : #'*Hyperspace-Model' }
 ZnRequest >> setAcceptLanguage: acceptLanguageDirectives [
 
 	self headers at: 'Accept-Language' put: acceptLanguageDirectives asString
@@ -28,4 +40,12 @@ ZnRequest >> setIfMatchTo: etag [
 ZnRequest >> setIfNoneMatchTo: etag [
 
 	self headers at: 'If-None-Match' put: etag asString
+]
+
+{ #category : #'*Hyperspace-Model' }
+ZnRequest class >> supportQUERYDuring: aBlock [
+
+	^ aBlock
+		  on: ZnUnknownHttpMethod
+		  do: [ :signal | signal resume: signal method ]
 ]

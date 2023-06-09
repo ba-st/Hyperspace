@@ -63,6 +63,35 @@ ZnRequestHyperspaceExtensionsTest >> testIfNoneMatch [
 ]
 
 { #category : #tests }
+ZnRequestHyperspaceExtensionsTest >> testQuery [
+
+	| request output |
+
+	request := ZnRequest query: self googleUrl / 'search'.
+
+	self assert: request method equals: #QUERY.
+	output := String streamContents: [ :s | request writeOn: s ].
+
+	self
+		assert: (output includesSubstring: 'QUERY /search HTTP/1.1');
+		assert: (output includesSubstring: 'Host: google.com')
+]
+
+{ #category : #tests }
+ZnRequestHyperspaceExtensionsTest >> testReadQueryRequest [
+
+	| request |
+
+	request := ZnRequest readFrom:
+		           'QUERY /search HTTP/1.1<r><l>Host: google.com' expandMacros readStream.
+
+	self
+		assert: request method equals: #QUERY;
+		assertUrl: request url equals: 'search';
+		assertUrl: request host equals: 'http://google.com'
+]
+
+{ #category : #tests }
 ZnRequestHyperspaceExtensionsTest >> testSetAcceptLanguageWithAny [
 
 	| request |

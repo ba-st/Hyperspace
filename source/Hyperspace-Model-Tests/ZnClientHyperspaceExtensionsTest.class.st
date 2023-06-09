@@ -4,6 +4,36 @@ Class {
 	#category : #'Hyperspace-Model-Tests-Zinc'
 }
 
+{ #category : #private }
+ZnClientHyperspaceExtensionsTest >> handleRequest: request [
+
+	self
+		assert: request method equals: #QUERY;
+		assertUrl: request url equals: 'hello'.
+	^ ZnResponse ok: (ZnEntity text: 'hello')
+]
+
+{ #category : #tests }
+ZnClientHyperspaceExtensionsTest >> testQuery [
+
+	| server port |
+
+	port := self freeListeningTCPPort.
+	server := ZnServer on: port.
+	server delegate: self.
+	server start.
+
+	[
+	| client |
+
+	client := ZnClient new.
+	client url: ('http://localhost:<1p>/hello' expandMacrosWith: port).
+	self
+		assert: client query equals: 'hello';
+		assert: client response isSuccess
+	] ensure: [ server stop ]
+]
+
 { #category : #tests }
 ZnClientHyperspaceExtensionsTest >> testResetRequest [
 

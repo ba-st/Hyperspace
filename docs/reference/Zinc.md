@@ -12,9 +12,9 @@
 
 ## ZnUrl
 
-- `queryAt:putUrl:` allows to set a query parameter containing an URL that
+- `queryAt:putUrl:` allows setting a query parameter containing a URL that
   will be URL-encoded
-- `start:limit:` allows to set two query parameters (`start` and `limit`)
+- `start:limit:` allows setting two query parameters (`start` and `limit`)
   usually used in pagination schemes.
 - `asHostedAt:` provides a copy of the URL using as host, scheme, and port
   the ones in the parameter.
@@ -35,6 +35,7 @@
 - `setAccept:` configures the `Accept` header in the current request
 - `setIfMatchTo:` configures the `If-Match` header in the current request
 - `setIfNoneMatchTo:` configures the `If-None-Match` header in the current request
+- `query` adds support for HTTP [QUERY method](https://www.ietf.org/archive/id/draft-ietf-httpbis-safe-method-w-body-02.html)
 
 ## ZnRequest
 
@@ -42,6 +43,7 @@
 - `setAcceptLanguage:` sets the `Accept-Language` header
 - `setIfMatchTo:` configures the `If-Match` header
 - `setIfNoneMatchTo:` configures the `If-None-Match` header
+- `query:` creates an HTTP [QUERY request](https://www.ietf.org/archive/id/draft-ietf-httpbis-safe-method-w-body-02.html)
 
 ## ZnResponse
 

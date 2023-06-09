@@ -5,7 +5,7 @@
 This is an exception expecting to be raised when someone makes an incorrect HTTP
 request.
 
-It allows to handle any kind of HTTP client errors by doing something like:
+It allows handling any kind of HTTP client errors by doing something like:
 
 ```smalltalk
 [ ... ] on: HTTPClientError do: [:signal | ]
@@ -35,7 +35,7 @@ I represent an HTTP client error: `406 Not Acceptable`
 
 The resource identified by the request is only capable of generating response
 entities that have content characteristics not acceptable according to the
-accept headers sent in the request.
+`Accept` headers sent in the request.
 
  I will carry over information about the acceptable media types.
 
@@ -50,7 +50,7 @@ accept headers sent in the request.
 This is an exception expecting to be raised when the server encounters an
 unexpected error.
 
-It allows to handle any kind of HTTP server errors by doing something like:
+It allows handling any kind of HTTP server errors by doing something like:
 
 ```smalltalk
 [ ... ] on: HTTPServerError do: [:signal | ]

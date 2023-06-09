@@ -7,6 +7,17 @@ ZnClient >> logLevel [
 ]
 
 { #category : #'*Hyperspace-Model' }
+ZnClient >> query [
+	"Execute an HTTP QUERY the request set up and return the response #contents."
+
+	^ ZnRequest supportQUERYDuring: [
+		  self
+			  method: #QUERY;
+			  execute
+		  ]
+]
+
+{ #category : #'*Hyperspace-Model' }
 ZnClient >> resetRequest [
 
 	request := ZnRequest empty.

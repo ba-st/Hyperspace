@@ -86,7 +86,7 @@ ZnRequestHyperspaceExtensionsTest >> testReadQueryRequest [
 		           'QUERY /search HTTP/1.1<r><l>Host: google.com' expandMacros readStream.
 
 	self
-		assert: request method equals: #QUERY;
+		assert: request method equals: 'QUERY';
 		assertUrl: request url equals: 'search';
 		assertUrl: request host equals: 'http://google.com'
 ]

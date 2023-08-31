@@ -8,7 +8,7 @@ Class {
 ZnClientHyperspaceExtensionsTest >> handleRequest: request [
 
 	self
-		assert: request method equals: #QUERY;
+		assert: request method equals: 'QUERY';
 		assertUrl: request url equals: 'hello'.
 	^ ZnResponse ok: (ZnEntity text: 'hello')
 ]

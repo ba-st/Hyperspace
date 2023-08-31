@@ -1,12 +1,12 @@
 Extension { #name : #ZnClient }
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnClient >> logLevel [
 
 	^ logLevel
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnClient >> query [
 	"Execute an HTTP QUERY the request set up and return the response #contents."
 
@@ -17,32 +17,32 @@ ZnClient >> query [
 		  ]
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnClient >> resetRequest [
 
 	request := ZnRequest empty.
 	response := nil
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnClient >> setAccept: object [
 
 	request setAccept: object
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnClient >> setIfMatchTo: etag [
 
 	request setIfMatchTo: etag
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnClient >> setIfNoneMatchTo: etag [
 
 	request setIfNoneMatchTo: etag
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnClient >> setLogLevelAtLeastTo: integer [
 
 	self logLevel: (integer max: logLevel)

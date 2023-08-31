@@ -52,6 +52,10 @@ BaselineOfHyperspace >> setUpPackages: spec [
 	spec
 		package: 'Hyperspace-Model' with: [ spec requires: #('Buoy-Deployment' 'Zinc-Core')];
 		group: 'Deployment' with: 'Hyperspace-Model';
+		package: 'Hyperspace-Extensions' with: [ spec requires: 'Hyperspace-Model'];
+		group: 'Deployment' with: 'Hyperspace-Extensions';
+		package: 'Hyperspace-Pharo-Extensions' with: [ spec requires: 'Hyperspace-Model'];
+		group: 'Deployment' with: 'Hyperspace-Pharo-Extensions';
 		package: 'Hyperspace-Model-Tests'
 		with: [ spec requires: #( 'Hyperspace-Model' 'Dependent-SUnit-Extensions' ) ];
 		group: 'Tests' with: 'Hyperspace-Model-Tests'.

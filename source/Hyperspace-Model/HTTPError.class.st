@@ -20,15 +20,6 @@ HTTPError class >> code: aCode [
 	^ instance
 ]
 
-{ #category : #'error handling' }
-HTTPError >> - anotherException [
-
-	^ ExceptionSetWithExclusions new
-		  add: self;
-		  addExclusion: anotherException;
-		  yourself
-]
-
 { #category : #accessing }
 HTTPError >> code [
 

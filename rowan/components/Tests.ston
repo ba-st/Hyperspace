@@ -1,0 +1,23 @@
+RwSimpleProjectLoadComponentV2 {
+  #name : 'Tests',
+  #condition : 'tests',
+  #projectNames : [ ],
+  #componentNames : [
+    'Deployment',
+    'Dependent-SUnit-Extensions'
+  ],
+  #packageNames : [
+    'Hyperspace-Model-Tests',
+    'Hyperspace-SUnit-Model-Tests'
+  ],
+  #conditionalPackageMapSpecs : {
+    'gemstone' : {
+      'allusers' : {
+        #packageNameToPlatformPropertiesMap : {
+          'Hyperspace-Model-Tests' : { 'symbolDictName' : 'Hyperspace' },
+          'Hyperspace-SUnit-Model-Tests' : { 'symbolDictName' : 'Hyperspace' }
+        }
+      }
+    }
+  }
+}

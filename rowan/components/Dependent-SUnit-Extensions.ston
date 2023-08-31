@@ -1,0 +1,18 @@
+RwSimpleProjectLoadComponentV2 {
+  #name : 'Dependent-SUnit-Extensions',
+  #condition : 'sunit',
+  #projectNames : [ ],
+  #componentNames : [ ],
+  #packageNames : [
+    'Hyperspace-SUnit-Model'
+  ],
+  #conditionalPackageMapSpecs : {
+    'gemstone' : {
+      'allusers' : {
+        #packageNameToPlatformPropertiesMap : {
+          'Hyperspace-SUnit-Model' : { 'symbolDictName' : 'Globals' }
+        }
+      }
+    }
+  }
+}

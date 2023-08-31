@@ -16,8 +16,8 @@ loading targets:
 
 ## GS64 Components
 
-Hyperspace includes the following components in its Rowan configuration that can be
-used as loading targets:
+Hyperspace includes the following components in its Rowan configuration that
+can be used as loading targets:
 
 - `Deployment` will load all the packages needed in a deployed application
 - `Tests` will load the test cases

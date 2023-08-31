@@ -7,7 +7,7 @@ RwSimpleProjectLoadComponentV2 {
   #packageNames : [
     'Hyperspace-Model',
     'Hyperspace-Extensions',
-    'Hyperspace-GS64-Extensions',
+    'Hyperspace-GS64-Extensions'
   ],
   #conditionalPackageMapSpecs : {
     'gemstone' : {

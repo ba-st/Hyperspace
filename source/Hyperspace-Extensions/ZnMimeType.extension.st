@@ -3,9 +3,10 @@ Extension { #name : #ZnMimeType }
 { #category : #'*Hyperspace-Extensions' }
 ZnMimeType >> accepts: aMimeType [
 
-	^ (aMimeType main = '*' or: [ aMimeType main = self main ])
-		and: [ aMimeType sub = '*'
-				or: [ self sub = aMimeType sub or: [ (self sub splitOn: $+) includes: aMimeType sub ] ] ]
+	^ (aMimeType main = '*' or: [ aMimeType main = self main ]) and: [
+		  aMimeType sub = '*' or: [
+			  self sub = aMimeType sub or: [
+				  ($+ split: self sub) includes: aMimeType sub ] ] ]
 ]
 
 { #category : #'*Hyperspace-Extensions' }

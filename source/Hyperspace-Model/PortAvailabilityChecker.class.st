@@ -35,7 +35,7 @@ PortAvailabilityChecker >> isAvailableForTCP: portNumber [
 	^ [ 
 	  | socket |
 
-	  socket := Socket newTCP.
+	  socket := ZnNetworkingUtils default socketClass newTCP.
 	  ZnNetworkingUtils default setServerSocketOptions: socket.
 	  socket listenOn: portNumber.
 	  [ 

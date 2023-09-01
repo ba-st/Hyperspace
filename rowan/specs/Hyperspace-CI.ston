@@ -1,0 +1,14 @@
+RwLoadSpecificationV2 {
+  #specName: 'Hyperspace-CI',
+  #projectName : 'Hyperspace',
+  #diskUrl : '/opt/gemstone/projects/Hyperspace',
+  #projectSpecFile : 'rowan/project.ston',
+  #componentNames : [
+    'Tests'
+  ],
+  #customConditionalAttributes : [
+    'tests',
+    'sunit'
+  ],
+  #comment : 'Loading spec for the continuous integration setup'
+}

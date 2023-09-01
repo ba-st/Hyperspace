@@ -1,30 +1,30 @@
 Extension { #name : #ZnResponse }
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnResponse >> addCachingDirective: aDirective [
 
 	self headers at: 'Cache-Control' add: aDirective
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnResponse >> addContentLanguage: aLanguageTag [
 
 	self headers at: 'Content-Language' add: aLanguageTag
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnResponse >> addLink: aLink [
 
 	self headers at: 'Link' add: aLink
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnResponse >> addToVary: headerName [
 
 	self headers at: 'Vary' add: headerName
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnResponse >> cachingDirectives [
 
 	| directives |
@@ -35,7 +35,7 @@ ZnResponse >> cachingDirectives [
 		ifFalse: [ Array with: directives ]
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnResponse >> contentLanguageTags [
 
 	| headerValue |
@@ -46,19 +46,19 @@ ZnResponse >> contentLanguageTags [
 		ifFalse: [ Array with: headerValue asLanguageTag ]
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnResponse >> entityTag [
 
 	^ (self headers at: 'ETag') asEntityTag
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnResponse >> hasLocation [
 
 	^ self headers includesKey: 'Location'
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnResponse >> links [
 
 	| headerValue |
@@ -69,13 +69,13 @@ ZnResponse >> links [
 		ifFalse: [ Array with: headerValue asWebLink ]
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnResponse >> setEntityTag: aStringOrEntityTag [
 
 	self headers at: 'ETag' put: aStringOrEntityTag asEntityTag asString
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnResponse >> varyHeaderNames [
 
 	| headerValue |
@@ -86,7 +86,7 @@ ZnResponse >> varyHeaderNames [
 		ifFalse: [ Array with: headerValue ]
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnResponse >> withEntityTagDo: foundBlock ifAbsent: absentBlock [
 
 	self headers at: 'ETag' ifPresent: [ :headerValue | ^ foundBlock cull: headerValue asEntityTag ].

@@ -5,9 +5,6 @@ Whenever possible, it is best to let the OS provide us a free port. But if you n
 Class {
 	#name : #PortAvailabilityChecker,
 	#superclass : #Object,
-	#instVars : [
-		'portNumberA'
-	],
 	#classInstVars : [
 		'uniqueInstance'
 	],
@@ -35,7 +32,7 @@ PortAvailabilityChecker >> isAvailableForTCP: portNumber [
 	^ [ 
 	  | socket |
 
-	  socket := Socket newTCP.
+	  socket := ZnNetworkingUtils default socketClass newTCP.
 	  ZnNetworkingUtils default setServerSocketOptions: socket.
 	  socket listenOn: portNumber.
 	  [ 

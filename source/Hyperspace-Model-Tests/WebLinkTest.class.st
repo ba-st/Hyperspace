@@ -262,6 +262,7 @@ WebLinkTest >> testPrinting [
 
 	self
 		assert: self googleUrl asWebLink printString equals: '<https://google.com/>';
+		assert: self googleUrl asWebLink asString equals: '<https://google.com/>';
 		assert: ( self googleUrl asWebLink relationType: 'search' ) printString
 		equals: '<https://google.com/>;rel=search'
 ]

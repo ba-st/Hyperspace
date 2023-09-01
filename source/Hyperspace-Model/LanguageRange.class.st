@@ -58,6 +58,12 @@ LanguageRange >> = anObject [
 		checkAgainst: anObject
 ]
 
+{ #category : #converting }
+LanguageRange >> asString [
+
+	^ self printString
+]
+
 { #category : #comparing }
 LanguageRange >> hash [
 

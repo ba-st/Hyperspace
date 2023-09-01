@@ -105,6 +105,12 @@ WebLink >> asByteArray [
 	^ self printString asByteArray
 ]
 
+{ #category : #printing }
+WebLink >> asString [
+
+	^ self printString
+]
+
 { #category : #converting }
 WebLink >> asWebLink [
 
@@ -258,7 +264,8 @@ WebLink >> quoteValueWhenNeeded: aString [
 	"Values including ; or , needs to be quoted"
 
 	self assertNotEmpty: aString.
-	^ ( aString includesAnyOf: ';,' ) then: [ '"<1s>"' expandMacrosWith: aString ]
+	^ ((aString includes: $;) or: [ aString includes: $, ])
+		  then: [ '"<1s>"' expandMacrosWith: aString ]
 		  otherwise: [ aString ]
 ]
 

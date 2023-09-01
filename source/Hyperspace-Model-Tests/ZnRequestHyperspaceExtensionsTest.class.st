@@ -47,7 +47,7 @@ ZnRequestHyperspaceExtensionsTest >> testIfMatch [
 		setIfMatchTo: ( EntityTag with: '12345' );
 		yourself.
 
-	self assert: ( request headers at: #'If-Match' ) equals: '"12345"'
+	self assert: ( request headers at: 'If-Match' ) equals: '"12345"'
 ]
 
 { #category : #tests }
@@ -59,14 +59,13 @@ ZnRequestHyperspaceExtensionsTest >> testIfNoneMatch [
 		setIfNoneMatchTo: ( EntityTag with: '12345' );
 		yourself.
 		
-	self assert: (request headers at: #'If-None-Match') equals: '"12345"'
+	self assert: (request headers at: 'If-None-Match') equals: '"12345"'
 ]
 
 { #category : #tests }
 ZnRequestHyperspaceExtensionsTest >> testQuery [
 
 	| request output |
-
 	request := ZnRequest query: self googleUrl / 'search'.
 
 	self assert: request method equals: #QUERY.
@@ -86,7 +85,7 @@ ZnRequestHyperspaceExtensionsTest >> testReadQueryRequest [
 		           'QUERY /search HTTP/1.1<r><l>Host: google.com' expandMacros readStream.
 
 	self
-		assert: request method equals: #QUERY;
+		assert: request method equals: 'QUERY';
 		assertUrl: request url equals: 'search';
 		assertUrl: request host equals: 'http://google.com'
 ]

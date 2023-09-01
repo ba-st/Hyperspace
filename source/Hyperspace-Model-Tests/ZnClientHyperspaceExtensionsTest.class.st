@@ -8,7 +8,7 @@ Class {
 ZnClientHyperspaceExtensionsTest >> handleRequest: request [
 
 	self
-		assert: request method equals: #QUERY;
+		assert: request method equals: 'QUERY';
 		assertUrl: request url equals: 'hello'.
 	^ ZnResponse ok: (ZnEntity text: 'hello')
 ]
@@ -66,9 +66,9 @@ ZnClientHyperspaceExtensionsTest >> testSetIfMatchTo [
 
 	client := ZnClient new.
 
-	self should: [ client request headers at: #'If-Match' ] raise: KeyNotFound.
+	self should: [ client request headers at: 'If-Match' ] raise: KeyNotFound.
 	client setIfMatchTo: ( EntityTag with: '12345' ).
-	self assert: ( client request headers at: #'If-Match' ) equals: '"12345"'
+	self assert: ( client request headers at: 'If-Match' ) equals: '"12345"'
 ]
 
 { #category : #tests }
@@ -78,9 +78,9 @@ ZnClientHyperspaceExtensionsTest >> testSetIfNoneMatchTo [
 
 	client := ZnClient new.
 
-	self should: [ client request headers at: #'If-None-Match' ] raise: KeyNotFound.
+	self should: [ client request headers at: 'If-None-Match' ] raise: KeyNotFound.
 	client setIfNoneMatchTo: ( EntityTag with: '12345' ).
-	self assert: ( client request headers at: #'If-None-Match' ) equals: '"12345"'
+	self assert: ( client request headers at: 'If-None-Match' ) equals: '"12345"'
 ]
 
 { #category : #tests }

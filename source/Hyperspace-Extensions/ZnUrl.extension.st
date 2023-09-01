@@ -1,6 +1,6 @@
 Extension { #name : #ZnUrl }
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnUrl >> asAbsoluteUrl [
 
 	AssertionChecker
@@ -11,7 +11,7 @@ ZnUrl >> asAbsoluteUrl [
 	^ self
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnUrl >> asHostedAt: aBaseUrl [
 
 	^ self copy
@@ -21,13 +21,13 @@ ZnUrl >> asHostedAt: aBaseUrl [
 		yourself
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnUrl >> asWebLink [
 
 	^ WebLink to: self
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnUrl >> queryAt: aKey putUrl: anUnencodedUrl [
 
 	| encodedUrl |
@@ -36,7 +36,7 @@ ZnUrl >> queryAt: aKey putUrl: anUnencodedUrl [
 	^ self queryAt: aKey put: encodedUrl
 ]
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnUrl >> start: startIndex limit: limitCount [
 
 	self

@@ -50,16 +50,29 @@ BaselineOfHyperspace >> setUpDependencies: spec [
 BaselineOfHyperspace >> setUpPackages: spec [
 
 	spec
-		package: 'Hyperspace-Model' with: [ spec requires: #('Buoy-Deployment' 'Zinc-Core')];
+		package: 'Hyperspace-Model'
+		with: [ spec requires: #( 'Buoy-Deployment' 'Zinc-Core' ) ];
 		group: 'Deployment' with: 'Hyperspace-Model';
-		package: 'Hyperspace-Model-Tests'
-		with: [ spec requires: #( 'Hyperspace-Model' 'Dependent-SUnit-Extensions' ) ];
+		package: 'Hyperspace-Extensions'
+		with: [ spec requires: 'Hyperspace-Model' ];
+		group: 'Deployment' with: 'Hyperspace-Extensions';
+		package: 'Hyperspace-Pharo-Extensions'
+		with: [ spec requires: 'Hyperspace-Model' ];
+		group: 'Deployment' with: 'Hyperspace-Pharo-Extensions'.
+
+	spec
+		package: 'Hyperspace-Model-Tests' with: [
+			spec requires:
+					#( 'Hyperspace-Model' 'Hyperspace-Extensions'
+					   'Hyperspace-Pharo-Extensions' 'Dependent-SUnit-Extensions' ) ];
 		group: 'Tests' with: 'Hyperspace-Model-Tests'.
 
 	spec
-		package: 'Hyperspace-SUnit-Model' with: [ spec requires: 'Buoy-SUnit' ];
+		package: 'Hyperspace-SUnit-Model'
+		with: [ spec requires: 'Buoy-SUnit' ];
 		group: 'Dependent-SUnit-Extensions' with: 'Hyperspace-SUnit-Model';
-		package: 'Hyperspace-SUnit-Model-Tests' with: [ spec requires: 'Hyperspace-SUnit-Model' ];
+		package: 'Hyperspace-SUnit-Model-Tests'
+		with: [ spec requires: 'Hyperspace-SUnit-Model' ];
 		group: 'Tests' with: 'Hyperspace-SUnit-Model-Tests'.
 
 	spec group: 'Tools' with: 'Buoy-Tools'

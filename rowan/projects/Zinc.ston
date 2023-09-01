@@ -1,0 +1,10 @@
+RwLoadSpecificationV2 {
+  #specName: 'Zinc',
+  #projectName : 'Zinc',
+  #gitUrl : 'https://github.com/ba-st-dependencies/Zinc.git',
+  #revision : 'v5',
+  #projectSpecFile : 'rowan/project.ston',
+  #componentNames : [
+    'Deployment'
+  ]
+}

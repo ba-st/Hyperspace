@@ -1,6 +1,6 @@
 Extension { #name : #ZnEntity }
 
-{ #category : #'*Hyperspace-Model' }
+{ #category : #'*Hyperspace-Extensions' }
 ZnEntity class >> with: anObject ofType: aMimeType [
 
 	| entity |

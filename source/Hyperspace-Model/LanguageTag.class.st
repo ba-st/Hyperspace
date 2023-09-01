@@ -62,6 +62,12 @@ LanguageTag >> asLanguageTag [
 	^ self
 ]
 
+{ #category : #printing }
+LanguageTag >> asString [
+
+	^ self printString
+]
+
 { #category : #private }
 LanguageTag >> assertIsValid [
 

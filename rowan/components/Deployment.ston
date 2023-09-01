@@ -1,0 +1,23 @@
+RwSimpleProjectLoadComponentV2 {
+  #name : 'Deployment',
+  #projectNames : [
+    'Zinc'
+  ],
+  #componentNames : [	],
+  #packageNames : [
+    'Hyperspace-Model',
+    'Hyperspace-Extensions',
+    'Hyperspace-GS64-Extensions'
+  ],
+  #conditionalPackageMapSpecs : {
+    'gemstone' : {
+      'allusers' : {
+        #packageNameToPlatformPropertiesMap : {
+          'Hyperspace-Model' : { 'symbolDictName' : 'Hyperspace' },
+          'Hyperspace-Extensions' : { 'symbolDictName' : 'Zinc' },
+          'Hyperspace-GS64-Extensions' : { 'symbolDictName' : 'Globals' }
+        }
+      }
+    }
+  }
+}

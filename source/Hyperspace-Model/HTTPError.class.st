@@ -20,13 +20,10 @@ HTTPError class >> code: aCode [
 	^ instance
 ]
 
-{ #category : #'error handling' }
-HTTPError >> - anotherException [
+{ #category : #'exception selector' }
+HTTPError >> , exceptionSelector [
 
-	^ ExceptionSetWithExclusions new
-		  add: self;
-		  addExclusion: anotherException;
-		  yourself
+	^ ExceptionSelectorSet new , self , exceptionSelector
 ]
 
 { #category : #accessing }
@@ -41,7 +38,7 @@ HTTPError >> code: anErrorCode [
 	code := anErrorCode
 ]
 
-{ #category : #'error handling' }
+{ #category : #'exception selector' }
 HTTPError >> handles: aSignal [
 
 	^ ( self class handles: aSignal ) and: [ aSignal code = self code ]

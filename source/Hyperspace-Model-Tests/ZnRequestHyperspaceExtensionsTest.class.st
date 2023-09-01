@@ -66,10 +66,9 @@ ZnRequestHyperspaceExtensionsTest >> testIfNoneMatch [
 ZnRequestHyperspaceExtensionsTest >> testQuery [
 
 	| request output |
-
 	request := ZnRequest query: self googleUrl / 'search'.
 
-	self assert: request method equals: 'QUERY'.
+	self assert: request method equals: #QUERY.
 	output := String streamContents: [ :s | request writeOn: s ].
 
 	self

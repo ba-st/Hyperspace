@@ -347,7 +347,7 @@ RetryTest >> testOnWhenExpectedErrorIsRaisedAndSeveralErrorsHandled [
 				]
 			configuredBy: [ :retry | 
 				retry
-					on: AssertionFailed , self expectedError;
+					on: self expectedError , AssertionFailed;
 					upTo: 1
 				]
 		].
@@ -363,7 +363,7 @@ RetryTest >> testOnWhenExpectedErrorIsRaisedAndSeveralErrorsHandled [
 					]
 				configuredBy: [ :retry | 
 					retry
-						on: AssertionFailed , self expectedError;
+						on: self expectedError , AssertionFailed;
 						upTo: 1
 					]
 			]

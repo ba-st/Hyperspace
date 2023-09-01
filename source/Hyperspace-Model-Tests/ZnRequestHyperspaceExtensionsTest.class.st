@@ -47,7 +47,7 @@ ZnRequestHyperspaceExtensionsTest >> testIfMatch [
 		setIfMatchTo: ( EntityTag with: '12345' );
 		yourself.
 
-	self assert: ( request headers at: #'If-Match' ) equals: '"12345"'
+	self assert: ( request headers at: 'If-Match' ) equals: '"12345"'
 ]
 
 { #category : #tests }
@@ -59,7 +59,7 @@ ZnRequestHyperspaceExtensionsTest >> testIfNoneMatch [
 		setIfNoneMatchTo: ( EntityTag with: '12345' );
 		yourself.
 		
-	self assert: (request headers at: #'If-None-Match') equals: '"12345"'
+	self assert: (request headers at: 'If-None-Match') equals: '"12345"'
 ]
 
 { #category : #tests }

@@ -105,6 +105,12 @@ WebLink >> asByteArray [
 	^ self printString asByteArray
 ]
 
+{ #category : #printing }
+WebLink >> asString [
+
+	^ self printString
+]
+
 { #category : #converting }
 WebLink >> asWebLink [
 

@@ -1,7 +1,7 @@
 RwLoadSpecificationV2 {
   #specName: 'Hyperspace-CI',
   #projectName : 'Hyperspace',
-  #diskUrl : '/opt/gemstone/projects/Hyperspace',
+  #diskUrl : 'Hyperspace',
   #projectSpecFile : 'rowan/project.ston',
   #componentNames : [
     'Tests'

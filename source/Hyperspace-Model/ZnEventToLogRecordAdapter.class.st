@@ -1,5 +1,5 @@
 Class {
-	#name : #ZnEventToLogRecordController,
+	#name : #ZnEventToLogRecordAdapter,
 	#superclass : #Object,
 	#instVars : [
 		'logOutgoingRequests',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #'private - dumping' }
-ZnEventToLogRecordController >> asStructuredRequest: aZnRequest [
+ZnEventToLogRecordAdapter >> asStructuredRequest: aZnRequest [
 
 	| json |
 
@@ -22,7 +22,7 @@ ZnEventToLogRecordController >> asStructuredRequest: aZnRequest [
 ]
 
 { #category : #'private - dumping' }
-ZnEventToLogRecordController >> asStructuredResponse: aZnResponse [
+ZnEventToLogRecordAdapter >> asStructuredResponse: aZnResponse [
 
 	| json |
 
@@ -34,7 +34,7 @@ ZnEventToLogRecordController >> asStructuredResponse: aZnResponse [
 ]
 
 { #category : #'private - dumping' }
-ZnEventToLogRecordController >> dumpConnectionEvent: aZnServerConnectionClosedEvent on: data [
+ZnEventToLogRecordAdapter >> dumpConnectionEvent: aZnServerConnectionClosedEvent on: data [
 
 	 data
 		  at: #remoteAddress
@@ -44,7 +44,7 @@ ZnEventToLogRecordController >> dumpConnectionEvent: aZnServerConnectionClosedEv
 ]
 
 { #category : #'private - dumping' }
-ZnEventToLogRecordController >> dumpRequestAndResponseOf: event on: json [
+ZnEventToLogRecordAdapter >> dumpRequestAndResponseOf: event on: json [
 
 	| response |
 
@@ -57,7 +57,7 @@ ZnEventToLogRecordController >> dumpRequestAndResponseOf: event on: json [
 ]
 
 { #category : #'private - dumping' }
-ZnEventToLogRecordController >> dumpRequestOf: event on: json [
+ZnEventToLogRecordAdapter >> dumpRequestOf: event on: json [
 
 	json
 		at: #summary put: event printString;
@@ -69,7 +69,7 @@ ZnEventToLogRecordController >> dumpRequestOf: event on: json [
 ]
 
 { #category : #'system startup' }
-ZnEventToLogRecordController >> initialize [
+ZnEventToLogRecordAdapter >> initialize [
 
 	super initialize.
 
@@ -79,27 +79,19 @@ ZnEventToLogRecordController >> initialize [
 ]
 
 { #category : #'private - configuring' }
-ZnEventToLogRecordController >> logIncomingRequests: aBoolean [
+ZnEventToLogRecordAdapter >> logIncomingRequests: aBoolean [
 
 	logIncomingRequests := aBoolean
 ]
 
 { #category : #'private - configuring' }
-ZnEventToLogRecordController >> logOutgoingRequests: aBoolean [
+ZnEventToLogRecordAdapter >> logOutgoingRequests: aBoolean [
 
 	logOutgoingRequests := aBoolean
 ]
 
 { #category : #'system startup' }
-ZnEventToLogRecordController >> startUp [
-
-	logOutgoingRequests then: [ self startUpOutgoingRequestListeners ].
-
-	logIncomingRequests then: [ self startUpIncomingRequestListeners ]
-]
-
-{ #category : #'system startup' }
-ZnEventToLogRecordController >> startUpIncomingRequestListeners [
+ZnEventToLogRecordAdapter >> startUpIncomingRequestListeners [
 
 	self subscribeToEventsOf: ZnServerConnectionClosedEvent andDo: [ :event |
 		LogRecord emitStructuredDebuggingInfo: 'Server closed connection'
@@ -120,7 +112,15 @@ ZnEventToLogRecordController >> startUpIncomingRequestListeners [
 ]
 
 { #category : #'system startup' }
-ZnEventToLogRecordController >> startUpOutgoingRequestListeners [
+ZnEventToLogRecordAdapter >> startUpListeners [
+
+	logOutgoingRequests then: [ self startUpOutgoingRequestListeners ].
+
+	logIncomingRequests then: [ self startUpIncomingRequestListeners ]
+]
+
+{ #category : #'system startup' }
+ZnEventToLogRecordAdapter >> startUpOutgoingRequestListeners [
 
 	self subscribeToEventsOf: ZnRequestWrittenEvent andDo: [ :event |
 		LogRecord emitStructuredDebuggingInfo: 'Outgoing HTTP request sent'
@@ -133,13 +133,13 @@ ZnEventToLogRecordController >> startUpOutgoingRequestListeners [
 ]
 
 { #category : #'system startup' }
-ZnEventToLogRecordController >> stop [
+ZnEventToLogRecordAdapter >> stopListeners [
 
 	subscriptions do: [:subscription | ZnLogEvent announcer removeSubscription: subscription]
 ]
 
 { #category : #'system startup' }
-ZnEventToLogRecordController >> subscribeToEventsOf: anEventType andDo: aBlock [
+ZnEventToLogRecordAdapter >> subscribeToEventsOf: anEventType andDo: aBlock [
 
 	subscriptions add: (ZnLogEvent announcer when: anEventType do: aBlock)
 ]

@@ -2,8 +2,8 @@ Class {
 	#name : #ZnEventToLogRecordControllerTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'logsController',
-		'loggingAsserter'
+		'loggingAsserter',
+		'zincEventToLogRecordAdapter'
 	],
 	#category : #'Hyperspace-Model-Tests-Zinc'
 }
@@ -21,13 +21,13 @@ ZnEventToLogRecordControllerTest >> setUp [
 
 	super setUp.
 	loggingAsserter := LoggingAsserter on: self.
-	logsController := ZnEventToLogRecordController new
+	zincEventToLogRecordAdapter := ZnEventToLogRecordAdapter new
 ]
 
 { #category : #running }
 ZnEventToLogRecordControllerTest >> tearDown [
 
-	logsController stop.
+	zincEventToLogRecordAdapter stopListeners.
 	loggingAsserter stopLoggers.
 
 	super tearDown
@@ -36,9 +36,9 @@ ZnEventToLogRecordControllerTest >> tearDown [
 { #category : #running }
 ZnEventToLogRecordControllerTest >> testLogsOfIncomingGetRequest [
 
-	logsController
+	zincEventToLogRecordAdapter
 		logIncomingRequests: true;
-		startUp.
+		startUpListeners.
 
 	self
 		runMemoryLoggerDuring: [
@@ -65,9 +65,9 @@ ZnEventToLogRecordControllerTest >> testLogsOfIncomingGetRequest [
 { #category : #running }
 ZnEventToLogRecordControllerTest >> testLogsOfIncomingPostRequest [
 
-	logsController
+	zincEventToLogRecordAdapter
 		logIncomingRequests: true;
-		startUp.
+		startUpListeners.
 
 	self
 		runMemoryLoggerDuring: [
@@ -93,9 +93,9 @@ ZnEventToLogRecordControllerTest >> testLogsOfIncomingPostRequest [
 { #category : #running }
 ZnEventToLogRecordControllerTest >> testLogsOfOutgoingGetRequest [
 
-	logsController
+	zincEventToLogRecordAdapter
 		logOutgoingRequests: true;
-		startUp.
+		startUpListeners.
 
 	self
 		runMemoryLoggerDuring: [
@@ -120,9 +120,9 @@ ZnEventToLogRecordControllerTest >> testLogsOfOutgoingGetRequest [
 { #category : #running }
 ZnEventToLogRecordControllerTest >> testLogsOfOutgoingPostRequest [
 
-	logsController
+	zincEventToLogRecordAdapter
 		logOutgoingRequests: true;
-		startUp.
+		startUpListeners.
 
 	self
 		runMemoryLoggerDuring: [

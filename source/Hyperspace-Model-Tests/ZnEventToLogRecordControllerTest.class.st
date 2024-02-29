@@ -9,11 +9,11 @@ Class {
 }
 
 { #category : #private }
-ZnEventToLogRecordControllerTest >> runMemoryLoggerDuring: aBlock assertingLogRecordsMatch: expectedLogEntries [
+ZnEventToLogRecordControllerTest >> runMemoryLoggerDuring: aBlock assertingLogRecordsMatchRegexes: expectedLogEntries [
 
 	loggingAsserter
 		runMemoryLoggerDuring: aBlock;
-		assertLogRecordsMatch: expectedLogEntries
+		assertLogRecordsMatchRegexes: expectedLogEntries
 ]
 
 { #category : #running }
@@ -55,11 +55,11 @@ ZnEventToLogRecordControllerTest >> testLogsOfIncomingGetRequest [
 				client get
 				]
 			]
-		assertingLogRecordsMatch: #( 
-				'[DEBUG] Server accepted connection {"remoteAddress":"127.0.0.1","processId":598770,"eventId":63}'
-				'[DEBUG] Incoming HTTP request received {"summary":"2024-02-09 18:11:48 066 148126 Request Read a ZnRequest(GET /) 0ms","durationInMilliseconds":0,"request":{"method":"GET","uri":"/"},"processId":148126,"eventId":66}'
-				'[DEBUG] Incoming HTTP request responded {"summary":"2024-02-09 18:11:48 067 148126 Request Handled a ZnRequest(GET /) 2ms","durationInMilliseconds":2,"request":{"method":"GET","uri":"/"},"processId":148126,"eventId":67,"response":{"code":200,"totalSize":4}}'
-			   '[DEBUG] Server closed connection {"remoteAddress":"127.0.0.1","processId":148126,"eventId":70}' )
+		assertingLogRecordsMatchRegexes:
+			#( '\[DEBUG\] Server accepted connection \{"remoteAddress"\:"127.0.0.1","processId"\:(\d+),"eventId"\:(\d+)\}'
+			   '\[DEBUG\] Incoming HTTP request received \{"summary"\:"\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2} (\d+) (\d+) Request Read a ZnRequest\(GET /\) (\d+)ms","durationInMilliseconds"\:(\d+),"request"\:\{"method"\:"GET","uri"\:"/"\},"processId"\:(\d+),"eventId"\:(\d+)\}'
+			   '\[DEBUG\] Incoming HTTP request responded \{"summary"\:"\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2} (\d+) (\d+) Request Handled a ZnRequest\(GET /\) (\d+)ms","durationInMilliseconds"\:(\d+),"request"\:\{"method"\:"GET","uri"\:"/"\},"processId"\:(\d+),"eventId"\:(\d+),"response"\:\{"code"\:200,"totalSize"\:(\d+)\}\}'
+			   '\[DEBUG\] Server closed connection \{"remoteAddress"\:"127.0.0.1","processId"\:(\d+),"eventId"\:(\d+)\}' )
 ]
 
 { #category : #running }
@@ -83,11 +83,11 @@ ZnEventToLogRecordControllerTest >> testLogsOfIncomingPostRequest [
 				client post: server localUrl contents: 'Hi there!'
 				]
 			]
-		assertingLogRecordsMatch: #( 
-				'[DEBUG] Server accepted connection {"remoteAddress":"127.0.0.1","processId":598770,"eventId":63}'
-				'[DEBUG] Incoming HTTP request received {"summary":"2024-02-09 18:11:48 066 148126 Request Read a ZnRequest(GET /) 0ms","durationInMilliseconds":0,"request":{"method":"GET","uri":"/"},"processId":148126,"eventId":66}'
-				'[DEBUG] Incoming HTTP request responded {"summary":"2024-02-09 18:11:48 067 148126 Request Handled a ZnRequest(GET /) 2ms","durationInMilliseconds":2,"request":{"method":"GET","uri":"/"},"processId":148126,"eventId":67,"response":{"code":200,"totalSize":4}}'
-			   '[DEBUG] Server closed connection {"remoteAddress":"127.0.0.1","processId":148126,"eventId":70}' )
+	assertingLogRecordsMatchRegexes:
+			#( '\[DEBUG\] Server accepted connection \{"remoteAddress"\:"127.0.0.1","processId"\:(\d+),"eventId"\:(\d+)\}'
+			   '\[DEBUG\] Incoming HTTP request received \{"summary"\:"\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2} (\d+) (\d+) Request Read a ZnRequest\(POST /\) (\d+)ms","durationInMilliseconds"\:(\d+),"request"\:\{"method"\:"POST","uri"\:"/"\},"processId"\:(\d+),"eventId"\:(\d+)\}'
+			   '\[DEBUG\] Incoming HTTP request responded \{"summary"\:"\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2} (\d+) (\d+) Request Handled a ZnRequest\(POST /\) (\d+)ms","durationInMilliseconds"\:(\d+),"request"\:\{"method"\:"POST","uri"\:"/"\},"processId"\:(\d+),"eventId"\:(\d+),"response"\:\{"code"\:200,"totalSize"\:(\d+)\}\}'
+			   '\[DEBUG\] Server closed connection \{"remoteAddress"\:"127.0.0.1","processId"\:(\d+),"eventId"\:(\d+)\}' )
 ]
 
 { #category : #running }
@@ -112,9 +112,9 @@ ZnEventToLogRecordControllerTest >> testLogsOfOutgoingGetRequest [
 				client get
 				]
 			]
-		assertingLogRecordsMatch:
-			#( '[DEBUG] Outgoing HTTP request sent {"summary":"2024-02-09 18:14:30 095 726586 Request Written a ZnRequest(GET /) 0ms","durationInMilliseconds":0,"request":{"method":"GET","uri":"http://localhost:35059/"},"processId":726586,"eventId":95}'
-			   '[DEBUG] Outgoing HTTP request responded {"summary":"2024-02-09 18:14:30 102 726586 GET / 200 4B 2ms","durationInMilliseconds":2,"request":{"method":"GET","uri":"http://localhost:35059/"},"processId":726586,"eventId":102,"response":{"code":200,"totalSize":4}}' )
+		assertingLogRecordsMatchRegexes:
+			#( '\[DEBUG\] Outgoing HTTP request sent \{"summary"\:"\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2} (\d+) (\d+) Request Written a ZnRequest\(GET /\) (\d+)ms","durationInMilliseconds"\:(\d+),"request"\:\{"method"\:"GET","uri"\:"http\://localhost\:(\d+)/"\},"processId"\:(\d+),"eventId"\:(\d+)\}'
+			   '\[DEBUG\] Outgoing HTTP request responded \{"summary"\:"\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2} (\d+) (\d+) GET / 200 (\d+)B (\d+)ms","durationInMilliseconds"\:(\d+),"request"\:\{"method"\:"GET","uri"\:"http\://localhost\:(\d+)/"\},"processId"\:(\d+),"eventId"\:(\d+),"response"\:\{"code"\:200,"totalSize"\:(\d+)\}\}' )
 ]
 
 { #category : #running }
@@ -138,9 +138,9 @@ ZnEventToLogRecordControllerTest >> testLogsOfOutgoingPostRequest [
 				client post: server localUrl contents: 'Hi there!'
 				]
 			]
-		assertingLogRecordsMatch:
-			#( '[DEBUG] Outgoing HTTP request sent {"summary":"2024-02-09 18:14:30 095 726586 Request Written a ZnRequest(GET /) 0ms","durationInMilliseconds":0,"request":{"method":"GET","uri":"http://localhost:35059/"},"processId":726586,"eventId":95}'
-			   '[DEBUG] Outgoing HTTP request responded {"summary":"2024-02-09 18:14:30 102 726586 GET / 200 4B 2ms","durationInMilliseconds":2,"request":{"method":"GET","uri":"http://localhost:35059/"},"processId":726586,"eventId":102,"response":{"code":200,"totalSize":4}}' )
+		assertingLogRecordsMatchRegexes:
+			#( '\[DEBUG\] Outgoing HTTP request sent \{"summary"\:"\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2} (\d+) (\d+) Request Written a ZnRequest\(POST /\) (\d+)ms","durationInMilliseconds"\:(\d+),"request"\:\{"method"\:"POST","uri"\:"http\://localhost\:(\d+)/"\},"processId"\:(\d+),"eventId"\:(\d+)\}'
+			   '\[DEBUG\] Outgoing HTTP request responded \{"summary"\:"\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2} (\d+) (\d+) POST / 200 (\d+)B (\d+)ms","durationInMilliseconds"\:(\d+),"request"\:\{"method"\:"POST","uri"\:"http\://localhost\:(\d+)/"\},"processId"\:(\d+),"eventId"\:(\d+),"response"\:\{"code"\:200,"totalSize"\:(\d+)\}\}' )
 ]
 
 { #category : #enumerating }

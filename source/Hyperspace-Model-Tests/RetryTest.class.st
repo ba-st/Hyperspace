@@ -104,7 +104,7 @@ RetryTest >> testExponentialBackoff [
 
 	self
 		assert: count equals: 3;
-		assert: runtime milliSeconds > ( 50 + 100 ) milliSeconds
+		assert: runtime milliSeconds >= (50 + 150) milliSeconds
 ]
 
 { #category : #'tests - configuring wait time' }

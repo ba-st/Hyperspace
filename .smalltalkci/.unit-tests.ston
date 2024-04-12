@@ -4,7 +4,8 @@ SmalltalkCISpec {
       #baseline : 'Hyperspace',
       #directory : '../source',
       #load : [ 'CI' ],
-      #platforms : [  #pharo ]
+      #platforms : [  #pharo ],
+      #failOn : [ #Warning ]
     }
   ],
   #testing : {

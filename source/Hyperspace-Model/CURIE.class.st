@@ -19,7 +19,7 @@ Class {
 CURIE class >> fromString: string [
 
   | segments |
-  segments := string splitOn: $:.
+  segments := $: split: string.
   AssertionChecker
     enforce: [ segments size = 2 ]
     because: [ 'Cannot create a CURIE from "<1s>"' expandMacrosWith: string ]

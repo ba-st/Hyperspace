@@ -1,29 +1,31 @@
 Class {
-	#name : #ZnResponseHyperspaceExtensionsTest,
-	#superclass : #TestCase,
-	#category : #'Hyperspace-Model-Tests-Zinc'
+	#name : 'ZnResponseHyperspaceExtensionsTest',
+	#superclass : 'TestCase',
+	#category : 'Hyperspace-Model-Tests-Zinc',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'Zinc'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZnResponseHyperspaceExtensionsTest >> amazonUrl [
 
 	^ 'https://amazon.com' asUrl
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnResponseHyperspaceExtensionsTest >> encodeAndDecode: response [
 
 	^ ZnResponse
 		readFrom: ( ByteArray streamContents: [ :stream | response writeOn: stream ] ) readStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnResponseHyperspaceExtensionsTest >> googleUrl [
 
 	^ 'https://google.com' asUrl
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnResponseHyperspaceExtensionsTest >> testAddContentLanguageTags [
 
 	| response |
@@ -40,7 +42,7 @@ ZnResponseHyperspaceExtensionsTest >> testAddContentLanguageTags [
 			( LanguageTag fromString: 'es-AR' )}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnResponseHyperspaceExtensionsTest >> testAddSeveralLinks [
 
 	| response |
@@ -57,7 +59,7 @@ ZnResponseHyperspaceExtensionsTest >> testAddSeveralLinks [
 			  WebLink to: self amazonUrl }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnResponseHyperspaceExtensionsTest >> testCachingDirectives [
 
 	| response |
@@ -71,7 +73,7 @@ ZnResponseHyperspaceExtensionsTest >> testCachingDirectives [
 	self assert: response cachingDirectives equals: #('public' 'Max-Age=60')
 ]
 
-{ #category : #'tests - encoding' }
+{ #category : 'tests - encoding' }
 ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithContentLanguageHeaders [
 
 	| response decodedResponse |
@@ -86,7 +88,7 @@ ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithContentLanguageHead
 	self assert: decodedResponse contentLanguageTags equals: response contentLanguageTags
 ]
 
-{ #category : #'tests - encoding' }
+{ #category : 'tests - encoding' }
 ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithEntityTag [
 
 	| response entityTag decodedResponse |
@@ -102,7 +104,7 @@ ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithEntityTag [
 		ifAbsent: [ self fail ]
 ]
 
-{ #category : #'tests - encoding' }
+{ #category : 'tests - encoding' }
 ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithLinkHeaders [
 
 	| response decodedResponse |
@@ -116,7 +118,7 @@ ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithLinkHeaders [
 	self assert: decodedResponse links equals: response links
 ]
 
-{ #category : #'tests - encoding' }
+{ #category : 'tests - encoding' }
 ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithVaryHeaders [
 
 	| response decodedResponse |
@@ -131,7 +133,7 @@ ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithVaryHeaders [
 	self assert: decodedResponse varyHeaderNames equals: response varyHeaderNames
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnResponseHyperspaceExtensionsTest >> testEntityTag [
 
 	| response entityTag |
@@ -147,7 +149,7 @@ ZnResponseHyperspaceExtensionsTest >> testEntityTag [
 	self should: [ ZnResponse noContent entityTag ] raise: KeyNotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnResponseHyperspaceExtensionsTest >> testHasLocation [
 
 	self
@@ -155,7 +157,7 @@ ZnResponseHyperspaceExtensionsTest >> testHasLocation [
 		assert: ( ZnResponse created: 'https://api.example.com/123' ) hasLocation
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnResponseHyperspaceExtensionsTest >> testLink [
 
 	| response |
@@ -167,7 +169,7 @@ ZnResponseHyperspaceExtensionsTest >> testLink [
 	self assert: response links equals: { WebLink to: self googleUrl }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnResponseHyperspaceExtensionsTest >> testVary [
 
 	| response |
@@ -186,7 +188,7 @@ ZnResponseHyperspaceExtensionsTest >> testVary [
 	self assert: response varyHeaderNames equals: #('Accept' 'Accept-Language')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnResponseHyperspaceExtensionsTest >> testWithEntityTagDo [
 
 	| response entityTag wasFound |
@@ -207,7 +209,7 @@ ZnResponseHyperspaceExtensionsTest >> testWithEntityTagDo [
 	self assert: wasFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnResponseHyperspaceExtensionsTest >> testWithEntityTagDoNotFound [
 
 	| response headerWasNotFound |

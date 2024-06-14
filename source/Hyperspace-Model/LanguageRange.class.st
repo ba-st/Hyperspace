@@ -16,27 +16,29 @@ Reference:
 	https://datatracker.ietf.org/doc/html/rfc3066
 "
 Class {
-	#name : #LanguageRange,
-	#superclass : #Object,
+	#name : 'LanguageRange',
+	#superclass : 'Object',
 	#instVars : [
 		'languageTagOptional'
 	],
-	#category : #'Hyperspace-Model-IETF'
+	#category : 'Hyperspace-Model-IETF',
+	#package : 'Hyperspace-Model',
+	#tag : 'IETF'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LanguageRange class >> any [
 
 	^ self with: Optional unused
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LanguageRange class >> from: aSubtagCollection [
 
 	^ self with: ( Optional containing: ( LanguageTag from: aSubtagCollection ) )
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LanguageRange class >> fromString: aString [
 
 	^ aString = '*'
@@ -44,13 +46,13 @@ LanguageRange class >> fromString: aString [
 		otherwise: [ self with: ( Optional containing: ( LanguageTag fromString: aString ) ) ]
 ]
 
-{ #category : #'private - instance creation' }
+{ #category : 'private - instance creation' }
 LanguageRange class >> with: aLanguageTagOptional [
 
 	^ self new initializeWith: aLanguageTagOptional
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LanguageRange >> = anObject [
 
 	^ self equalityChecker
@@ -58,25 +60,25 @@ LanguageRange >> = anObject [
 		checkAgainst: anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LanguageRange >> asString [
 
 	^ self printString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LanguageRange >> hash [
 
 	^ languageTagOptional withContentDo: [ :tag | tag hash ] ifUnused: [ $* hash ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LanguageRange >> initializeWith: aLanguageTagOptional [
 
 	languageTagOptional := aLanguageTagOptional
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LanguageRange >> matches: aLanguageTag [
 
 	^ languageTagOptional
@@ -84,13 +86,13 @@ LanguageRange >> matches: aLanguageTag [
 		ifUnused: [ true ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LanguageRange >> printOn: stream [
 
 	languageTagOptional withContentDo: [ :tag | tag printOn: stream ] ifUnused: [ stream nextPut: $* ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageRange >> subtags [
 
 	^ languageTagOptional withContentDo: [ :tag | tag subtags ] ifUnused: [ #('*') ]

@@ -14,18 +14,20 @@ Reference:
 
 "
 Class {
-	#name : #LanguageTag,
-	#superclass : #Object,
+	#name : 'LanguageTag',
+	#superclass : 'Object',
 	#instVars : [
 		'languageCode',
 		'scriptOptional',
 		'regionOptional',
 		'subtags'
 	],
-	#category : #'Hyperspace-Model-IETF'
+	#category : 'Hyperspace-Model-IETF',
+	#package : 'Hyperspace-Model',
+	#tag : 'IETF'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LanguageTag class >> from: aSubtagCollection [
 
 	AssertionChecker
@@ -36,13 +38,13 @@ LanguageTag class >> from: aSubtagCollection [
 	^ self new initializeFrom: aSubtagCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LanguageTag class >> fromString: aString [
 
 	^ self from: ( aString substrings: '-' )
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LanguageTag >> = anObject [
 
 	^ self equalityChecker
@@ -50,25 +52,25 @@ LanguageTag >> = anObject [
 		checkAgainst: anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LanguageTag >> asByteArray [
 
 	^ self printString asByteArray
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LanguageTag >> asLanguageTag [
 
 	^ self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LanguageTag >> asString [
 
 	^ self printString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageTag >> assertIsValid [
 
 	AssertionCheckerBuilder new
@@ -96,13 +98,13 @@ LanguageTag >> assertIsValid [
 		buildAndCheck
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LanguageTag >> hash [
 
 	^ self equalityHashCombinator combineHashesOfAll: subtags
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LanguageTag >> initializeFrom: aSubtagCollection [
 
 	subtags := Array withAll: aSubtagCollection.
@@ -113,14 +115,14 @@ LanguageTag >> initializeFrom: aSubtagCollection [
 		assertIsValid
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageTag >> initializeLanguageCode [
 
 	subtags at: 1 put: subtags first asLowercase.
 	languageCode := subtags first
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageTag >> initializeRegion [
 
 	regionOptional := Optional unused.
@@ -129,7 +131,7 @@ LanguageTag >> initializeRegion [
 		ifUnused: [ self initializeRegionTaggedAt: 2 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageTag >> initializeRegionTaggedAt: index [
 
 	[ | regionCandidate |
@@ -142,7 +144,7 @@ LanguageTag >> initializeRegionTaggedAt: index [
 	] unless: subtags size < index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageTag >> initializeScript [
 
 	scriptOptional := Optional unused.
@@ -157,31 +159,31 @@ LanguageTag >> initializeScript [
 	] unless: subtags size = 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageTag >> languageCode [
 
 	^ languageCode
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LanguageTag >> printOn: stream [
 
 	subtags do: [ :subtag | stream nextPutAll: subtag ] separatedBy: [ stream nextPut: $- ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageTag >> subtags [
 
 	^ subtags
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageTag >> withRegionDo: aBlock [
 
 	regionOptional withContentDo: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageTag >> withScriptDo: aBlock [
 
 	scriptOptional withContentDo: aBlock

@@ -1,13 +1,15 @@
 Class {
-	#name : #PortAvailabilityCheckerTest,
-	#superclass : #TestCase,
+	#name : 'PortAvailabilityCheckerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'checker'
 	],
-	#category : #'Hyperspace-Model-Tests-Resilience'
+	#category : 'Hyperspace-Model-Tests-Resilience',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'Resilience'
 }
 
-{ #category : #'private - support' }
+{ #category : 'private - support' }
 PortAvailabilityCheckerTest >> openSocketOn: aPortNumber during: aBlock [
 
 	| socket |
@@ -16,14 +18,14 @@ PortAvailabilityCheckerTest >> openSocketOn: aPortNumber during: aBlock [
 	aBlock ensure: [ socket destroy ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PortAvailabilityCheckerTest >> setUp [
 
 	super setUp.
 	checker := PortAvailabilityChecker new
 ]
 
-{ #category : #'tests - TCP' }
+{ #category : 'tests - TCP' }
 PortAvailabilityCheckerTest >> testIfIsAvailableForTCPIfNot [
 
 	| wasEvaluated |
@@ -35,7 +37,7 @@ PortAvailabilityCheckerTest >> testIfIsAvailableForTCPIfNot [
 	self assert: wasEvaluated
 ]
 
-{ #category : #'tests - TCP' }
+{ #category : 'tests - TCP' }
 PortAvailabilityCheckerTest >> testIfIsAvailableForTCPIfNotWhenNotAvailable [
 
 	| port |
@@ -49,13 +51,13 @@ PortAvailabilityCheckerTest >> testIfIsAvailableForTCPIfNotWhenNotAvailable [
 		]
 ]
 
-{ #category : #'tests - TCP' }
+{ #category : 'tests - TCP' }
 PortAvailabilityCheckerTest >> testIsAvailableForTCP [
 
 	self assert: ( checker isAvailableForTCP: self freeListeningTCPPort )
 ]
 
-{ #category : #'tests - TCP' }
+{ #category : 'tests - TCP' }
 PortAvailabilityCheckerTest >> testIsNotAvailableForTCP [
 
 	| port |

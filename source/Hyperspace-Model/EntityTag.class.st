@@ -9,16 +9,18 @@ References:
 - [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232#section-2.3)
 "
 Class {
-	#name : #EntityTag,
-	#superclass : #Object,
+	#name : 'EntityTag',
+	#superclass : 'Object',
 	#instVars : [
 		'value',
 		'suffix'
 	],
-	#category : #'Hyperspace-Model-IETF'
+	#category : 'Hyperspace-Model-IETF',
+	#package : 'Hyperspace-Model',
+	#tag : 'IETF'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EntityTag class >> fromString: aString [
 
 	AssertionCheckerBuilder new
@@ -35,7 +37,7 @@ EntityTag class >> fromString: aString [
 		inWhichCase: [ self parseWeakETagFromString: aString ]
 ]
 
-{ #category : #'private - instance creation' }
+{ #category : 'private - instance creation' }
 EntityTag class >> parseStrongETagFromString: aString [
 
 	AssertionCheckerBuilder new
@@ -52,7 +54,7 @@ EntityTag class >> parseStrongETagFromString: aString [
 	^ self with: (aString copyFrom: 2 to: aString size - 1)
 ]
 
-{ #category : #'private - instance creation' }
+{ #category : 'private - instance creation' }
 EntityTag class >> parseWeakETagFromString: aString [
 
 	AssertionCheckerBuilder new
@@ -69,25 +71,25 @@ EntityTag class >> parseWeakETagFromString: aString [
 	^ self weakWith: (aString copyFrom: 4 to: aString size - 1)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EntityTag class >> weakWith: anETagValue [
 
 	^ self with: anETagValue suffixedBy: 'W/'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EntityTag class >> with: anETagValue [
 
 	^ self with: anETagValue suffixedBy: ''
 ]
 
-{ #category : #'private - instance creation' }
+{ #category : 'private - instance creation' }
 EntityTag class >> with: anETagValue suffixedBy: aSuffix [
 
 	^ self new initializeWith: anETagValue suffixedBy: aSuffix
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EntityTag >> = anObject [
 
 	^ self equalityChecker
@@ -95,32 +97,32 @@ EntityTag >> = anObject [
 		checkAgainst: anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 EntityTag >> asEntityTag [
 
 	^ self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 EntityTag >> asString [
 
 	^self printString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EntityTag >> hash [
 
 	^ value hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EntityTag >> initializeWith: anETagValue suffixedBy: aSuffix [ 
 
 	value := anETagValue.
 	suffix := aSuffix
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 EntityTag >> printOn: aStream [
 
 	aStream
@@ -130,7 +132,7 @@ EntityTag >> printOn: aStream [
 		nextPut: $"
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 EntityTag >> value [
 
 	^ value

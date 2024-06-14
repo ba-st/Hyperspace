@@ -1,6 +1,6 @@
-Extension { #name : #ZnMimeType }
+Extension { #name : 'ZnMimeType' }
 
-{ #category : #'*Hyperspace-Extensions' }
+{ #category : '*Hyperspace-Extensions' }
 ZnMimeType >> accepts: aMimeType [
 
 	^ (aMimeType main = '*' or: [ aMimeType main = self main ]) and: [
@@ -9,19 +9,19 @@ ZnMimeType >> accepts: aMimeType [
 				  ($+ split: self sub) includes: aMimeType sub ] ] ]
 ]
 
-{ #category : #'*Hyperspace-Extensions' }
+{ #category : '*Hyperspace-Extensions' }
 ZnMimeType >> asMediaType [
 
 	^ self
 ]
 
-{ #category : #'*Hyperspace-Extensions' }
+{ #category : '*Hyperspace-Extensions' }
 ZnMimeType >> quality [
 
 	^ Float readFrom: (self parameterAt: 'q' ifAbsent: [ ^1.0 ])
 ]
 
-{ #category : #'*Hyperspace-Extensions' }
+{ #category : '*Hyperspace-Extensions' }
 ZnMimeType >> version: aVersionString [
 
 	self parameters at: 'version' put: aVersionString

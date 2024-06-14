@@ -1,27 +1,29 @@
 Class {
-	#name : #ExceptionSelectorSet,
-	#superclass : #Object,
+	#name : 'ExceptionSelectorSet',
+	#superclass : 'Object',
 	#instVars : [
 		'value',
 		'suffix',
 		'selectors'
 	],
-	#category : #'Hyperspace-Model-IETF'
+	#category : 'Hyperspace-Model-IETF',
+	#package : 'Hyperspace-Model',
+	#tag : 'IETF'
 }
 
-{ #category : #'exception selector' }
+{ #category : 'exception selector' }
 ExceptionSelectorSet >> , exceptionSelector [
 
 	selectors add: exceptionSelector
 ]
 
-{ #category : #'exception selector' }
+{ #category : 'exception selector' }
 ExceptionSelectorSet >> handles: anException [
 
 	^ selectors anySatisfy: [ :selector | selector handles: anException ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExceptionSelectorSet >> initialize [
 
 	super initialize.

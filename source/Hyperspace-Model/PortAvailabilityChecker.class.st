@@ -3,22 +3,24 @@ I'm here to help to identify if some port is free or not, so we can start a serv
 Whenever possible, it is best to let the OS provide us a free port. But if you need to constraint the port selection, I'm useful in detecting available ports.
 "
 Class {
-	#name : #PortAvailabilityChecker,
-	#superclass : #Object,
+	#name : 'PortAvailabilityChecker',
+	#superclass : 'Object',
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Hyperspace-Model-Resilience'
+	#category : 'Hyperspace-Model-Resilience',
+	#package : 'Hyperspace-Model',
+	#tag : 'Resilience'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PortAvailabilityChecker class >> new [
 
 	uniqueInstance ifNil: [ uniqueInstance := super new ].
 	^ uniqueInstance
 ]
 
-{ #category : #conditional }
+{ #category : 'conditional' }
 PortAvailabilityChecker >> if: portNumber isAvailableForTCP: aFoundBlock ifNot: aNotFoundBlock [
 
 	^ ( self isAvailableForTCP: portNumber ) 
@@ -26,7 +28,7 @@ PortAvailabilityChecker >> if: portNumber isAvailableForTCP: aFoundBlock ifNot: 
 		ifFalse: [ aNotFoundBlock cull: ( 'Port <1p> is not available' expandMacrosWith: portNumber ) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PortAvailabilityChecker >> isAvailableForTCP: portNumber [
 
 	^ [ 

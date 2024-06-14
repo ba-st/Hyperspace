@@ -22,8 +22,8 @@ Retry
 
 "
 Class {
-	#name : #Retry,
-	#superclass : #Object,
+	#name : 'Retry',
+	#superclass : 'Object',
 	#instVars : [
 		'maximumNumberOfAttempts',
 		'waitActionBetweenRetries',
@@ -33,40 +33,42 @@ Class {
 		'exceptionBasedActionBetweenRetries',
 		'exceptionToRetry'
 	],
-	#category : #'Hyperspace-Model-Resilience'
+	#category : 'Hyperspace-Model-Resilience',
+	#package : 'Hyperspace-Model',
+	#tag : 'Resilience'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Retry class >> configuredBy: configurationAction [
 
 	^ self new initializeConfiguredBy: configurationAction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Retry class >> defaultMaximumNumberOfAttempts [
 
 	^ 3
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 Retry class >> value: aNyladicClosure [
 
 	^ self value: aNyladicClosure configuredBy: [ :retry | retry onException ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 Retry class >> value: aNiladycBlock configuredBy: configurationAction [
 
 	^ ( self configuredBy: configurationAction ) value: aNiladycBlock
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 Retry >> backoffExponentiallyWithTimeSlot: aDuration [
 
 	self backoffExponentiallyWithTimeSlot: aDuration using: [ :integer | integer atRandom ]
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 Retry >> backoffExponentiallyWithTimeSlot: aDuration using: aRandomizingAction [
 
 	"This strategy implements [Exponential Backoff](https://en.wikipedia.org/wiki/Exponential_backoff).
@@ -84,19 +86,19 @@ Retry >> backoffExponentiallyWithTimeSlot: aDuration using: aRandomizingAction [
 	                            ]
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 Retry >> every: aDuration [
 
 	waitActionBetweenRetries := [ aDuration wait ]
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 Retry >> ignore: anException [
 
 	exceptionsToIgnore := exceptionsToIgnore , anException
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Retry >> initializeConfiguredBy: configurationAction [
 
 	maximumNumberOfAttempts := self class defaultMaximumNumberOfAttempts.
@@ -109,26 +111,26 @@ Retry >> initializeConfiguredBy: configurationAction [
 	configurationAction value: self
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 Retry >> on: anException [
 
 	exceptionToRetry := anException
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 Retry >> on: anException evaluating: aDyadicBlock [
 
 	exceptionToRetry := anException.
 	exceptionBasedActionBetweenRetries := aDyadicBlock
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 Retry >> onException [
 
 	self on: Exception
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 Retry >> upTo: aRetryCount [
 
 	AssertionChecker enforce: [ aRetryCount strictlyPositive ]
@@ -136,7 +138,7 @@ Retry >> upTo: aRetryCount [
 	maximumNumberOfAttempts := aRetryCount + 1
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 Retry >> upTo: aRetryCount timesEvery: aDuration [
 
 	self
@@ -144,7 +146,7 @@ Retry >> upTo: aRetryCount timesEvery: aDuration [
 		every: aDuration
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 Retry >> value: aNyladicBlock [
 
 	1 to: maximumNumberOfAttempts - 1 do: [ :tryCount | 
@@ -164,13 +166,13 @@ Retry >> value: aNyladicBlock [
 	^ aNyladicBlock cull: maximumNumberOfAttempts
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 Retry >> when: aCondition [
 
 	retryCondition := aCondition
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 Retry >> when: aCondition evaluating: aDyadicBlock [
 
 	retryCondition := aCondition.

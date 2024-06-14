@@ -2,12 +2,14 @@
 I represent an HTTP Client Error [ 4xx ]
 "
 Class {
-	#name : #HTTPClientError,
-	#superclass : #HTTPError,
-	#category : #'Hyperspace-Model-Exceptions'
+	#name : 'HTTPClientError',
+	#superclass : 'HTTPError',
+	#category : 'Hyperspace-Model-Exceptions',
+	#package : 'Hyperspace-Model',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HTTPClientError class >> badRequest [
 
 	"The server cannot or will not process the request due to something that is perceived to be a client error
@@ -16,7 +18,7 @@ HTTPClientError class >> badRequest [
 	^ self code: 400
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HTTPClientError class >> conflict [
 
 	"The request could not be completed due to a conflict with the current state of the target resource. 
@@ -26,7 +28,7 @@ HTTPClientError class >> conflict [
 	^ self code: 409
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HTTPClientError class >> notFound [
 
 	"The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.
@@ -36,7 +38,7 @@ HTTPClientError class >> notFound [
 	^ self code: 404
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HTTPClientError class >> preconditionFailed [
 
 	"One or more conditions given in the request header fields evaluated to false when tested on the server.
@@ -46,7 +48,7 @@ HTTPClientError class >> preconditionFailed [
 	^ self code: 412
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HTTPClientError class >> preconditionRequired [
 
 	"The origin server requires the request to be conditional.
@@ -57,7 +59,7 @@ HTTPClientError class >> preconditionRequired [
 	^ self code: 428
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HTTPClientError class >> tooManyRequests [
 
 	"The user has sent too many requests in a given amount of time (rate limiting).
@@ -67,7 +69,7 @@ HTTPClientError class >> tooManyRequests [
 	^ self code: 429
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HTTPClientError class >> unprocessableEntity [
 
 	"The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate), 
@@ -77,7 +79,7 @@ HTTPClientError class >> unprocessableEntity [
 	^ self code: 422
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HTTPClientError class >> unsupportedMediaType [
 
 	"The origin server is refusing to service the request because the payload is in a format not supported by this method on the target resource.

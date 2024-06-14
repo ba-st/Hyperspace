@@ -2,12 +2,14 @@
 A LanguageRangeTest is a test class for testing the behavior of LanguageRange
 "
 Class {
-	#name : #LanguageRangeTest,
-	#superclass : #TestCase,
-	#category : #'Hyperspace-Model-Tests-IETF'
+	#name : 'LanguageRangeTest',
+	#superclass : 'TestCase',
+	#category : 'Hyperspace-Model-Tests-IETF',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'IETF'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageRangeTest >> testAny [
 
 	self
@@ -17,7 +19,7 @@ LanguageRangeTest >> testAny [
 		assert: LanguageRange any subtags equals: #('*')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageRangeTest >> testAnyMatches [
 
 	| range |
@@ -29,7 +31,7 @@ LanguageRangeTest >> testAnyMatches [
 		assert: ( range matches: 'es-ar' asLanguageTag )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageRangeTest >> testComparison [
 
 	| range |
@@ -42,7 +44,7 @@ LanguageRangeTest >> testComparison [
 		deny: range equals: ( LanguageRange from: #('en') )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageRangeTest >> testCreation [
 
 	| range |
@@ -53,7 +55,7 @@ LanguageRangeTest >> testCreation [
 		assert: range printString equals: 'en-Latn-US'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageRangeTest >> testMatches [
 
 	| range |

@@ -14,6 +14,7 @@ AbstractCURIE class >> fromString: string [
 { #category : 'testing' }
 AbstractCURIE class >> isAbstract [
 
+  <ignoreForCoverage>
   ^ self = AbstractCURIE
 ]
 

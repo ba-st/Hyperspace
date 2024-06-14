@@ -36,6 +36,12 @@ AbstractCURIE >> asSafeCURIE [
 ]
 
 { #category : 'converting' }
+AbstractCURIE >> asString [
+
+  ^ self printString
+]
+
+{ #category : 'converting' }
 AbstractCURIE >> asWebLink [
 
   ^ WebLink to: self

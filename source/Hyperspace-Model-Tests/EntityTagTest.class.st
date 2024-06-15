@@ -2,12 +2,14 @@
 I'm a test case for EntityTag
 "
 Class {
-	#name : #EntityTagTest,
-	#superclass : #TestCase,
-	#category : #'Hyperspace-Model-Tests-IETF'
+	#name : 'EntityTagTest',
+	#superclass : 'TestCase',
+	#category : 'Hyperspace-Model-Tests-IETF',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'IETF'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 EntityTagTest >> testAsEntityTag [
 
 	self
@@ -15,14 +17,14 @@ EntityTagTest >> testAsEntityTag [
 		assert: (EntityTag fromString: '"12345"') asEntityTag equals: (EntityTag fromString: '"12345"')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EntityTagTest >> testAsString [ 
 	
 	self 	assert: (EntityTag with: '12345') asString equals: '"12345"'.
 	self 	assert: (EntityTag weakWith: '12345') asString equals: 'W/"12345"'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EntityTagTest >> testCaseSensitiveWeakEntityTagCreation [
 
 	self
@@ -31,7 +33,7 @@ EntityTagTest >> testCaseSensitiveWeakEntityTagCreation [
 			raise: InstanceCreationFailed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EntityTagTest >> testFromString [
 
 	self
@@ -49,7 +51,7 @@ EntityTagTest >> testFromString [
 		should: [ EntityTag fromString: 'w/"1"' ] raise: InstanceCreationFailed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EntityTagTest >> testHash [
 
 	self
@@ -60,7 +62,7 @@ EntityTagTest >> testHash [
 		equals: (EntityTag fromString: 'W/"12345"') hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EntityTagTest >> testPrinting [
 
 	self assert: (EntityTag with: '12345') printString equals: '"12345"'.

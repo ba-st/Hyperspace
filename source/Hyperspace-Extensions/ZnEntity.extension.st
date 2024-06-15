@@ -1,6 +1,6 @@
-Extension { #name : #ZnEntity }
+Extension { #name : 'ZnEntity' }
 
-{ #category : #'*Hyperspace-Extensions' }
+{ #category : '*Hyperspace-Extensions' }
 ZnEntity class >> with: anObject ofType: aMimeType [
 
 	| entity |

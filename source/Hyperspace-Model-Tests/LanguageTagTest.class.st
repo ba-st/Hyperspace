@@ -2,12 +2,14 @@
 A LanguageTagTest is a test class for testing the behavior of LanguageTag
 "
 Class {
-	#name : #LanguageTagTest,
-	#superclass : #TestCase,
-	#category : #'Hyperspace-Model-Tests-IETF'
+	#name : 'LanguageTagTest',
+	#superclass : 'TestCase',
+	#category : 'Hyperspace-Model-Tests-IETF',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'IETF'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageTagTest >> testCantCreateWhenLanguageCodeIsInvalid [
 
 	self
@@ -19,7 +21,7 @@ LanguageTagTest >> testCantCreateWhenLanguageCodeIsInvalid [
 			withMessageText: 'ISO 639 language codes must consist only of letters.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageTagTest >> testCantCreateWhenRegionIsInvalid [
 
 	self
@@ -28,7 +30,7 @@ LanguageTagTest >> testCantCreateWhenRegionIsInvalid [
 		withMessageText: 'Supported ISO 3166-1 codes must be 2 letters.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageTagTest >> testCantCreateWhenScriptIsInvalid [
 
 	self
@@ -37,7 +39,7 @@ LanguageTagTest >> testCantCreateWhenScriptIsInvalid [
 		withMessageText: 'ISO 15924 script codes must be 4 letters.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageTagTest >> testCreation [
 
 	| tag |
@@ -51,7 +53,7 @@ LanguageTagTest >> testCreation [
 	self assert: tag subtags equals: #('en' 'Latn' 'US')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageTagTest >> testCreationWithExtensions [
 
 	| tag |
@@ -67,7 +69,7 @@ LanguageTagTest >> testCreationWithExtensions [
 		equals: #('en' 'Latn' 'GB' 'boont' 'r' 'extended' 'sequence' 'x' 'private')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageTagTest >> testCreationWithHorribleCase [
 
 	| tag |
@@ -81,7 +83,7 @@ LanguageTagTest >> testCreationWithHorribleCase [
 	self assert: tag subtags equals: #('es' 'Latn' 'AR')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageTagTest >> testCreationWithOnlyLanguage [
 
 	| tag |
@@ -95,7 +97,7 @@ LanguageTagTest >> testCreationWithOnlyLanguage [
 	self assert: tag subtags equals: #('en')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageTagTest >> testCreationWithRegionButNotScript [
 
 	| tag |
@@ -109,7 +111,7 @@ LanguageTagTest >> testCreationWithRegionButNotScript [
 	self assert: tag subtags equals: #('en' 'US')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageTagTest >> testCreationWithScriptButNoRegion [
 
 	| tag |

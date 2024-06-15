@@ -11,24 +11,26 @@ The server is currently unable to handle the request due to a temporary overload
 The server MAY send a Retry-After header field1 to suggest an appropriate amount of time for the client to wait before retrying the request.
 "
 Class {
-	#name : #HTTPServerError,
-	#superclass : #HTTPError,
-	#category : #'Hyperspace-Model-Exceptions'
+	#name : 'HTTPServerError',
+	#superclass : 'HTTPError',
+	#category : 'Hyperspace-Model-Exceptions',
+	#package : 'Hyperspace-Model',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HTTPServerError class >> internalServerError [
 
 	^ self code: 500
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HTTPServerError class >> serviceUnavailable [
 
 	^ self code: 503
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 HTTPServerError class >> signalInternalServerError: aMessageText [
 
 	^ self internalServerError signal: aMessageText

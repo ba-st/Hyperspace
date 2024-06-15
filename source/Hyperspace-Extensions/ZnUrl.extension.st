@@ -1,6 +1,6 @@
-Extension { #name : #ZnUrl }
+Extension { #name : 'ZnUrl' }
 
-{ #category : #'*Hyperspace-Extensions' }
+{ #category : '*Hyperspace-Extensions' }
 ZnUrl >> asAbsoluteUrl [
 
 	AssertionChecker
@@ -11,7 +11,7 @@ ZnUrl >> asAbsoluteUrl [
 	^ self
 ]
 
-{ #category : #'*Hyperspace-Extensions' }
+{ #category : '*Hyperspace-Extensions' }
 ZnUrl >> asHostedAt: aBaseUrl [
 
 	^ self copy
@@ -21,13 +21,19 @@ ZnUrl >> asHostedAt: aBaseUrl [
 		yourself
 ]
 
-{ #category : #'*Hyperspace-Extensions' }
+{ #category : '*Hyperspace-Extensions' }
 ZnUrl >> asWebLink [
 
 	^ WebLink to: self
 ]
 
-{ #category : #'*Hyperspace-Extensions' }
+{ #category : '*Hyperspace-Extensions' }
+ZnUrl >> expandToURIIn: context [
+
+  ^ self
+]
+
+{ #category : '*Hyperspace-Extensions' }
 ZnUrl >> queryAt: aKey putUrl: anUnencodedUrl [
 
 	| encodedUrl |
@@ -36,10 +42,16 @@ ZnUrl >> queryAt: aKey putUrl: anUnencodedUrl [
 	^ self queryAt: aKey put: encodedUrl
 ]
 
-{ #category : #'*Hyperspace-Extensions' }
+{ #category : '*Hyperspace-Extensions' }
 ZnUrl >> start: startIndex limit: limitCount [
 
 	self
 		queryAt: 'start' put: startIndex;
 		queryAt: 'limit' put: limitCount
+]
+
+{ #category : '*Hyperspace-Extensions' }
+ZnUrl >> withFragment: string [
+
+  ^ self copy fragment: string
 ]

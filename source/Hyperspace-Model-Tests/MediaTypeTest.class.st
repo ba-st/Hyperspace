@@ -2,12 +2,14 @@
 I'm a test for media type extensions
 "
 Class {
-	#name : #MediaTypeTest,
-	#superclass : #TestCase,
-	#category : #'Hyperspace-Model-Tests-IETF'
+	#name : 'MediaTypeTest',
+	#superclass : 'TestCase',
+	#category : 'Hyperspace-Model-Tests-IETF',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'IETF'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MediaTypeTest >> testAccepts [
 
 	| mediaType |
@@ -28,7 +30,7 @@ MediaTypeTest >> testAccepts [
 		deny: (mediaType accepts: 'application/xml' asMediaType)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MediaTypeTest >> testAsMediaType [
 
 	| mediaType |
@@ -38,7 +40,7 @@ MediaTypeTest >> testAsMediaType [
 	self assert: mediaType asMediaType identicalTo: mediaType
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MediaTypeTest >> testQuality [
 
 	self
@@ -46,7 +48,7 @@ MediaTypeTest >> testQuality [
 		assert: 'text/html;q=0.8' asMediaType quality equals: 0.8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MediaTypeTest >> testVersion [
 
 	| mediaType |

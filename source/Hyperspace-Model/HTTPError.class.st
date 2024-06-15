@@ -2,15 +2,17 @@
 I'm an exception expecting to be raised when there's an error processing an HTTP request.
 "
 Class {
-	#name : #HTTPError,
-	#superclass : #Error,
+	#name : 'HTTPError',
+	#superclass : 'Error',
 	#instVars : [
 		'code'
 	],
-	#category : #'Hyperspace-Model-Exceptions'
+	#category : 'Hyperspace-Model-Exceptions',
+	#package : 'Hyperspace-Model',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HTTPError class >> code: aCode [
 
 	| instance |
@@ -20,31 +22,31 @@ HTTPError class >> code: aCode [
 	^ instance
 ]
 
-{ #category : #'exception selector' }
+{ #category : 'exception selector' }
 HTTPError >> , exceptionSelector [
 
 	^ ExceptionSelectorSet new , self , exceptionSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HTTPError >> code [
 
 	^ code
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HTTPError >> code: anErrorCode [
 
 	code := anErrorCode
 ]
 
-{ #category : #'exception selector' }
+{ #category : 'exception selector' }
 HTTPError >> handles: aSignal [
 
 	^ ( self class handles: aSignal ) and: [ aSignal code = self code ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 HTTPError >> printOn: stream [
 
 	stream

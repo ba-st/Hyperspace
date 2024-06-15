@@ -8,16 +8,18 @@ References
 	https://tools.ietf.org/html/rfc5988#page-6
 "
 Class {
-	#name : #WebLink,
-	#superclass : #Object,
+	#name : 'WebLink',
+	#superclass : 'Object',
 	#instVars : [
 		'parameters',
 		'url'
 	],
-	#category : #'Hyperspace-Model-IETF'
+	#category : 'Hyperspace-Model-IETF',
+	#package : 'Hyperspace-Model',
+	#tag : 'IETF'
 }
 
-{ #category : #'private - preconditions' }
+{ #category : 'private - preconditions' }
 WebLink class >> assertLinkValueFormatIsValid: urlCandidate [
 
 	AssertionCheckerBuilder new
@@ -31,7 +33,7 @@ WebLink class >> assertLinkValueFormatIsValid: urlCandidate [
 		buildAndCheck
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WebLink class >> fromString: aString [
 
 	| stream linkValueCandidate link |
@@ -45,7 +47,7 @@ WebLink class >> fromString: aString [
 	^ link
 ]
 
-{ #category : #'private - parsing' }
+{ #category : 'private - parsing' }
 WebLink class >> parseParametersOn: stream configuredIn: link [
 
 	[ stream atEnd ] whileFalse: [ 
@@ -66,19 +68,19 @@ WebLink class >> parseParametersOn: stream configuredIn: link [
 		]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WebLink class >> to: aUrl [
 
 	^ self new initializeTo: aUrl
 ]
 
-{ #category : #'private - parsing' }
+{ #category : 'private - parsing' }
 WebLink class >> trimTagsIn: urlCandidate [
 
 	^ urlCandidate copyFrom: 2 to: urlCandidate size - 1
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 WebLink >> = anObject [
 
 	^ self equalityChecker
@@ -87,7 +89,7 @@ WebLink >> = anObject [
 		checkAgainst: anObject
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> addLanguageHint: aLanguageTag [
 
 	"The hreflang parameter, when present, is a hint indicating what the language
@@ -99,25 +101,25 @@ WebLink >> addLanguageHint: aLanguageTag [
 	self parameterAt: 'hreflang' add: aLanguageTag asLanguageTag printString
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WebLink >> asByteArray [
 
 	^ self printString asByteArray
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 WebLink >> asString [
 
 	^ self printString
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WebLink >> asWebLink [
 
 	^ self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WebLink >> assertNotEmpty: aKey [
 
 	AssertionChecker enforce: [ aKey notEmpty ]
@@ -125,13 +127,13 @@ WebLink >> assertNotEmpty: aKey [
 		raising: InstanceCreationFailed
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WebLink >> hasParameters [
 
 	^ parameters notNil and: [ parameters notEmpty ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WebLink >> hasTheSameParametersAs: aLink [
 
 	^ self hasParameters = aLink hasParameters
@@ -140,7 +142,7 @@ WebLink >> hasTheSameParametersAs: aLink [
 				aLink parameters includesAssociation: each]]]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 WebLink >> hash [
 
 	^ self hasParameters
@@ -148,13 +150,13 @@ WebLink >> hash [
 		otherwise: [ self url hash ]
 ]
 
-{ #category : #'initialize - release' }
+{ #category : 'initialize - release' }
 WebLink >> initializeTo: aUrl [
 
 	url := aUrl
 ]
 
-{ #category : #'accessing - target parameters' }
+{ #category : 'accessing - target parameters' }
 WebLink >> languageHints [
 
 	| value |
@@ -165,13 +167,13 @@ WebLink >> languageHints [
 		ifFalse: [ Array with: value asLanguageTag ]
 ]
 
-{ #category : #'accessing - target parameters' }
+{ #category : 'accessing - target parameters' }
 WebLink >> mediaQueryHint [
 
 	^ self parameterAt: 'media'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> mediaQueryHint: aCssMediaQuery [
 
 	"The media parameter, when present, is used to indicate intended
@@ -182,13 +184,13 @@ WebLink >> mediaQueryHint: aCssMediaQuery [
 	self parameterAt: 'media' put: aCssMediaQuery asString
 ]
 
-{ #category : #'accessing - target parameters' }
+{ #category : 'accessing - target parameters' }
 WebLink >> mediaTypeHint [
 
 	^ ( self parameterAt: 'type' ) asMediaType
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> mediaTypeHint: aMediaType [
 
 	"The type parameter, when present, is a hint indicating what the media type of the
@@ -200,48 +202,48 @@ WebLink >> mediaTypeHint: aMediaType [
 	self parameterAt: 'type' put: aMediaType asMediaType printString
 ]
 
-{ #category : #parameters }
+{ #category : 'parameters' }
 WebLink >> parameterAt: key [
 
 	^ self parameterAt: key ifAbsent: [ KeyNotFound signalFor: key ]
 ]
 
-{ #category : #parameters }
+{ #category : 'parameters' }
 WebLink >> parameterAt: aKey add: aValue [
 
 	self assertNotEmpty: aKey.
 	self parameters at: aKey add: ( self quoteValueWhenNeeded: aValue )
 ]
 
-{ #category : #parameters }
+{ #category : 'parameters' }
 WebLink >> parameterAt: key ifAbsent: block [
 
 	parameters ifNil: [ ^ block value ].
 	^ self parameters at: key ifAbsent: block
 ]
 
-{ #category : #parameters }
+{ #category : 'parameters' }
 WebLink >> parameterAt: aKey put: aString [
 
 	self assertNotEmpty: aKey.
 	self parameters at: aKey put: ( self quoteValueWhenNeeded: aString )
 ]
 
-{ #category : #parameters }
+{ #category : 'parameters' }
 WebLink >> parameters [
 
 	parameters ifNil: [ parameters := MultiValueOrderedDictionary new ].
 	^ parameters
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 WebLink >> postCopy [
 
 	super postCopy.
 	parameters := parameters copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 WebLink >> printOn: stream [
 
 	stream
@@ -258,7 +260,7 @@ WebLink >> printOn: stream [
 						nextPutAll: value ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WebLink >> quoteValueWhenNeeded: aString [
 
 	"Values including ; or , needs to be quoted"
@@ -269,36 +271,36 @@ WebLink >> quoteValueWhenNeeded: aString [
 		  otherwise: [ aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WebLink >> relationType [
 
 	^ self parameterAt: 'rel'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> relationType: aRelation [
 
 	"The relation type of a link is conveyed in the rel parameter's
    value.  The rel parameter MUST NOT appear more than once in a given
    link-value; occurrences after the first MUST be ignored by parsers."
 
-	self parameterAt: 'rel' put: aRelation
+	self parameterAt: 'rel' put: aRelation asString
 ]
 
-{ #category : #parameters }
+{ #category : 'parameters' }
 WebLink >> removeParameter: key [
 
 	parameters ifNil: [ ^ self ].
 	^ self parameters removeKey: key ifAbsent: [ nil ]
 ]
 
-{ #category : #'accessing - target parameters' }
+{ #category : 'accessing - target parameters' }
 WebLink >> title [
 
 	^ self parameterAt: 'title'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> title: aString [
 
 	"The title parameter, when present, is used to label the destination of a
@@ -310,7 +312,7 @@ WebLink >> title: aString [
 	self parameterAt: 'title' put: aString
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toCollection [
 
 	"The target IRI points to a resource which represents the collection resource for the context IRI."
@@ -318,7 +320,7 @@ WebLink >> toCollection [
 	self relationType: 'collection'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toCopyright [
 
 	"Refers to a copyright statement that applies to the link's context."
@@ -326,7 +328,7 @@ WebLink >> toCopyright [
 	self relationType: 'copyright'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toEdit [
 
 	"Refers to a resource that can be used to edit the link's context."
@@ -334,7 +336,7 @@ WebLink >> toEdit [
 	self relationType: 'edit'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toExternalSite [
 
 	"Refers to a resource that is not part of the same site as the current context."
@@ -342,7 +344,7 @@ WebLink >> toExternalSite [
 	self relationType: 'external'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toFirst [
 
 	"An IRI that refers to the furthest preceding resource in a series of resources."
@@ -350,7 +352,7 @@ WebLink >> toFirst [
 	self relationType: 'first'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toHelp [
 
 	"Refers to context-sensitive help."
@@ -358,7 +360,7 @@ WebLink >> toHelp [
 	self relationType: 'help'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toIcon [
 
 	"Refers to an icon representing the link's context."
@@ -366,7 +368,7 @@ WebLink >> toIcon [
 	self relationType: 'icon'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toItem [
 
 	"The target IRI points to a resource that is a member of the collection represented by the context IRI."
@@ -374,7 +376,7 @@ WebLink >> toItem [
 	self relationType: 'item'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toLast [
 
 	"An IRI that refers to the furthest following resource in a series of resources."
@@ -382,7 +384,7 @@ WebLink >> toLast [
 	self relationType: 'last'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toLatestVersion [
 
 	"Points to a resource containing the latest (e.g., current) version of the context."
@@ -390,7 +392,7 @@ WebLink >> toLatestVersion [
 	self relationType: 'latest-version'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toLicense [
 
 	"Refers to a license associated with this context."
@@ -398,7 +400,7 @@ WebLink >> toLicense [
 	self relationType: 'license'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toMyself [
 
 	"Conveys an identifier for the link's context. "
@@ -406,7 +408,7 @@ WebLink >> toMyself [
 	self relationType: 'self'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toNext [
 
 	"Indicates that the link's context is a part of a series, and that the next in the series is the link target."
@@ -414,7 +416,7 @@ WebLink >> toNext [
 	self relationType: 'next'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toParent [
 
 	"Refers to a parent document in a hierarchy of documents. "
@@ -422,7 +424,7 @@ WebLink >> toParent [
 	self relationType: 'up'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toPayment [
 
 	"Indicates a resource where payment is accepted."
@@ -430,7 +432,7 @@ WebLink >> toPayment [
 	self relationType: 'payment'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toPredecessorVersion [
 
 	"Points to a resource containing the predecessor version in the version history. "
@@ -438,7 +440,7 @@ WebLink >> toPredecessorVersion [
 	self relationType: 'predecessor-version'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toPrevious [
 
 	"Indicates that the link's context is a part of a series, and that the previous in the series is the link target. "
@@ -446,7 +448,7 @@ WebLink >> toPrevious [
 	self relationType: 'prev'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toProfile [
 
 	"Identifying that a resource representation conforms to a certain profile,
@@ -455,7 +457,7 @@ WebLink >> toProfile [
 	self relationType: 'profile'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toSearch [
 
 	"Refers to a resource that can be used to search through the link's context and related resources."
@@ -463,7 +465,7 @@ WebLink >> toSearch [
 	self relationType: 'search'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toSuccessorVersion [
 
 	"Points to a resource containing the successor version in the version history. "
@@ -471,7 +473,7 @@ WebLink >> toSuccessorVersion [
 	self relationType: 'successor-version'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toTermsOfService [
 
 	"Refers to the terms of service associated with the link's context."
@@ -479,7 +481,7 @@ WebLink >> toTermsOfService [
 	self relationType: 'terms-of-service'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toVersionHistory [
 
 	"Points to a resource containing the version history for the context. "
@@ -487,7 +489,7 @@ WebLink >> toVersionHistory [
 	self relationType: 'version-history'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toWorkingCopy [
 
 	"Points to a working copy for this resource."
@@ -495,7 +497,7 @@ WebLink >> toWorkingCopy [
 	self relationType: 'working-copy'
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 WebLink >> toWorkingCopyOrigin [
 
 	"Points to the versioned resource from which this working copy was obtained."
@@ -503,7 +505,7 @@ WebLink >> toWorkingCopyOrigin [
 	self relationType: 'working-copy-of'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WebLink >> url [
 
 	^ url

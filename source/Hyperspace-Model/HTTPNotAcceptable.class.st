@@ -12,16 +12,18 @@ Unless it was a HEAD request, the response SHOULD include an entity containing a
 If the response could be unacceptable, a user agent SHOULD temporarily stop receipt of more data and query the user for a decision on further actions.
 "
 Class {
-	#name : #HTTPNotAcceptable,
-	#superclass : #HTTPClientError,
+	#name : 'HTTPNotAcceptable',
+	#superclass : 'HTTPClientError',
 	#instVars : [
 		'allowedMediaTypes',
 		'allowedLanguageTags'
 	],
-	#category : #'Hyperspace-Model-Exceptions'
+	#category : 'Hyperspace-Model-Exceptions',
+	#package : 'Hyperspace-Model',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HTTPNotAcceptable class >> messageText: aMessageText accepting: allowedMediaTypes inAnyOf: allowedLanguageTags [
 
 	^ ( self code: 406 )
@@ -31,37 +33,37 @@ HTTPNotAcceptable class >> messageText: aMessageText accepting: allowedMediaType
 		yourself
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 HTTPNotAcceptable class >> signal: aMessageText accepting: allowedMediaTypes [
 
 	^ self signal: aMessageText accepting: allowedMediaTypes inAnyOf: #()
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 HTTPNotAcceptable class >> signal: aMessageText accepting: allowedMediaTypes inAnyOf: allowedLanguageTags [
 
 	^ ( self messageText: aMessageText accepting: allowedMediaTypes inAnyOf: allowedLanguageTags ) signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HTTPNotAcceptable >> allowedLanguageTags [
 
 	^ allowedLanguageTags
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HTTPNotAcceptable >> allowedLanguageTags: anArray [
 
 	 allowedLanguageTags := anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HTTPNotAcceptable >> allowedMediaTypes [
 
 	^ allowedMediaTypes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HTTPNotAcceptable >> allowedMediaTypes: anArray [
 
 	 allowedMediaTypes := anArray

@@ -1,6 +1,6 @@
-Extension { #name : #ZnNetworkingUtils }
+Extension { #name : 'ZnNetworkingUtils' }
 
-{ #category : #'*Hyperspace-Pharo-Extensions' }
+{ #category : '*Hyperspace-Pharo-Extensions' }
 ZnNetworkingUtils >> socketClass [
 
 	^ Socket

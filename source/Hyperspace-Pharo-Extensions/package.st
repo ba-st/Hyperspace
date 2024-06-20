@@ -1,1 +1,1 @@
-Package { #name : #'Hyperspace-Pharo-Extensions' }
+Package { #name : 'Hyperspace-Pharo-Extensions' }

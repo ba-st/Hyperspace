@@ -1,6 +1,6 @@
-Extension { #name : #HTTPError }
+Extension { #name : 'HTTPError' }
 
-{ #category : #'*Hyperspace-Pharo-Extensions' }
+{ #category : '*Hyperspace-Pharo-Extensions' }
 HTTPError >> - anotherException [
 
 	^ ExceptionSetWithExclusions new

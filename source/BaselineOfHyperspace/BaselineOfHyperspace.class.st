@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfHyperspace,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfHyperspace
+	#name : 'BaselineOfHyperspace',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfHyperspace',
+	#package : 'BaselineOfHyperspace'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfHyperspace >> baseline: spec [
 
 	<baseline>
@@ -27,13 +28,13 @@ BaselineOfHyperspace >> baseline: spec [
 	spec for: #'pharo10.x' do: [ self setUpPharo10Packages: spec ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfHyperspace >> projectClass [
 
 	^ MetacelloCypressBaselineProject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BaselineOfHyperspace >> setUpDependencies: spec [
 
 	spec
@@ -46,39 +47,36 @@ BaselineOfHyperspace >> setUpDependencies: spec [
 		project: 'Zinc-Core' copyFrom: 'ZincHTTPComponents' with: [ spec loads: 'Core' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BaselineOfHyperspace >> setUpPackages: spec [
 
-	spec
-		package: 'Hyperspace-Model'
-		with: [ spec requires: #( 'Buoy-Deployment' 'Zinc-Core' ) ];
-		group: 'Deployment' with: 'Hyperspace-Model';
-		package: 'Hyperspace-Extensions'
-		with: [ spec requires: 'Hyperspace-Model' ];
-		group: 'Deployment' with: 'Hyperspace-Extensions';
-		package: 'Hyperspace-Pharo-Extensions'
-		with: [ spec requires: 'Hyperspace-Model' ];
-		group: 'Deployment' with: 'Hyperspace-Pharo-Extensions'.
+  spec
+    package: 'Hyperspace-Model' with: [ spec requires: #( 'Buoy-Deployment' 'Zinc-Core' ) ];
+    group: 'Deployment' with: 'Hyperspace-Model';
+    package: 'Hyperspace-Extensions' with: [ spec requires: 'Hyperspace-Model' ];
+    group: 'Deployment' with: 'Hyperspace-Extensions';
+    package: 'Hyperspace-Buoy-Extensions' with: [ spec requires: 'Hyperspace-Model' ];
+    group: 'Deployment' with: 'Hyperspace-Buoy-Extensions';
+    package: 'Hyperspace-Pharo-Extensions' with: [ spec requires: 'Hyperspace-Model' ];
+    group: 'Deployment' with: 'Hyperspace-Pharo-Extensions'.
 
-	spec
-		package: 'Hyperspace-Model-Tests' with: [
-			spec requires:
-					#( 'Hyperspace-Model' 'Hyperspace-Extensions'
-					   'Hyperspace-Pharo-Extensions' 'Dependent-SUnit-Extensions' ) ];
-		group: 'Tests' with: 'Hyperspace-Model-Tests'.
+  spec
+    package: 'Hyperspace-Model-Tests' with: [
+        spec requires: #( 'Hyperspace-Model' 'Hyperspace-Extensions' 'Hyperspace-Pharo-Extensions'
+               'Hyperspace-Buoy-Extensions' 'Dependent-SUnit-Extensions' )
+      ];
+    group: 'Tests' with: 'Hyperspace-Model-Tests'.
 
-	spec
-		package: 'Hyperspace-SUnit-Model'
-		with: [ spec requires: 'Buoy-SUnit' ];
-		group: 'Dependent-SUnit-Extensions' with: 'Hyperspace-SUnit-Model';
-		package: 'Hyperspace-SUnit-Model-Tests'
-		with: [ spec requires: 'Hyperspace-SUnit-Model' ];
-		group: 'Tests' with: 'Hyperspace-SUnit-Model-Tests'.
+  spec
+    package: 'Hyperspace-SUnit-Model' with: [ spec requires: 'Buoy-SUnit' ];
+    group: 'Dependent-SUnit-Extensions' with: 'Hyperspace-SUnit-Model';
+    package: 'Hyperspace-SUnit-Model-Tests' with: [ spec requires: 'Hyperspace-SUnit-Model' ];
+    group: 'Tests' with: 'Hyperspace-SUnit-Model-Tests'.
 
-	spec group: 'Tools' with: 'Buoy-Tools'
+  spec group: 'Tools' with: 'Buoy-Tools'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BaselineOfHyperspace >> setUpPharo10Packages: spec [
 
 	spec

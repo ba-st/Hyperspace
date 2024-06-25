@@ -36,11 +36,10 @@ ZnEventToLogRecordAdapter >> asStructuredResponse: aZnResponse [
 { #category : #'private - dumping' }
 ZnEventToLogRecordAdapter >> dumpConnectionEvent: aZnServerConnectionClosedEvent on: data [
 
-	 data
-		  at: #remoteAddress
-		  put: ( ZnNetworkingUtils ipAddressToString: aZnServerConnectionClosedEvent address );
-		  at: #processId put: aZnServerConnectionClosedEvent processId;
-		  at: #eventId put: aZnServerConnectionClosedEvent id
+  data
+    at: #remoteAddress put: ( self ipAddressToString: aZnServerConnectionClosedEvent );
+    at: #processId put: aZnServerConnectionClosedEvent processId;
+    at: #eventId put: aZnServerConnectionClosedEvent id
 ]
 
 { #category : #'private - dumping' }
@@ -76,6 +75,14 @@ ZnEventToLogRecordAdapter >> initialize [
 	logOutgoingRequests := false.
 	logIncomingRequests := false.
 	subscriptions := OrderedCollection new
+]
+
+{ #category : #'private - dumping' }
+ZnEventToLogRecordAdapter >> ipAddressToString: aZnServerConnectionClosedEvent [
+
+  ^ aZnServerConnectionClosedEvent address isString
+      then: [ aZnServerConnectionClosedEvent address ]
+      otherwise: [ ZnNetworkingUtils ipAddressToString: aZnServerConnectionClosedEvent address ]
 ]
 
 { #category : #'private - configuring' }

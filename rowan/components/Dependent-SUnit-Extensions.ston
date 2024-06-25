@@ -2,7 +2,8 @@ RwSimpleProjectLoadComponentV2 {
   #name : 'Dependent-SUnit-Extensions',
   #condition : 'sunit',
   #projectNames : [
-    'Bell'
+    'Bell',
+    'Regex'
   ],
   #componentNames : [
     'Deployment'

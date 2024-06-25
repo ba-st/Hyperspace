@@ -141,5 +141,5 @@ ZnEventToLogRecordAdapter >> stopListeners [
 { #category : #'system startup' }
 ZnEventToLogRecordAdapter >> subscribeToEventsOf: anEventType andDo: aBlock [
 
-	subscriptions add: (ZnLogEvent announcer when: anEventType do: aBlock)
+  subscriptions add: ( ZnLogEvent announcer when: anEventType do: aBlock for: self )
 ]

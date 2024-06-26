@@ -9,11 +9,24 @@ Class {
 }
 
 { #category : #private }
+ZnEventToLogRecordControllerTest >> addTimestampRegexTo: aLogEntryCollection [
+
+  ^ aLogEntryCollection collect: [ :regexExpression |
+        '\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}(\.\d+)?(\+|-)(\d+\:\d+) <1s>' expandMacrosWith:
+          regexExpression
+      ]
+]
+
+{ #category : #private }
 ZnEventToLogRecordControllerTest >> runMemoryLoggerDuring: aBlock assertingLogRecordsMatchRegexes: expectedLogEntries [
 
-	loggingAsserter
-		runMemoryLoggerDuring: aBlock;
-		assertLogRecordsMatchRegexes: expectedLogEntries
+  | expectedLogEntriesWithTimestamp |
+
+  expectedLogEntriesWithTimestamp := self addTimestampRegexTo: expectedLogEntries.
+
+  loggingAsserter
+    runMemoryLoggerDuring: aBlock;
+    assertLogRecordsMatchRegexes: expectedLogEntriesWithTimestamp
 ]
 
 { #category : #running }

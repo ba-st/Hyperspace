@@ -2,14 +2,12 @@
 A HTTPErrorTest is a test class for testing the behavior of HTTPError
 "
 Class {
-	#name : 'HTTPErrorTest',
-	#superclass : 'TestCase',
-	#category : 'Hyperspace-Model-Tests-Exceptions',
-	#package : 'Hyperspace-Model-Tests',
-	#tag : 'Exceptions'
+	#name : #HTTPErrorTest,
+	#superclass : #TestCase,
+	#category : 'Hyperspace-Model-Tests-Exceptions'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPErrorTest >> testHandlingExceptionSelectorSets [
 
 	self
@@ -26,13 +24,13 @@ HTTPErrorTest >> testHandlingExceptionSelectorSets [
 		raise: HTTPServerError serviceUnavailable
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPErrorTest >> testHandlingHTTPClientError [
 
 	self should: [ HTTPClientError notFound signal ] raise: HTTPError
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPErrorTest >> testHandlingHTTPServerError [
 
 	self should: [ HTTPServerError internalServerError signal ] raise: HTTPError

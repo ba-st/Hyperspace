@@ -2,14 +2,12 @@
 I'm a test for extensions on ZnUrl
 "
 Class {
-	#name : 'ZnUrlHyperspaceExtensionsTest',
-	#superclass : 'TestCase',
-	#category : 'Hyperspace-Model-Tests-Zinc',
-	#package : 'Hyperspace-Model-Tests',
-	#tag : 'Zinc'
+	#name : #ZnUrlHyperspaceExtensionsTest,
+	#superclass : #TestCase,
+	#category : 'Hyperspace-Model-Tests-Zinc'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 ZnUrlHyperspaceExtensionsTest >> testAsAbsoluteUrl [
 
 	self
@@ -28,7 +26,7 @@ ZnUrlHyperspaceExtensionsTest >> testAsAbsoluteUrl [
 		withMessageText: '/resource is a relative URL'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 ZnUrlHyperspaceExtensionsTest >> testAsHostedAt [
 
 	self
@@ -46,7 +44,7 @@ ZnUrlHyperspaceExtensionsTest >> testAsHostedAt [
 			equals: 'https://alternative.org:2222/resource' asUrl
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 ZnUrlHyperspaceExtensionsTest >> testAsWebLink [
 
 	| url |
@@ -55,7 +53,7 @@ ZnUrlHyperspaceExtensionsTest >> testAsWebLink [
 	self assert: url asWebLink equals: ( WebLink to: url )
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 ZnUrlHyperspaceExtensionsTest >> testQueryAtPutUrl [
 
 	self
@@ -66,7 +64,7 @@ ZnUrlHyperspaceExtensionsTest >> testQueryAtPutUrl [
 		equals: 'https://api.example.com/pets?relatedTo=https%253A%252F%252Fapi.example.com%252Fpets%252F99' asUrl
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 ZnUrlHyperspaceExtensionsTest >> testStartLimit [
 
 	self

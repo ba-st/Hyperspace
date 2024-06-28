@@ -2,14 +2,12 @@
 A HTTPClientErrorTest is a test class for testing the behavior of HTTPClientError
 "
 Class {
-	#name : 'HTTPClientErrorTest',
-	#superclass : 'TestCase',
-	#category : 'Hyperspace-Model-Tests-Exceptions',
-	#package : 'Hyperspace-Model-Tests',
-	#tag : 'Exceptions'
+	#name : #HTTPClientErrorTest,
+	#superclass : #TestCase,
+	#category : 'Hyperspace-Model-Tests-Exceptions'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPClientErrorTest >> testBadRequest [
 
 	self
@@ -23,7 +21,7 @@ HTTPClientErrorTest >> testBadRequest [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPClientErrorTest >> testConflict [
 
 	self
@@ -37,7 +35,7 @@ HTTPClientErrorTest >> testConflict [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPClientErrorTest >> testConvenienceHandler [
 
 	self
@@ -50,7 +48,7 @@ HTTPClientErrorTest >> testConvenienceHandler [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPClientErrorTest >> testConvenienceHandlerUsingAnotherSignal [
 
 	self
@@ -66,7 +64,7 @@ HTTPClientErrorTest >> testConvenienceHandlerUsingAnotherSignal [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPClientErrorTest >> testConvenienceHandlerWithOnExceptDo [
 
 	self
@@ -83,7 +81,7 @@ HTTPClientErrorTest >> testConvenienceHandlerWithOnExceptDo [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPClientErrorTest >> testNotFound [
 
 	self
@@ -106,7 +104,7 @@ HTTPClientErrorTest >> testNotFound [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPClientErrorTest >> testPreconditionFailed [
 
 	self
@@ -120,7 +118,7 @@ HTTPClientErrorTest >> testPreconditionFailed [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPClientErrorTest >> testPreconditionRequired [
 
 	self
@@ -134,7 +132,7 @@ HTTPClientErrorTest >> testPreconditionRequired [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPClientErrorTest >> testSignalingCustomCode [
 
 	self
@@ -153,7 +151,7 @@ HTTPClientErrorTest >> testSignalingCustomCode [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPClientErrorTest >> testTooManyRequests [
 
 	self
@@ -167,7 +165,7 @@ HTTPClientErrorTest >> testTooManyRequests [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPClientErrorTest >> testUnprocessableEntity [
 
 	self
@@ -181,7 +179,7 @@ HTTPClientErrorTest >> testUnprocessableEntity [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPClientErrorTest >> testUnsupportedMediaType [
 
 	self

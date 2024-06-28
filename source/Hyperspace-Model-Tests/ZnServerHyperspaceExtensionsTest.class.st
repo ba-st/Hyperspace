@@ -1,12 +1,10 @@
 Class {
-	#name : 'ZnServerHyperspaceExtensionsTest',
-	#superclass : 'TestCase',
-	#category : 'Hyperspace-Model-Tests-Zinc',
-	#package : 'Hyperspace-Model-Tests',
-	#tag : 'Zinc'
+	#name : #ZnServerHyperspaceExtensionsTest,
+	#superclass : #TestCase,
+	#category : 'Hyperspace-Model-Tests-Zinc'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 ZnServerHyperspaceExtensionsTest >> testSetLogLevelAtLeastTo [
 
 	| server |

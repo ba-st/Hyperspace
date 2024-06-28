@@ -2,19 +2,18 @@
 A SafeCURIETest is a test class for testing the behavior of SafeCURIE
 "
 Class {
-	#name : 'SafeCURIETest',
-	#superclass : 'AbstractCURIETest',
-	#category : 'Hyperspace-Model-Tests',
-	#package : 'Hyperspace-Model-Tests'
+	#name : #SafeCURIETest,
+	#superclass : #AbstractCURIETest,
+	#category : 'Hyperspace-Model-Tests'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 SafeCURIETest >> curieClass [
 
   ^ SafeCURIE
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 SafeCURIETest >> testAsSafeCURIE [
 
   | curie |
@@ -23,7 +22,7 @@ SafeCURIETest >> testAsSafeCURIE [
   self assert: curie asSafeCURIE equals: curie
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 SafeCURIETest >> testFromString [
 
   | curie |
@@ -34,7 +33,7 @@ SafeCURIETest >> testFromString [
     assertUrl: curie relativeReference equals: 'octocat' asUrl / 'tokens'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 SafeCURIETest >> testParsingErrors [
 
   self
@@ -61,7 +60,7 @@ SafeCURIETest >> testParsingErrors [
     withMessageText: 'Cannot create a CURIE from "users"'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 SafeCURIETest >> testPrinting [
 
   | curie curieWithPath curieWithFragment |

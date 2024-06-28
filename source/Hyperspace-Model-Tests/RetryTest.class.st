@@ -2,32 +2,30 @@
 A RetryTest is a test class for testing the behavior of Retry
 "
 Class {
-	#name : 'RetryTest',
-	#superclass : 'TestCase',
-	#category : 'Hyperspace-Model-Tests-Resilience',
-	#package : 'Hyperspace-Model-Tests',
-	#tag : 'Resilience'
+	#name : #RetryTest,
+	#superclass : #TestCase,
+	#category : 'Hyperspace-Model-Tests-Resilience'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 RetryTest >> expectedError [
 
 	^ HTTPClientError badRequest
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RetryTest >> shouldRaiseExpectedError: aBlock [
 
 	self should: aBlock raise: self expectedError withMessageText: 'Too bad'
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RetryTest >> signalExpectedError [
 
 	^ self expectedError signal: 'Too bad'
 ]
 
-{ #category : 'tests - configuring retry count' }
+{ #category : #'tests - configuring retry count' }
 RetryTest >> testCannotUseNegativeRetries [
 
 	self should: [ Retry value: [  ] configuredBy: [ :retry | retry upTo: -1 ] ]
@@ -35,7 +33,7 @@ RetryTest >> testCannotUseNegativeRetries [
 		withMessageText: 'The maximum number of retries must be strictly positive.'
 ]
 
-{ #category : 'tests - configuring retry count' }
+{ #category : #'tests - configuring retry count' }
 RetryTest >> testCannotUseZeroRetries [
 
 	self should: [ Retry value: [  ] configuredBy: [ :retry | retry upTo: 0 ] ]
@@ -43,7 +41,7 @@ RetryTest >> testCannotUseZeroRetries [
 		withMessageText: 'The maximum number of retries must be strictly positive.'
 ]
 
-{ #category : 'tests - configuring retry count' }
+{ #category : #'tests - configuring retry count' }
 RetryTest >> testConfiguringRetryCountWhenRetriesNotNeeded [
 
 	| count |
@@ -55,7 +53,7 @@ RetryTest >> testConfiguringRetryCountWhenRetriesNotNeeded [
 	self assert: count equals: 1
 ]
 
-{ #category : 'tests - configuring wait time' }
+{ #category : #'tests - configuring wait time' }
 RetryTest >> testEvery [
 
 	| count runtime |
@@ -82,7 +80,7 @@ RetryTest >> testEvery [
 		assert: runtime milliSeconds >= 200 milliSeconds
 ]
 
-{ #category : 'tests - configuring wait time' }
+{ #category : #'tests - configuring wait time' }
 RetryTest >> testExponentialBackoff [
 
 	| count runtime |
@@ -109,7 +107,7 @@ RetryTest >> testExponentialBackoff [
 		assert: runtime milliSeconds >= (50 + 150) milliSeconds
 ]
 
-{ #category : 'tests - configuring wait time' }
+{ #category : #'tests - configuring wait time' }
 RetryTest >> testExponentialBackoffWithDefaultRandomGenerator [
 
 	| count |
@@ -132,7 +130,7 @@ RetryTest >> testExponentialBackoffWithDefaultRandomGenerator [
 	self assert: count equals: 3
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RetryTest >> testHooksOnRetries [
 
 	| count exceptionsDrivingRetries resultsDrivingRetries |
@@ -170,7 +168,7 @@ RetryTest >> testHooksOnRetries [
 		assertCollection: resultsDrivingRetries hasSameElements: #( 1 3 )
 ]
 
-{ #category : 'tests - configuring condition' }
+{ #category : #'tests - configuring condition' }
 RetryTest >> testHooksOnRetriesDueToCondition [
 
 	| count resultsDrivingRetries |
@@ -197,7 +195,7 @@ RetryTest >> testHooksOnRetriesDueToCondition [
 		assertCollection: resultsDrivingRetries hasSameElements: #( 1 2 3 )
 ]
 
-{ #category : 'tests - configuring errors' }
+{ #category : #'tests - configuring errors' }
 RetryTest >> testHooksOnRetriesDueToExpectedErrorRaised [
 
 	| count exceptionsDrivingRetries |
@@ -232,7 +230,7 @@ RetryTest >> testHooksOnRetriesDueToExpectedErrorRaised [
 			]
 ]
 
-{ #category : 'tests - configuring errors' }
+{ #category : #'tests - configuring errors' }
 RetryTest >> testIgnoreWhenExpectedErrorIsRaised [
 
 	| count |
@@ -256,7 +254,7 @@ RetryTest >> testIgnoreWhenExpectedErrorIsRaised [
 	self assert: count equals: 2
 ]
 
-{ #category : 'tests - configuring errors' }
+{ #category : #'tests - configuring errors' }
 RetryTest >> testIgnoreWhenUnexpectedErrorIsRaised [
 
 	| count |
@@ -282,7 +280,7 @@ RetryTest >> testIgnoreWhenUnexpectedErrorIsRaised [
 	self assert: count equals: 1
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RetryTest >> testMaximumNumberOfAttemptsIsSurpassed [
 
 	| count |
@@ -299,7 +297,7 @@ RetryTest >> testMaximumNumberOfAttemptsIsSurpassed [
 	self assert: count equals: Retry defaultMaximumNumberOfAttempts
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RetryTest >> testNoNeedToRetry [
 
 	| count |
@@ -311,7 +309,7 @@ RetryTest >> testNoNeedToRetry [
 	self assert: count equals: 1
 ]
 
-{ #category : 'tests - configuring errors' }
+{ #category : #'tests - configuring errors' }
 RetryTest >> testOnWhenExpectedErrorIsRaised [
 
 	| count |
@@ -334,7 +332,7 @@ RetryTest >> testOnWhenExpectedErrorIsRaised [
 	self assert: count equals: 2
 ]
 
-{ #category : 'tests - configuring errors' }
+{ #category : #'tests - configuring errors' }
 RetryTest >> testOnWhenExpectedErrorIsRaisedAndSeveralErrorsHandled [
 
 	| count |
@@ -374,7 +372,7 @@ RetryTest >> testOnWhenExpectedErrorIsRaisedAndSeveralErrorsHandled [
 	self assert: count equals: 4
 ]
 
-{ #category : 'tests - configuring errors' }
+{ #category : #'tests - configuring errors' }
 RetryTest >> testOnWhenUnexpectedErrorIsRaised [
 
 	| count |
@@ -399,7 +397,7 @@ RetryTest >> testOnWhenUnexpectedErrorIsRaised [
 	self assert: count equals: 1
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RetryTest >> testRetryOnce [
 
 	| count |
@@ -414,7 +412,7 @@ RetryTest >> testRetryOnce [
 	self assert: count equals: 2
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RetryTest >> testReturnValue [
 
 	| count result |
@@ -430,7 +428,7 @@ RetryTest >> testReturnValue [
 	self assert: result equals: 2
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RetryTest >> testReturnValueWhenNotRetrying [
 
 	| count result |
@@ -445,7 +443,7 @@ RetryTest >> testReturnValueWhenNotRetrying [
 	self assert: result equals: 1
 ]
 
-{ #category : 'tests - configuring retry count' }
+{ #category : #'tests - configuring retry count' }
 RetryTest >> testUpTo [
 
 	| count |
@@ -468,7 +466,7 @@ RetryTest >> testUpTo [
 	self assert: count equals: 2
 ]
 
-{ #category : 'tests - configuring wait time' }
+{ #category : #'tests - configuring wait time' }
 RetryTest >> testUpToTimesEvery [
 
 	| count runtime |
@@ -495,7 +493,7 @@ RetryTest >> testUpToTimesEvery [
 		assert: runtime milliSeconds >= 300 milliSeconds
 ]
 
-{ #category : 'tests - configuring condition' }
+{ #category : #'tests - configuring condition' }
 RetryTest >> testWhen [
 
 	| count |
@@ -516,7 +514,7 @@ RetryTest >> testWhen [
 	self assert: count equals: 4
 ]
 
-{ #category : 'tests - configuring condition' }
+{ #category : #'tests - configuring condition' }
 RetryTest >> testWhenConditionNotUsed [
 
 	| count |
@@ -537,7 +535,7 @@ RetryTest >> testWhenConditionNotUsed [
 	self assert: count equals: 1
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RetryTest >> unexpectedError [
 
 	^ HTTPServerError

@@ -2,14 +2,12 @@
 I'm a test case for WebLink
 "
 Class {
-	#name : 'WebLinkTest',
-	#superclass : 'TestCase',
-	#category : 'Hyperspace-Model-Tests-IETF',
-	#package : 'Hyperspace-Model-Tests',
-	#tag : 'IETF'
+	#name : #WebLinkTest,
+	#superclass : #TestCase,
+	#category : 'Hyperspace-Model-Tests-IETF'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 WebLinkTest >> checkCollectionLinkRelationsOn: link [
 
 	self
@@ -17,7 +15,7 @@ WebLinkTest >> checkCollectionLinkRelationsOn: link [
 		assert: link toCollection relationType equals: 'collection'
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 WebLinkTest >> checkLegalLinkRelationsOn: link [
 
 	self
@@ -26,7 +24,7 @@ WebLinkTest >> checkLegalLinkRelationsOn: link [
 		assert: link toCopyright relationType equals: 'copyright'
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 WebLinkTest >> checkNavigationLinkRelationsOn: link [
 
 	self
@@ -37,7 +35,7 @@ WebLinkTest >> checkNavigationLinkRelationsOn: link [
 		assert: link toParent relationType equals: 'up'
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 WebLinkTest >> checkVersionNavigationLinkRelationsOn: link [
 
 	"Version Navigation Link Relations. See RFC 5829"
@@ -51,13 +49,13 @@ WebLinkTest >> checkVersionNavigationLinkRelationsOn: link [
 		assert: link toWorkingCopyOrigin relationType equals: 'working-copy-of'
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 WebLinkTest >> googleUrl [
 
 	^ 'https://google.com' asUrl
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testAccessing [
 
 	| link |
@@ -83,7 +81,7 @@ WebLinkTest >> testAccessing [
 			'<https://google.com/>;rel=search;title=Google Search;hreflang=en;type=text/html;media=screen'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testAsByteArray [
 
 	self
@@ -92,7 +90,7 @@ WebLinkTest >> testAsByteArray [
 		equals: '<https://google.com/>;rel=search' asByteArray
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testComparing [
 
 	| googleLink other |
@@ -109,7 +107,7 @@ WebLinkTest >> testComparing [
 	self deny: googleLink equals: other
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testComplexMediaTypeHint [
 
 	| link mediaType |
@@ -125,7 +123,7 @@ WebLinkTest >> testComplexMediaTypeHint [
 		equals: '<https://google.com/>;type="application/vnd.stargate.pet+json;version=2.0.0"'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testCopying [
 
 	| googleLink copy |
@@ -143,7 +141,7 @@ WebLinkTest >> testCopying [
 		assert: copy hasParameters
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testExtensionRelationTypes [
   "Extension relation types can be URIs or CURIEs.
 	See https://datatracker.ietf.org/doc/html/rfc5988#section-4.2"
@@ -172,7 +170,7 @@ WebLinkTest >> testExtensionRelationTypes [
     equals: '<https://google.com/>;rel=[docs:link-relations#create-person]'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testFromString [
 
 	| link parsedLink |
@@ -187,7 +185,7 @@ WebLinkTest >> testFromString [
 	self assert: link equals: parsedLink
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testLanguageHints [
 
 	| link |
@@ -199,7 +197,7 @@ WebLinkTest >> testLanguageHints [
 	self assert: link printString equals: '<https://google.com/>;hreflang=en-US;hreflang=es-AR'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testMediaQueryHint [
 
 	| link |
@@ -211,7 +209,7 @@ WebLinkTest >> testMediaQueryHint [
 	self assert: link printString equals: '<https://google.com/>;media="screen, print"'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testMediaTypeHint [
 
 	| link |
@@ -222,7 +220,7 @@ WebLinkTest >> testMediaTypeHint [
 	self assert: link printString equals: '<https://google.com/>;type=application/json'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testParameters [
 
 	| link |
@@ -239,7 +237,7 @@ WebLinkTest >> testParameters [
 	self assert: ( link parameterAt: 'foo' ifAbsent: [ #none ] ) equals: #none
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testParsingComplexLink [
 
 	| link |
@@ -257,7 +255,7 @@ WebLinkTest >> testParsingComplexLink [
 	self assert: link printString asWebLink equals: link
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testParsingErrors [
 
 	self
@@ -288,7 +286,7 @@ WebLinkTest >> testParsingErrors [
 			withMessageText: 'Invalid parameter format.'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testPrinting [
 
 	self
@@ -298,7 +296,7 @@ WebLinkTest >> testPrinting [
 		equals: '<https://google.com/>;rel=search'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 WebLinkTest >> testWellKnownRelationTypes [
 
 	| link |

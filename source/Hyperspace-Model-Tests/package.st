@@ -1,1 +1,1 @@
-Package { #name : 'Hyperspace-Model-Tests' }
+Package { #name : #'Hyperspace-Model-Tests' }

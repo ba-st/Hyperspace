@@ -2,19 +2,18 @@
 A CompactURITest is a test class for testing the behavior of CompactURI
 "
 Class {
-	#name : 'CURIETest',
-	#superclass : 'AbstractCURIETest',
-	#category : 'Hyperspace-Model-Tests',
-	#package : 'Hyperspace-Model-Tests'
+	#name : #CURIETest,
+	#superclass : #AbstractCURIETest,
+	#category : 'Hyperspace-Model-Tests'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 CURIETest >> curieClass [
 
   ^ CURIE
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 CURIETest >> testAsSafeCURIE [
 
   self
@@ -22,7 +21,7 @@ CURIETest >> testAsSafeCURIE [
     equals: '[users:octocat]'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 CURIETest >> testFromString [
 
   | curie |
@@ -33,7 +32,7 @@ CURIETest >> testFromString [
     assertUrl: curie relativeReference equals: 'octocat' asUrl / 'tokens'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 CURIETest >> testParsingErrors [
 
   self
@@ -51,7 +50,7 @@ CURIETest >> testParsingErrors [
     withMessageText: 'Cannot create a CURIE from "users"'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 CURIETest >> testPrinting [
 
   | curie curieWithPath curieWithFragment |

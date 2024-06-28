@@ -1,12 +1,10 @@
 Class {
-	#name : 'HTTPNotAcceptableTest',
-	#superclass : 'TestCase',
-	#category : 'Hyperspace-Model-Tests-Exceptions',
-	#package : 'Hyperspace-Model-Tests',
-	#tag : 'Exceptions'
+	#name : #HTTPNotAcceptableTest,
+	#superclass : #TestCase,
+	#category : 'Hyperspace-Model-Tests-Exceptions'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPNotAcceptableTest >> testSignaling [
 
 	self

@@ -2,14 +2,12 @@
 A HTTPServerErrorTest is a test class for testing the behavior of HTTPServerError
 "
 Class {
-	#name : 'HTTPServerErrorTest',
-	#superclass : 'TestCase',
-	#category : 'Hyperspace-Model-Tests-Exceptions',
-	#package : 'Hyperspace-Model-Tests',
-	#tag : 'Exceptions'
+	#name : #HTTPServerErrorTest,
+	#superclass : #TestCase,
+	#category : 'Hyperspace-Model-Tests-Exceptions'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPServerErrorTest >> testConvenienceHandler [
 
 	self
@@ -22,7 +20,7 @@ HTTPServerErrorTest >> testConvenienceHandler [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPServerErrorTest >> testConvenienceHandlerUsingAnotherSignal [
 
 	self
@@ -34,7 +32,7 @@ HTTPServerErrorTest >> testConvenienceHandlerUsingAnotherSignal [
 		withExceptionDo: [ :signal | self assert: signal code equals: 503 ]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPServerErrorTest >> testExceptionExclusion [
 
 	self
@@ -58,7 +56,7 @@ HTTPServerErrorTest >> testExceptionExclusion [
 		withExceptionDo: [ :signal | self assert: signal code equals: 503 ]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPServerErrorTest >> testInternalServerError [
 
 	self
@@ -72,7 +70,7 @@ HTTPServerErrorTest >> testInternalServerError [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPServerErrorTest >> testInternalServerErrorDefaultMessageText [
 
 	self
@@ -86,7 +84,7 @@ HTTPServerErrorTest >> testInternalServerErrorDefaultMessageText [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPServerErrorTest >> testServiceUnavailable [
 
 	self
@@ -100,7 +98,7 @@ HTTPServerErrorTest >> testServiceUnavailable [
 			]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 HTTPServerErrorTest >> testServiceUnavailableDefaultMessageText [
 
 	self

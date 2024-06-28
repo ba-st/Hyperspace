@@ -26,7 +26,7 @@ ZnEventToLogRecordControllerTest >> runMemoryLoggerDuring: aBlock assertingLogRe
 
   loggingAsserter
     runMemoryLoggerDuring: aBlock;
-    assertLogRecordsMatchRegexes: expectedLogEntriesWithTimestamp
+    assertLogRecordsMatchUsing: expectedLogEntriesWithTimestamp
 ]
 
 { #category : #running }

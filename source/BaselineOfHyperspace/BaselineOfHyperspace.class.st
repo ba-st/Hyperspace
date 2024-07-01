@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfHyperspace,
-	#superclass : #BaselineOf,
-	#category : 'BaselineOfHyperspace'
+	#name : 'BaselineOfHyperspace',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfHyperspace',
+	#package : 'BaselineOfHyperspace'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfHyperspace >> baseline: spec [
 
 	<baseline>
@@ -27,13 +28,13 @@ BaselineOfHyperspace >> baseline: spec [
 	spec for: #'pharo10.x' do: [ self setUpPharo10Packages: spec ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfHyperspace >> projectClass [
 
 	^ MetacelloCypressBaselineProject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BaselineOfHyperspace >> setUpDependencies: spec [
 
   spec
@@ -51,7 +52,7 @@ BaselineOfHyperspace >> setUpDependencies: spec [
     project: 'Bell-SUnit' copyFrom: 'Bell' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BaselineOfHyperspace >> setUpPackages: spec [
 
 	spec
@@ -79,10 +80,10 @@ BaselineOfHyperspace >> setUpPackages: spec [
 		with: [ spec requires: 'Hyperspace-SUnit-Model' ];
 		group: 'Tests' with: 'Hyperspace-SUnit-Model-Tests'.
 
-	spec group: 'Tools' with: 'Buoy-Tools'
+	spec group: 'Tools' with: 'Buoy-Tools' 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BaselineOfHyperspace >> setUpPharo10Packages: spec [
 
 	spec

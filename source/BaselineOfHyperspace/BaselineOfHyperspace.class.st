@@ -1,7 +1,7 @@
 Class {
 	#name : #BaselineOfHyperspace,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfHyperspace
+	#category : 'BaselineOfHyperspace'
 }
 
 { #category : #baselines }
@@ -36,19 +36,19 @@ BaselineOfHyperspace >> projectClass [
 { #category : #initialization }
 BaselineOfHyperspace >> setUpDependencies: spec [
 
-	spec
-		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v7' ];
-		project: 'Buoy-Deployment' copyFrom: 'Buoy' with: [ spec loads: 'Deployment' ];
-		project: 'Buoy-SUnit' copyFrom: 'Buoy' with: [ spec loads: 'Dependent-SUnit-Extensions' ];
-		project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ].
-	spec
-		baseline: 'ZincHTTPComponents' with: [ spec repository: 'github://svenvc/zinc' ];
-		project: 'Zinc-Core' copyFrom: 'ZincHTTPComponents' with: [ spec loads: 'Core' ].
+  spec
+    baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v7' ];
+    project: 'Buoy-Deployment' copyFrom: 'Buoy' with: [ spec loads: 'Deployment' ];
+    project: 'Buoy-SUnit' copyFrom: 'Buoy' with: [ spec loads: 'Dependent-SUnit-Extensions' ];
+    project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ].
+  spec
+    baseline: 'ZincHTTPComponents' with: [ spec repository: 'github://svenvc/zinc' ];
+    project: 'Zinc-Core' copyFrom: 'ZincHTTPComponents' with: [ spec loads: 'Core' ].
 
-	spec
-		baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:regex-support' ];
-		project: 'Bell-Deployment' copyFrom: 'Bell' with: [ spec loads: 'Deployment' ]; 
-		project: 'Bell-SUnit' copyFrom: 'Bell' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
+  spec
+    baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:v2' ];
+    project: 'Bell-Deployment' copyFrom: 'Bell' with: [ spec loads: 'Deployment' ];
+    project: 'Bell-SUnit' copyFrom: 'Bell' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
 ]
 
 { #category : #initialization }

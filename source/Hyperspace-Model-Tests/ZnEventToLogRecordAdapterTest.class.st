@@ -1,5 +1,5 @@
 Class {
-	#name : #ZnEventToLogRecordControllerTest,
+	#name : #ZnEventToLogRecordAdapterTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'loggingAsserter',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #private }
-ZnEventToLogRecordControllerTest >> addTimestampRegexTo: aLogEntryCollection [
+ZnEventToLogRecordAdapterTest >> addTimestampRegexTo: aLogEntryCollection [
 
   ^ aLogEntryCollection collect: [ :regexExpression |
         '\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}(\.\d+)?(\+|-)(\d+\:\d+) <1s>' expandMacrosWith:
@@ -18,7 +18,7 @@ ZnEventToLogRecordControllerTest >> addTimestampRegexTo: aLogEntryCollection [
 ]
 
 { #category : #private }
-ZnEventToLogRecordControllerTest >> runMemoryLoggerDuring: aBlock assertingLogRecordsMatchRegexes: expectedLogEntries [
+ZnEventToLogRecordAdapterTest >> runMemoryLoggerDuring: aBlock assertingLogRecordsMatchRegexes: expectedLogEntries [
 
   | expectedLogEntriesWithTimestamp |
 
@@ -30,7 +30,7 @@ ZnEventToLogRecordControllerTest >> runMemoryLoggerDuring: aBlock assertingLogRe
 ]
 
 { #category : #running }
-ZnEventToLogRecordControllerTest >> setUp [
+ZnEventToLogRecordAdapterTest >> setUp [
 
 	super setUp.
 	loggingAsserter := LoggingAsserter on: self.
@@ -38,7 +38,7 @@ ZnEventToLogRecordControllerTest >> setUp [
 ]
 
 { #category : #running }
-ZnEventToLogRecordControllerTest >> tearDown [
+ZnEventToLogRecordAdapterTest >> tearDown [
 
 	zincEventToLogRecordAdapter stopListeners.
 	loggingAsserter stopLoggers.
@@ -47,7 +47,7 @@ ZnEventToLogRecordControllerTest >> tearDown [
 ]
 
 { #category : #running }
-ZnEventToLogRecordControllerTest >> testLogsOfIncomingGetRequest [
+ZnEventToLogRecordAdapterTest >> testLogsOfIncomingGetRequest [
 
   zincEventToLogRecordAdapter
     logIncomingRequests: true;
@@ -75,7 +75,7 @@ ZnEventToLogRecordControllerTest >> testLogsOfIncomingGetRequest [
 ]
 
 { #category : #running }
-ZnEventToLogRecordControllerTest >> testLogsOfIncomingPostRequest [
+ZnEventToLogRecordAdapterTest >> testLogsOfIncomingPostRequest [
 
 	zincEventToLogRecordAdapter
 		logIncomingRequests: true;
@@ -103,7 +103,7 @@ ZnEventToLogRecordControllerTest >> testLogsOfIncomingPostRequest [
 ]
 
 { #category : #running }
-ZnEventToLogRecordControllerTest >> testLogsOfOutgoingGetRequest [
+ZnEventToLogRecordAdapterTest >> testLogsOfOutgoingGetRequest [
 
 	zincEventToLogRecordAdapter
 		logOutgoingRequests: true;
@@ -130,7 +130,7 @@ ZnEventToLogRecordControllerTest >> testLogsOfOutgoingGetRequest [
 ]
 
 { #category : #running }
-ZnEventToLogRecordControllerTest >> testLogsOfOutgoingPostRequest [
+ZnEventToLogRecordAdapterTest >> testLogsOfOutgoingPostRequest [
 
 	zincEventToLogRecordAdapter
 		logOutgoingRequests: true;
@@ -156,6 +156,6 @@ ZnEventToLogRecordControllerTest >> testLogsOfOutgoingPostRequest [
 ]
 
 { #category : #enumerating }
-ZnEventToLogRecordControllerTest >> withServerDo: block [
+ZnEventToLogRecordAdapterTest >> withServerDo: block [
 	ZnServer withOSAssignedPortDo: block
 ]

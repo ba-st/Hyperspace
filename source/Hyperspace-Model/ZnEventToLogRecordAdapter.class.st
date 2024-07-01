@@ -1,15 +1,16 @@
 Class {
-	#name : #ZnEventToLogRecordAdapter,
-	#superclass : #Object,
+	#name : 'ZnEventToLogRecordAdapter',
+	#superclass : 'Object',
 	#instVars : [
 		'logOutgoingRequests',
 		'logIncomingRequests',
 		'subscriptions'
 	],
-	#category : #'Hyperspace-Model'
+	#category : 'Hyperspace-Model',
+	#package : 'Hyperspace-Model'
 }
 
-{ #category : #'private - dumping' }
+{ #category : 'private - dumping' }
 ZnEventToLogRecordAdapter >> asStructuredRequest: aZnRequest [
 
 	| json |
@@ -21,7 +22,7 @@ ZnEventToLogRecordAdapter >> asStructuredRequest: aZnRequest [
 	^json
 ]
 
-{ #category : #'private - dumping' }
+{ #category : 'private - dumping' }
 ZnEventToLogRecordAdapter >> asStructuredResponse: aZnResponse [
 
 	| json |
@@ -33,7 +34,7 @@ ZnEventToLogRecordAdapter >> asStructuredResponse: aZnResponse [
 	^json
 ]
 
-{ #category : #'private - dumping' }
+{ #category : 'private - dumping' }
 ZnEventToLogRecordAdapter >> dumpConnectionEvent: aZnServerConnectionClosedEvent on: data [
 
   data
@@ -42,7 +43,7 @@ ZnEventToLogRecordAdapter >> dumpConnectionEvent: aZnServerConnectionClosedEvent
     at: #eventId put: aZnServerConnectionClosedEvent id
 ]
 
-{ #category : #'private - dumping' }
+{ #category : 'private - dumping' }
 ZnEventToLogRecordAdapter >> dumpRequestAndResponseOf: event on: json [
 
 	| response |
@@ -55,7 +56,7 @@ ZnEventToLogRecordAdapter >> dumpRequestAndResponseOf: event on: json [
 	^json
 ]
 
-{ #category : #'private - dumping' }
+{ #category : 'private - dumping' }
 ZnEventToLogRecordAdapter >> dumpRequestOf: event on: json [
 
 	json
@@ -67,17 +68,17 @@ ZnEventToLogRecordAdapter >> dumpRequestOf: event on: json [
 	^json
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ZnEventToLogRecordAdapter >> initialize [
 
 	super initialize.
 
 	logOutgoingRequests := false.
 	logIncomingRequests := false.
-	subscriptions := OrderedCollection new
+	subscriptions := OrderedCollection new 
 ]
 
-{ #category : #'private - dumping' }
+{ #category : 'private - dumping' }
 ZnEventToLogRecordAdapter >> ipAddressToString: aZnServerConnectionClosedEvent [
 
   ^ aZnServerConnectionClosedEvent address isString
@@ -85,19 +86,19 @@ ZnEventToLogRecordAdapter >> ipAddressToString: aZnServerConnectionClosedEvent [
       otherwise: [ ZnNetworkingUtils ipAddressToString: aZnServerConnectionClosedEvent address ]
 ]
 
-{ #category : #'private - configuring' }
+{ #category : 'private - configuring' }
 ZnEventToLogRecordAdapter >> logIncomingRequests: aBoolean [
 
 	logIncomingRequests := aBoolean
 ]
 
-{ #category : #'private - configuring' }
+{ #category : 'private - configuring' }
 ZnEventToLogRecordAdapter >> logOutgoingRequests: aBoolean [
 
 	logOutgoingRequests := aBoolean
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ZnEventToLogRecordAdapter >> startUpIncomingRequestListeners [
 
 	self subscribeToEventsOf: ZnServerConnectionClosedEvent andDo: [ :event |
@@ -118,7 +119,7 @@ ZnEventToLogRecordAdapter >> startUpIncomingRequestListeners [
 		]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ZnEventToLogRecordAdapter >> startUpListeners [
 
 	logOutgoingRequests then: [ self startUpOutgoingRequestListeners ].
@@ -126,7 +127,7 @@ ZnEventToLogRecordAdapter >> startUpListeners [
 	logIncomingRequests then: [ self startUpIncomingRequestListeners ]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ZnEventToLogRecordAdapter >> startUpOutgoingRequestListeners [
 
 	self subscribeToEventsOf: ZnRequestWrittenEvent andDo: [ :event |
@@ -139,13 +140,13 @@ ZnEventToLogRecordAdapter >> startUpOutgoingRequestListeners [
 		]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ZnEventToLogRecordAdapter >> stopListeners [
 
 	subscriptions do: [:subscription | ZnLogEvent announcer removeSubscription: subscription]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ZnEventToLogRecordAdapter >> subscribeToEventsOf: anEventType andDo: aBlock [
 
   subscriptions add: ( ZnLogEvent announcer when: anEventType do: aBlock for: self )

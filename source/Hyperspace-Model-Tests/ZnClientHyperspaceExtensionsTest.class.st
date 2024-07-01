@@ -1,10 +1,12 @@
 Class {
-	#name : #ZnClientHyperspaceExtensionsTest,
-	#superclass : #TestCase,
-	#category : 'Hyperspace-Model-Tests-Zinc'
+	#name : 'ZnClientHyperspaceExtensionsTest',
+	#superclass : 'TestCase',
+	#category : 'Hyperspace-Model-Tests-Zinc',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'Zinc'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZnClientHyperspaceExtensionsTest >> handleRequest: request [
 
 	self
@@ -13,7 +15,7 @@ ZnClientHyperspaceExtensionsTest >> handleRequest: request [
 	^ ZnResponse ok: (ZnEntity text: 'hello')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnClientHyperspaceExtensionsTest >> testQuery [
 
 	| server port |
@@ -34,7 +36,7 @@ ZnClientHyperspaceExtensionsTest >> testQuery [
 	] ensure: [ server stop ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnClientHyperspaceExtensionsTest >> testResetRequest [
 
 	| client |
@@ -47,7 +49,7 @@ ZnClientHyperspaceExtensionsTest >> testResetRequest [
 	self assert: client request url isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnClientHyperspaceExtensionsTest >> testSetAccept [
 
 	| client |
@@ -59,7 +61,7 @@ ZnClientHyperspaceExtensionsTest >> testSetAccept [
 	self assert: client request accept equals: ZnMimeType applicationPdf asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnClientHyperspaceExtensionsTest >> testSetIfMatchTo [
 
 	| client |
@@ -71,7 +73,7 @@ ZnClientHyperspaceExtensionsTest >> testSetIfMatchTo [
 	self assert: ( client request headers at: 'If-Match' ) equals: '"12345"'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnClientHyperspaceExtensionsTest >> testSetIfNoneMatchTo [
 
 	| client |
@@ -83,7 +85,7 @@ ZnClientHyperspaceExtensionsTest >> testSetIfNoneMatchTo [
 	self assert: ( client request headers at: 'If-None-Match' ) equals: '"12345"'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnClientHyperspaceExtensionsTest >> testSetLogLevelAtLeastTo [
 
 	| client |

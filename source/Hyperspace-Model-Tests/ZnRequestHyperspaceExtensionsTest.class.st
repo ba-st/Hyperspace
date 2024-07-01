@@ -1,16 +1,18 @@
 Class {
-	#name : #ZnRequestHyperspaceExtensionsTest,
-	#superclass : #TestCase,
-	#category : 'Hyperspace-Model-Tests-Zinc'
+	#name : 'ZnRequestHyperspaceExtensionsTest',
+	#superclass : 'TestCase',
+	#category : 'Hyperspace-Model-Tests-Zinc',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'Zinc'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZnRequestHyperspaceExtensionsTest >> googleUrl [
 
 	^ 'https://google.com' asUrl
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnRequestHyperspaceExtensionsTest >> testAcceptLanguage [
 
 	| request |
@@ -24,7 +26,7 @@ ZnRequestHyperspaceExtensionsTest >> testAcceptLanguage [
 	self should: [ ( ZnRequest get: self googleUrl ) acceptLanguage ] raise: KeyNotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnRequestHyperspaceExtensionsTest >> testHasLanguageProrityList [
 
 	| request |
@@ -38,7 +40,7 @@ ZnRequestHyperspaceExtensionsTest >> testHasLanguageProrityList [
 		deny: ( ZnRequest get: self googleUrl ) hasLanguageProrityList
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnRequestHyperspaceExtensionsTest >> testIfMatch [
 
 	| request |
@@ -50,7 +52,7 @@ ZnRequestHyperspaceExtensionsTest >> testIfMatch [
 	self assert: ( request headers at: 'If-Match' ) equals: '"12345"'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnRequestHyperspaceExtensionsTest >> testIfNoneMatch [
 
 	| request |
@@ -62,7 +64,7 @@ ZnRequestHyperspaceExtensionsTest >> testIfNoneMatch [
 	self assert: (request headers at: 'If-None-Match') equals: '"12345"'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnRequestHyperspaceExtensionsTest >> testQuery [
 
 	| request output |
@@ -76,7 +78,7 @@ ZnRequestHyperspaceExtensionsTest >> testQuery [
 		assert: (output includesSubstring: 'Host: google.com')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnRequestHyperspaceExtensionsTest >> testReadQueryRequest [
 
 	| request |
@@ -90,7 +92,7 @@ ZnRequestHyperspaceExtensionsTest >> testReadQueryRequest [
 		assertUrl: request host equals: 'http://google.com'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnRequestHyperspaceExtensionsTest >> testSetAcceptLanguageWithAny [
 
 	| request |
@@ -102,7 +104,7 @@ ZnRequestHyperspaceExtensionsTest >> testSetAcceptLanguageWithAny [
 	self assert: request acceptLanguage equals: '*'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnRequestHyperspaceExtensionsTest >> testSetAcceptLanguageWithLanguageTag [
 
 	| request |

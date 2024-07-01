@@ -2,18 +2,20 @@
 I'm a test case for Hyperspace's ZnEntity extensions
 "
 Class {
-	#name : #ZnEntityHyperspaceExtensionsTest,
-	#superclass : #TestCase,
-	#category : 'Hyperspace-Model-Tests-Zinc'
+	#name : 'ZnEntityHyperspaceExtensionsTest',
+	#superclass : 'TestCase',
+	#category : 'Hyperspace-Model-Tests-Zinc',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'Zinc'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnEntityHyperspaceExtensionsTest >> applicationJson [
 
 	^ 'application/json' asMediaType
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnEntityHyperspaceExtensionsTest >> testJsonExtension [
 
 	| entity |
@@ -24,7 +26,7 @@ ZnEntityHyperspaceExtensionsTest >> testJsonExtension [
 		assert: entity contentType equals: self applicationJson
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnEntityHyperspaceExtensionsTest >> testWithOfTypeExtension [
 
 	| entity |

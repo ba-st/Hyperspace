@@ -2,24 +2,25 @@
 An AbstractCURIETest is a test class for testing the behavior of AbstractCURIE
 "
 Class {
-	#name : #AbstractCURIETest,
-	#superclass : #TestCase,
-	#category : 'Hyperspace-Model-Tests'
+	#name : 'AbstractCURIETest',
+	#superclass : 'TestCase',
+	#category : 'Hyperspace-Model-Tests',
+	#package : 'Hyperspace-Model-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractCURIETest class >> isAbstract [
 
   ^ self = AbstractCURIETest
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AbstractCURIETest >> curieClass [
 
   ^ self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractCURIETest >> testAccessing [
 
   | curie |
@@ -37,7 +38,7 @@ AbstractCURIETest >> testAccessing [
     assertUrl: curie relativeReference equals: 'Person#legal' asUrl
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractCURIETest >> testAsWebLink [
 
   | curie |
@@ -45,7 +46,7 @@ AbstractCURIETest >> testAsWebLink [
   self assert: curie asWebLink equals: ( WebLink to: curie )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractCURIETest >> testCantCreateWithAbsoluteReference [
 
   self
@@ -54,7 +55,7 @@ AbstractCURIETest >> testCantCreateWithAbsoluteReference [
     withMessageText: 'https://google.com/ must be a relative reference'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractCURIETest >> testCantCreateWithEmptyPrefix [
 
   self
@@ -63,7 +64,7 @@ AbstractCURIETest >> testCantCreateWithEmptyPrefix [
     withMessageText: 'A CURIE prefix cannot be empty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractCURIETest >> testCantExpandToURIInContext [
 
   | curie |
@@ -75,7 +76,7 @@ AbstractCURIETest >> testCantExpandToURIInContext [
     withMessageText: 'Missing namespace "users"'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractCURIETest >> testCantExpandToURIInContextRecursiverly [
 
   | userCurie usersCurie context |
@@ -90,7 +91,7 @@ AbstractCURIETest >> testCantExpandToURIInContextRecursiverly [
     withMessageText: 'Missing namespace "api"'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractCURIETest >> testComparing [
 
   | curie |
@@ -106,7 +107,7 @@ AbstractCURIETest >> testComparing [
     deny: curie equals: ( self curieClass prefixedBy: 'orgs' referencing: 'octocat' asUrl )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractCURIETest >> testExpandToURIInContext [
 
   | curie context |
@@ -119,7 +120,7 @@ AbstractCURIETest >> testExpandToURIInContext [
     equals: 'https://api.github.com/users/octocat' asUrl
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractCURIETest >> testExpandToURIInContextRecursively [
 
   | usersCurie userCurie context |

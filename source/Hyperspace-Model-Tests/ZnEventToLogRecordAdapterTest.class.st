@@ -1,14 +1,16 @@
 Class {
-	#name : #ZnEventToLogRecordAdapterTest,
-	#superclass : #TestCase,
+	#name : 'ZnEventToLogRecordAdapterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'loggingAsserter',
 		'zincEventToLogRecordAdapter'
 	],
-	#category : #'Hyperspace-Model-Tests-Zinc'
+	#category : 'Hyperspace-Model-Tests-Zinc',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'Zinc'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZnEventToLogRecordAdapterTest >> addTimestampRegexTo: aLogEntryCollection [
 
   ^ aLogEntryCollection collect: [ :regexExpression |
@@ -17,7 +19,7 @@ ZnEventToLogRecordAdapterTest >> addTimestampRegexTo: aLogEntryCollection [
       ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnEventToLogRecordAdapterTest >> runMemoryLoggerDuring: aBlock assertingLogRecordsMatchRegexes: expectedLogEntries [
 
   | expectedLogEntriesWithTimestamp |
@@ -29,7 +31,7 @@ ZnEventToLogRecordAdapterTest >> runMemoryLoggerDuring: aBlock assertingLogRecor
     assertLogRecordsMatchUsing: expectedLogEntriesWithTimestamp
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZnEventToLogRecordAdapterTest >> setUp [
 
 	super setUp.
@@ -37,7 +39,7 @@ ZnEventToLogRecordAdapterTest >> setUp [
 	zincEventToLogRecordAdapter := ZnEventToLogRecordAdapter new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZnEventToLogRecordAdapterTest >> tearDown [
 
 	zincEventToLogRecordAdapter stopListeners.
@@ -46,7 +48,7 @@ ZnEventToLogRecordAdapterTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZnEventToLogRecordAdapterTest >> testLogsOfIncomingGetRequest [
 
   zincEventToLogRecordAdapter
@@ -74,7 +76,7 @@ ZnEventToLogRecordAdapterTest >> testLogsOfIncomingGetRequest [
          '\[DEBUG\] Server closed connection \{"remoteAddress"\:"127.0.0.1","processId"\:(\d+),"eventId"\:(\d+)\}' )
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZnEventToLogRecordAdapterTest >> testLogsOfIncomingPostRequest [
 
 	zincEventToLogRecordAdapter
@@ -102,7 +104,7 @@ ZnEventToLogRecordAdapterTest >> testLogsOfIncomingPostRequest [
 			   '\[DEBUG\] Server closed connection \{"remoteAddress"\:"127.0.0.1","processId"\:(\d+),"eventId"\:(\d+)\}' )
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZnEventToLogRecordAdapterTest >> testLogsOfOutgoingGetRequest [
 
 	zincEventToLogRecordAdapter
@@ -129,7 +131,7 @@ ZnEventToLogRecordAdapterTest >> testLogsOfOutgoingGetRequest [
 			   '\[DEBUG\] Outgoing HTTP request responded \{"summary"\:"\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2} ((\d+) (\d+))? GET / 200 (\d+)B (\d+)ms","durationInMilliseconds"\:(\d+),"request"\:\{"method"\:"GET","uri"\:"http\://localhost\:(\d+)/"\},"processId"\:(\d+),"eventId"\:(\d+),"response"\:\{"code"\:200,"totalSize"\:(\d+)\}\}' )
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZnEventToLogRecordAdapterTest >> testLogsOfOutgoingPostRequest [
 
 	zincEventToLogRecordAdapter
@@ -155,7 +157,8 @@ ZnEventToLogRecordAdapterTest >> testLogsOfOutgoingPostRequest [
 			   '\[DEBUG\] Outgoing HTTP request responded \{"summary"\:"\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2} ((\d+) (\d+))? POST / 200 (\d+)B (\d+)ms","durationInMilliseconds"\:(\d+),"request"\:\{"method"\:"POST","uri"\:"http\://localhost\:(\d+)/"\},"processId"\:(\d+),"eventId"\:(\d+),"response"\:\{"code"\:200,"totalSize"\:(\d+)\}\}' )
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ZnEventToLogRecordAdapterTest >> withServerDo: block [
+
 	ZnServer withOSAssignedPortDo: block
 ]

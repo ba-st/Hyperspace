@@ -1,10 +1,12 @@
 Class {
-	#name : #ZnMimeTypeHyperspaceExtensionsTest,
-	#superclass : #TestCase,
-	#category : 'Hyperspace-Model-Tests-Zinc'
+	#name : 'ZnMimeTypeHyperspaceExtensionsTest',
+	#superclass : 'TestCase',
+	#category : 'Hyperspace-Model-Tests-Zinc',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'Zinc'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnMimeTypeHyperspaceExtensionsTest >> testComparingWithParameters [
 
 	| mimeType equalMimeType |

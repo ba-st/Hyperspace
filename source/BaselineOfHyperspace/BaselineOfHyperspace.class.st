@@ -46,7 +46,7 @@ BaselineOfHyperspace >> setUpDependencies: spec [
 		project: 'Zinc-Core' copyFrom: 'ZincHTTPComponents' with: [ spec loads: 'Core' ].
 
 	spec
-		baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:regex-support' ];
+		baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:v2' ];
 		project: 'Bell-Deployment' copyFrom: 'Bell' with: [ spec loads: 'Deployment' ]; 
 		project: 'Bell-SUnit' copyFrom: 'Bell' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
 ]

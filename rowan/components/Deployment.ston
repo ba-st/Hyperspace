@@ -1,7 +1,8 @@
 RwSimpleProjectLoadComponentV2 {
   #name : 'Deployment',
   #projectNames : [
-    'Zinc'
+    'Zinc',
+    'Bell'
   ],
   #componentNames : [	],
   #packageNames : [

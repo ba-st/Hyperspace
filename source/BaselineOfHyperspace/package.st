@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfHyperspace }
+Package { #name : 'BaselineOfHyperspace' }

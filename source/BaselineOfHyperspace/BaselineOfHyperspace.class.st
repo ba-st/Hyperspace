@@ -38,7 +38,7 @@ BaselineOfHyperspace >> projectClass [
 BaselineOfHyperspace >> setUpDependencies: spec [
 
   spec
-    baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v7' ];
+    baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v8' ];
     project: 'Buoy-Deployment' copyFrom: 'Buoy' with: [ spec loads: 'Deployment' ];
     project: 'Buoy-SUnit' copyFrom: 'Buoy' with: [ spec loads: 'Dependent-SUnit-Extensions' ];
     project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ].
@@ -47,7 +47,7 @@ BaselineOfHyperspace >> setUpDependencies: spec [
     project: 'Zinc-Core' copyFrom: 'ZincHTTPComponents' with: [ spec loads: 'Core' ].
 
   spec
-    baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:v2' ];
+    baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:v3' ];
     project: 'Bell-Deployment' copyFrom: 'Bell' with: [ spec loads: 'Deployment' ];
     project: 'Bell-SUnit' copyFrom: 'Bell' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
 ]
@@ -55,32 +55,30 @@ BaselineOfHyperspace >> setUpDependencies: spec [
 { #category : 'initialization' }
 BaselineOfHyperspace >> setUpPackages: spec [
 
-	spec
-		package: 'Hyperspace-Model' with: [ spec requires: #('Buoy-Deployment' 'Zinc-Core' 'Bell-Deployment')];
-		group: 'Deployment' with: 'Hyperspace-Model';
-		package: 'Hyperspace-Extensions'
-		with: [ spec requires: 'Hyperspace-Model' ];
-		group: 'Deployment' with: 'Hyperspace-Extensions';
-		package: 'Hyperspace-Pharo-Extensions'
-		with: [ spec requires: 'Hyperspace-Model' ];
-		group: 'Deployment' with: 'Hyperspace-Pharo-Extensions'.
+  spec
+    package: 'Hyperspace-Model' with: [ spec requires: #( 'Buoy-Deployment' 'Zinc-Core' 'Bell-Deployment') ];
+    group: 'Deployment' with: 'Hyperspace-Model';
+    package: 'Hyperspace-Extensions' with: [ spec requires: 'Hyperspace-Model' ];
+    group: 'Deployment' with: 'Hyperspace-Extensions';
+    package: 'Hyperspace-Buoy-Extensions' with: [ spec requires: 'Hyperspace-Model' ];
+    group: 'Deployment' with: 'Hyperspace-Buoy-Extensions';
+    package: 'Hyperspace-Pharo-Extensions' with: [ spec requires: 'Hyperspace-Model' ];
+    group: 'Deployment' with: 'Hyperspace-Pharo-Extensions'.
 
-	spec
-		package: 'Hyperspace-Model-Tests' with: [
-			spec requires:
-					#( 'Hyperspace-Model' 'Hyperspace-Extensions'
-					   'Hyperspace-Pharo-Extensions' 'Dependent-SUnit-Extensions' 'Bell-SUnit') ];
-		group: 'Tests' with: 'Hyperspace-Model-Tests'.
+  spec
+    package: 'Hyperspace-Model-Tests' with: [
+        spec requires: #( 'Hyperspace-Model' 'Hyperspace-Extensions' 'Hyperspace-Pharo-Extensions'
+               'Hyperspace-Buoy-Extensions' 'Dependent-SUnit-Extensions' 'Bell-SUnit')
+      ];
+    group: 'Tests' with: 'Hyperspace-Model-Tests'.
 
-	spec
-		package: 'Hyperspace-SUnit-Model'
-		with: [ spec requires: 'Buoy-SUnit' ];
-		group: 'Dependent-SUnit-Extensions' with: 'Hyperspace-SUnit-Model';
-		package: 'Hyperspace-SUnit-Model-Tests'
-		with: [ spec requires: 'Hyperspace-SUnit-Model' ];
-		group: 'Tests' with: 'Hyperspace-SUnit-Model-Tests'.
+  spec
+    package: 'Hyperspace-SUnit-Model' with: [ spec requires: 'Buoy-SUnit' ];
+    group: 'Dependent-SUnit-Extensions' with: 'Hyperspace-SUnit-Model';
+    package: 'Hyperspace-SUnit-Model-Tests' with: [ spec requires: 'Hyperspace-SUnit-Model' ];
+    group: 'Tests' with: 'Hyperspace-SUnit-Model-Tests'.
 
-	spec group: 'Tools' with: 'Buoy-Tools' 
+  spec group: 'Tools' with: 'Buoy-Tools'
 ]
 
 { #category : 'initialization' }

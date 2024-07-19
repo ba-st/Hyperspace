@@ -6,6 +6,7 @@ RwSimpleProjectLoadComponentV2 {
   ],
   #componentNames : [	],
   #packageNames : [
+    'Hyperspace-Buoy-Extensions',
     'Hyperspace-Model',
     'Hyperspace-Extensions',
     'Hyperspace-GS64-Extensions'
@@ -14,6 +15,7 @@ RwSimpleProjectLoadComponentV2 {
     'gemstone' : {
       'allusers' : {
         #packageNameToPlatformPropertiesMap : {
+          'Hyperspace-Buoy-Extensions' : { 'symbolDictName' : 'Buoy' },
           'Hyperspace-Model' : { 'symbolDictName' : 'Hyperspace' },
           'Hyperspace-Extensions' : { 'symbolDictName' : 'Zinc' },
           'Hyperspace-GS64-Extensions' : { 'symbolDictName' : 'Globals' }

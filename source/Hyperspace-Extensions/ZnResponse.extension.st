@@ -7,12 +7,6 @@ ZnResponse >> addCachingDirective: aDirective [
 ]
 
 { #category : '*Hyperspace-Extensions' }
-ZnResponse >> addContentLanguage: aLanguageTag [
-
-	self headers at: 'Content-Language' add: aLanguageTag
-]
-
-{ #category : '*Hyperspace-Extensions' }
 ZnResponse >> addLink: aLink [
 
 	self headers at: 'Link' add: aLink
@@ -33,17 +27,6 @@ ZnResponse >> cachingDirectives [
 	^ directives isArray
 		ifTrue: [ directives ]
 		ifFalse: [ Array with: directives ]
-]
-
-{ #category : '*Hyperspace-Extensions' }
-ZnResponse >> contentLanguageTags [
-
-	| headerValue |
-
-	headerValue := self headers at: 'Content-Language' ifAbsent: [ ^ #() ].
-	^ headerValue isArray
-		ifTrue: [ headerValue collect: #asLanguageTag ]
-		ifFalse: [ Array with: headerValue asLanguageTag ]
 ]
 
 { #category : '*Hyperspace-Extensions' }

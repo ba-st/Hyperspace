@@ -47,5 +47,5 @@ ZnRequest class >> supportQUERYDuring: aBlock [
 
 	^ aBlock
 		  on: ZnUnknownHttpMethod
-		  do: [ :signal | signal resume: signal method ]
+		  do: [ :signal | signal resume: signal method asSymbol ]
 ]

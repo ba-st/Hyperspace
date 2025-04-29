@@ -87,7 +87,7 @@ ZnRequestHyperspaceExtensionsTest >> testReadQueryRequest [
 		           'QUERY /search HTTP/1.1<r><l>Host: google.com' expandMacros readStream.
 
 	self
-		assert: request method equals: 'QUERY';
+		assert: request method equals: #QUERY;
 		assertUrl: request url equals: 'search';
 		assertUrl: request host equals: 'http://google.com'
 ]
@@ -114,4 +114,14 @@ ZnRequestHyperspaceExtensionsTest >> testSetAcceptLanguageWithLanguageTag [
 		yourself.
 
 	self assert: request acceptLanguage equals: 'fr-CH'
+]
+
+{ #category : 'tests' }
+ZnRequestHyperspaceExtensionsTest >> testSupportQUERYDuring [
+
+  self
+    assert: ( ZnRequest supportQUERYDuring: [
+            ZnRequestLine readFrom: ( 'QUERY /foo/bar HTTP/1.1' , String crlf ) readStream ] )
+        method
+    equals: #QUERY
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #WebLink }
+Extension { #name : 'WebLink' }
 
-{ #category : #'*Hyperspace-Development-Tools' }
+{ #category : '*Hyperspace-Development-Tools' }
 WebLink >> parametersInspectorTab: builder [
 
 	<inspectorPresentationOrder: 901 title: 'Parameters'>

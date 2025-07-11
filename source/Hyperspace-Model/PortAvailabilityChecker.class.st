@@ -31,17 +31,16 @@ PortAvailabilityChecker >> if: portNumber isAvailableForTCP: aFoundBlock ifNot: 
 { #category : 'testing' }
 PortAvailabilityChecker >> isAvailableForTCP: portNumber [
 
-	^ [ 
-	  | socket |
-
-	  socket := ZnNetworkingUtils default socketClass newTCP.
-	  ZnNetworkingUtils default setServerSocketOptions: socket.
-	  socket listenOn: portNumber.
-	  [ 
-	  socket isValid and: [ 
-		  "If port is not available, Pharo gives you a random one" 
-		  portNumber == socket localPort ]
-	  ] ensure: [ socket destroy ]
-	  ] on: NetworkError
-		  do: [ :error | error return: false ]
+  ^ [
+      | socket |
+      socket := ZnNetworkingUtils default socketClass newTCP.
+      ZnNetworkingUtils default setServerSocketOptions: socket.
+      socket listenOn: portNumber.
+      [
+        socket isValid and: [ "If port is not available, Pharo gives you a random one"
+            portNumber == socket localPort ]
+      ] ensure: [ socket destroy ]
+    ]
+      on: NetworkError , SocketError
+      do: [ :error | error return: false ]
 ]

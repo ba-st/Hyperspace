@@ -1,13 +1,14 @@
 Class {
-	#name : #HTTPStatusReference,
-	#superclass : #SharedPool,
+	#name : 'HTTPStatusReference',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'ReferenceByCode'
 	],
-	#category : #'Hyperspace-Development-Tools'
+	#category : 'Hyperspace-Development-Tools',
+	#package : 'Hyperspace-Development-Tools'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 HTTPStatusReference class >> initialize [
 
 	ReferenceByCode := Dictionary new.
@@ -37,7 +38,7 @@ HTTPStatusReference class >> initialize [
 		initializeNoContent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeAccepted [
 
 	ReferenceByCode
@@ -52,7 +53,7 @@ The 202 response is intentionally noncommittal. Its purpose is to allow a server
 Source: [RFC7231 Section 6.3.3](https://tools.ietf.org/html/rfc7231#section-6.3.3)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeBadRequest [
 
 	ReferenceByCode
@@ -63,7 +64,7 @@ HTTPStatusReference class >> initializeBadRequest [
 Source: [RFC7231 Section 6.5.1](https://tools.ietf.org/html/rfc7231#section-6.5.1)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeConflict [
 
 	ReferenceByCode
@@ -78,7 +79,7 @@ Conflicts are most likely to occur in response to a **PUT** request. For example
 Source: [RFC7231 Section 6.5.8](https://tools.ietf.org/html/rfc7231#section-6.5.8)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeCreated [
 
 	ReferenceByCode
@@ -92,7 +93,7 @@ The 201 response payload typically describes and links to the resource(s) create
 Source: [RFC7231 Section 6.3.2](https://tools.ietf.org/html/rfc7231#section-6.3.2)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeForbidden [
 
 	ReferenceByCode at: 403 put: 'The server understood the request but refuses to authorize it.
@@ -106,7 +107,7 @@ An origin server that wishes to “hide” the current existence of a forbidden 
 Source: [RFC7231 Section 6.5.3](https://tools.ietf.org/html/rfc7231#section-6.5.3)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeInternalServerError [
 
 	ReferenceByCode
@@ -117,7 +118,7 @@ HTTPStatusReference class >> initializeInternalServerError [
 Source: [RFC7231 Section 6.6.1](https://tools.ietf.org/html/rfc7231#section-6.6.1)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeMethodNotAllowed [
 
 	ReferenceByCode
@@ -132,7 +133,7 @@ A 405 response is cacheable by default; i.e., unless otherwise indicated by the 
 Source: [RFC7231 Section 6.5.5](https://tools.ietf.org/html/rfc7231#section-6.5.5)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeNoContent [
 
 	ReferenceByCode
@@ -155,7 +156,7 @@ A 204 response is cacheable by default; i.e., unless otherwise indicated by the 
 Source: [RFC7231 Section 6.3.5](https://tools.ietf.org/html/rfc7231#section-6.3.5)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeNotAcceptable [
 
 	ReferenceByCode
@@ -168,7 +169,7 @@ The server SHOULD generate a payload containing a list of available representati
 Source: [RFC7231 Section 6.5.6](https://tools.ietf.org/html/rfc7231#section-6.5.6)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeNotFound [
 
 	ReferenceByCode
@@ -183,7 +184,7 @@ A 404 response is cacheable by default; i.e., unless otherwise indicated by the 
 Source: [RFC7231 Section 6.5.4](https://tools.ietf.org/html/rfc7231#section-6.5.4)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeOk [
 
 	ReferenceByCode at: 200 put: 'The request has succeeded.
@@ -203,7 +204,7 @@ A 200 response is cacheable by default; i.e., unless otherwise indicated by the 
 Source: [RFC7231 Section 6.3.1](https://tools.ietf.org/html/rfc7231#section-6.3.1)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializePreconditionFailed [
 
 	ReferenceByCode at: 412 put: 'One or more conditions given in the request header fields evaluated to false when tested on the server.
@@ -213,7 +214,7 @@ This response code allows the client to place preconditions on the current resou
 Source: [RFC7232 Section 4.2](https://tools.ietf.org/html/rfc7232#section-4.2)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializePreconditionRequired [
 
 	ReferenceByCode at: 428 put: 'The origin server requires the request to be conditional.
@@ -227,7 +228,7 @@ Responses with the 428 status code MUST NOT be stored by a cache.
 Source: [RFC6585 Section 3](https://tools.ietf.org/html/rfc6585#section-3)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeRequestTimeout [
 
 	ReferenceByCode
@@ -240,7 +241,7 @@ A server SHOULD send the “close” connection option in the response, since 40
 Source: [RFC7231 Section 6.5.7](https://tools.ietf.org/html/rfc7231#section-6.5.7)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeServiceUnavailable [
 
 	ReferenceByCode at: 503 put: 'The server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay.
@@ -250,7 +251,7 @@ The server MAY send a Retry-After header field to suggest an appropriate amount 
 Source: [RFC7231 Section 6.6.4](https://tools.ietf.org/html/rfc7231#section-6.6.4)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeTooManyRequests [
 
 	ReferenceByCode at: 429 put: 'The user has sent too many requests in a given amount of time (“rate limiting”).
@@ -264,7 +265,7 @@ Responses with the 429 status code MUST NOT be stored by a cache.
 Source: [RFC6585 Section 4](https://tools.ietf.org/html/rfc6585#section-4)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeUnauthorized [
 
 	ReferenceByCode at: 401 put: 'The request has not been applied because it lacks valid authentication credentials for the target resource.
@@ -276,7 +277,7 @@ If the request included authentication credentials, then the 401 response indica
 Source: [RFC7235 Section 3.1](https://tools.ietf.org/html/rfc7235#section-3.1)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeUnprocessableEntity [
 
 	ReferenceByCode at: 422 put: 'The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate), and the syntax of the request entity is correct (thus a 400 Bad Request status code is inappropriate) but was unable to process the contained instructions.
@@ -286,7 +287,7 @@ For example, this error condition may occur if an XML request body contains well
 Source: [RFC4918 Section 11.2](https://tools.ietf.org/html/rfc4918#section-11.2)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HTTPStatusReference class >> initializeUnsupportedMediaType [
 
 	ReferenceByCode at: 415 put: 'The origin server is refusing to service the request because the payload is in a format not supported by this method on the target resource.
@@ -296,7 +297,7 @@ The format problem might be due to the request’s indicated **Content-Type** or
 Source: [RFC7231 Section 6.5.13](https://tools.ietf.org/html/rfc7231#section-6.5.13)'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HTTPStatusReference class >> referenceFor: errorCode [
 
 	| header referenceText |

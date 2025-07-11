@@ -1,6 +1,6 @@
-Extension { #name : #ZnHeaders }
+Extension { #name : 'ZnHeaders' }
 
-{ #category : #'*Hyperspace-Development-Tools' }
+{ #category : '*Hyperspace-Development-Tools' }
 ZnHeaders >> itemsInspectorTab: builder [
 
 	<inspectorPresentationOrder: 0 title: 'Items'>

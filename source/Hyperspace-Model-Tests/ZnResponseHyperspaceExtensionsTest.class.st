@@ -73,6 +73,18 @@ ZnResponseHyperspaceExtensionsTest >> testCachingDirectives [
 	self assert: response cachingDirectives equals: #('public' 'Max-Age=60')
 ]
 
+{ #category : 'tests' }
+ZnResponseHyperspaceExtensionsTest >> testCachingDirectivesFromString [
+
+  | response |
+
+  response := ZnResponse noContent.
+
+  response headers at: 'Cache-Control' put: 'public, max-age=60'.
+
+  self assert: response cachingDirectives equals: #( 'public' 'max-age=60' )
+]
+
 { #category : 'tests - encoding' }
 ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithContentLanguageHeaders [
 

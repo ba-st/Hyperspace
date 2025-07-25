@@ -3,7 +3,10 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'headerStream',
-		'directiveRegistry'
+		'directiveRegistry',
+		'nextTokenParseMethod',
+		'currentDirective',
+		'directives'
 	],
 	#category : 'Hyperspace-Model',
 	#package : 'Hyperspace-Model'
@@ -24,47 +27,53 @@ CachingDirectivesParser >> consumeSeparators [
 { #category : 'initialization' }
 CachingDirectivesParser >> initialize: aReadStream [
 
-  headerStream := aReadStream
+  headerStream := aReadStream.
+  nextTokenParseMethod := #parseDirective.
+  currentDirective := nil.
+  directives := OrderedCollection new
 ]
 
 { #category : 'parsing' }
 CachingDirectivesParser >> parseArguments [
 
-  ^ ( headerStream peekFor: $" )
-      then: [ '"<1s>"' expandMacrosWith: ( headerStream upTo: $" ) ]
-      otherwise: [ headerStream upTo: $, ]
+  | arguments |
+  arguments := ( headerStream peekFor: $" )
+                 then: [ '"<1s>"' expandMacrosWith: ( headerStream upTo: $" ) ]
+                 otherwise: [ headerStream upTo: $, ].
+
+  directives add: ( '<1s>=<2s>' expandMacrosWith: currentDirective contents with: arguments ).
+
+  nextTokenParseMethod := #parseDirective
+]
+
+{ #category : 'parsing' }
+CachingDirectivesParser >> parseDirective [
+
+  currentDirective := WriteStream on: String new.
+
+  [ headerStream atEnd ] whileFalse: [
+      ( headerStream peekFor: $, ) then: [
+          directives add: currentDirective contents.
+          ^ self
+        ].
+      ( headerStream peekFor: $= ) then: [
+          nextTokenParseMethod := #parseArguments.
+          ^ self
+        ].
+
+      currentDirective nextPut: headerStream next
+    ].
+
+  directives add: currentDirective contents
 ]
 
 { #category : 'parsing' }
 CachingDirectivesParser >> parseDirectives [
 
-  | directives |
-  directives := OrderedCollection new.
   [ headerStream atEnd ] whileFalse: [
-      | directive |
-      directive := self parseNextDirective.
-      headerStream peekBack = $=
-        then: [
-            | arguments |
-            arguments := self parseArguments.
-            directives add: ( '<1s>=<2s>' expandMacrosWith: directive with: arguments )
-          ]
-        otherwise: [ directives add: directive ].
-      self consumeSeparators
+      self consumeSeparators.
+      self perform: nextTokenParseMethod
     ].
 
   ^ directives asArray
-]
-
-{ #category : 'parsing' }
-CachingDirectivesParser >> parseNextDirective [
-
-  ^ String streamContents: [ :stream |
-        [ headerStream atEnd or: [ ( headerStream peekFor: $, ) or: [ headerStream peekFor: $= ] ] ]
-          whileFalse: [
-              | char |
-              char := headerStream next.
-              stream nextPut: char
-            ]
-      ]
 ]

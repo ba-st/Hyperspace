@@ -18,7 +18,7 @@ CachingDirectivesParser class >> on: aReadStream [
 	^self new initialize: aReadStream
 ]
 
-{ #category : 'adding' }
+{ #category : 'private - parsing' }
 CachingDirectivesParser >> consumeSeparators [
 
   [ ( headerStream peekFor: $, ) or: [ headerStream peekFor: Character space ] ] whileTrue
@@ -33,7 +33,7 @@ CachingDirectivesParser >> initialize: aReadStream [
   directives := OrderedCollection new
 ]
 
-{ #category : 'parsing' }
+{ #category : 'private - parsing' }
 CachingDirectivesParser >> parseArguments [
 
   | arguments |
@@ -41,19 +41,23 @@ CachingDirectivesParser >> parseArguments [
                  then: [ '"<1s>"' expandMacrosWith: ( headerStream upTo: $" ) ]
                  otherwise: [ headerStream upTo: $, ].
 
-  directives add: ( '<1s>=<2s>' expandMacrosWith: currentDirective contents with: arguments ).
+  currentDirective
+    nextPut: $=;
+    nextPutAll: arguments.
+
+  self storeCurrentDirective.
 
   nextTokenParseMethod := #parseDirective
 ]
 
-{ #category : 'parsing' }
+{ #category : 'private - parsing' }
 CachingDirectivesParser >> parseDirective [
 
   currentDirective := WriteStream on: String new.
 
   [ headerStream atEnd ] whileFalse: [
       ( headerStream peekFor: $, ) then: [
-          directives add: currentDirective contents.
+          self storeCurrentDirective.
           ^ self
         ].
       ( headerStream peekFor: $= ) then: [
@@ -63,8 +67,7 @@ CachingDirectivesParser >> parseDirective [
 
       currentDirective nextPut: headerStream next
     ].
-
-  directives add: currentDirective contents
+  self storeCurrentDirective
 ]
 
 { #category : 'parsing' }
@@ -76,4 +79,10 @@ CachingDirectivesParser >> parseDirectives [
     ].
 
   ^ directives asArray
+]
+
+{ #category : 'private - parsing' }
+CachingDirectivesParser >> storeCurrentDirective [
+
+  directives add: currentDirective contents
 ]

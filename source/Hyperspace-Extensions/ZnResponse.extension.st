@@ -22,12 +22,11 @@ ZnResponse >> addToVary: headerName [
 ZnResponse >> cachingDirectives [
 
   | directives |
-
   directives := self headers at: 'Cache-Control' ifAbsent: [ ^ #(  ) ].
 
   ^ directives isArray
       ifTrue: [ directives ]
-      ifFalse: [ ( directives substrings: ',' ) collect: #trimBoth ]
+      ifFalse: [ CachingDirectivesParser new parse: directives ]
 ]
 
 { #category : '*Hyperspace-Extensions' }

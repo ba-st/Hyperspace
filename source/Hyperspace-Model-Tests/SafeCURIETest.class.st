@@ -4,8 +4,9 @@ A SafeCURIETest is a test class for testing the behavior of SafeCURIE
 Class {
 	#name : 'SafeCURIETest',
 	#superclass : 'AbstractCURIETest',
-	#category : 'Hyperspace-Model-Tests',
-	#package : 'Hyperspace-Model-Tests'
+	#category : 'Hyperspace-Model-Tests-IETF',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'IETF'
 }
 
 { #category : 'private' }

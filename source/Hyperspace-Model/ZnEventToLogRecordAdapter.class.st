@@ -6,8 +6,9 @@ Class {
 		'logIncomingRequests',
 		'subscriptions'
 	],
-	#category : 'Hyperspace-Model',
-	#package : 'Hyperspace-Model'
+	#category : 'Hyperspace-Model-Resilience',
+	#package : 'Hyperspace-Model',
+	#tag : 'Resilience'
 }
 
 { #category : 'private - dumping' }

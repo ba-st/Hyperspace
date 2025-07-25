@@ -6,12 +6,6 @@ Class {
 	#tag : 'IETF'
 }
 
-{ #category : 'instance creation' }
-CachingDirectivesParser class >> on: aReadStream [ 
-	
-	^self new initialize: aReadStream
-]
-
 { #category : 'parsing' }
 CachingDirectivesParser >> parse: string [
 

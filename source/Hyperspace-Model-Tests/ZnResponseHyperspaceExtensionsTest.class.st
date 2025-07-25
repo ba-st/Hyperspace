@@ -119,7 +119,7 @@ ZnResponseHyperspaceExtensionsTest >> testCachingDirectivesWithUnknownDirective 
 
   response headers at: 'Cache-Control' put: 'private="server, user", unknown'.
 
-  self assert: response cachingDirectives equals: #( 'private="server, user"' unknown ).
+  self assert: response cachingDirectives equals: #( 'private="server, user"' 'unknown' ).
 
   response headers
     at: 'Cache-Control'

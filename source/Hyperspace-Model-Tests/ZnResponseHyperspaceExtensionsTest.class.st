@@ -108,7 +108,7 @@ ZnResponseHyperspaceExtensionsTest >> testCachingDirectivesWithMalformedDirectiv
 
   response headers at: 'Cache-Control' put: 'private="server, user, max-age=14400'.
 
-  self assert: response cachingDirectives equals: #( 'private="server, user, max-age=14400"' )
+  self assert: response cachingDirectives equals: #( 'private="server, user, max-age=14400' )
 ]
 
 { #category : 'tests' }

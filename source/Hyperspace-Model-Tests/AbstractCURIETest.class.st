@@ -4,8 +4,9 @@ An AbstractCURIETest is a test class for testing the behavior of AbstractCURIE
 Class {
 	#name : 'AbstractCURIETest',
 	#superclass : 'TestCase',
-	#category : 'Hyperspace-Model-Tests',
-	#package : 'Hyperspace-Model-Tests'
+	#category : 'Hyperspace-Model-Tests-IETF',
+	#package : 'Hyperspace-Model-Tests',
+	#tag : 'IETF'
 }
 
 { #category : 'testing' }

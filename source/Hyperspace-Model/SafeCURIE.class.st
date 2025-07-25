@@ -11,8 +11,9 @@ Class {
 	#instVars : [
 		'curie'
 	],
-	#category : 'Hyperspace-Model',
-	#package : 'Hyperspace-Model'
+	#category : 'Hyperspace-Model-IETF',
+	#package : 'Hyperspace-Model',
+	#tag : 'IETF'
 }
 
 { #category : 'instance creation' }

@@ -31,7 +31,7 @@ CachingDirectivesParser >> initialize: aReadStream [
 CachingDirectivesParser >> parseArguments [
 
   ^ ( headerStream peekFor: $" )
-      then: [ headerStream upTo: $" ]
+      then: [ '"<1s>"' expandMacrosWith: ( headerStream upTo: $" ) ]
       otherwise: [ headerStream upTo: $, ]
 ]
 

@@ -85,6 +85,51 @@ ZnResponseHyperspaceExtensionsTest >> testCachingDirectivesFromString [
   self assert: response cachingDirectives equals: #( 'public' 'max-age=60' )
 ]
 
+{ #category : 'tests' }
+ZnResponseHyperspaceExtensionsTest >> testCachingDirectivesWithArrayParameter [
+
+  | response |
+  response := ZnResponse noContent.
+
+  response headers
+    at: 'Cache-Control'
+    put: 'private="server, user", max-age=1440, no-cache="Authorization, Cookie"'.
+
+  self
+    assert: response cachingDirectives
+    equals: #( 'private=server, user' 'max-age=1440' 'no-cache=Authorization, Cookie' )
+]
+
+{ #category : 'tests' }
+ZnResponseHyperspaceExtensionsTest >> testCachingDirectivesWithMalformedDirective [
+
+  | response |
+  response := ZnResponse noContent.
+
+  response headers at: 'Cache-Control' put: 'private="server, user, max-age=14400'.
+
+  self assert: response cachingDirectives equals: #( 'private=server, user, max-age=14400' )
+]
+
+{ #category : 'tests' }
+ZnResponseHyperspaceExtensionsTest >> testCachingDirectivesWithUnknownDirective [
+
+  | response |
+  response := ZnResponse noContent.
+
+  response headers at: 'Cache-Control' put: 'private="server, user", unknown'.
+
+  self assert: response cachingDirectives equals: #( 'private=server, user' unknown ).
+
+  response headers
+    at: 'Cache-Control'
+    put: 'private="server, user", unknown=undefined, max-age=14400'.
+
+  self
+    assert: response cachingDirectives
+    equals: #( 'private=server, user' 'unknown=undefined' 'max-age=14400' )
+]
+
 { #category : 'tests - encoding' }
 ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithContentLanguageHeaders [
 

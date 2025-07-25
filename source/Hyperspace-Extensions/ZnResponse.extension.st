@@ -27,7 +27,7 @@ ZnResponse >> cachingDirectives [
 
   ^ directives isArray
       ifTrue: [ directives ]
-      ifFalse: [ ( directives substrings: ',' ) collect: #trimBoth ]
+      ifFalse: [ (CachingDirectivesParser on: directives readStream) parseDirectives ]
 ]
 
 { #category : '*Hyperspace-Extensions' }

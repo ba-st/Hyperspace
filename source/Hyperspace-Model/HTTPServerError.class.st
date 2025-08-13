@@ -19,6 +19,12 @@ Class {
 }
 
 { #category : 'instance creation' }
+HTTPServerError class >> gatewayTimeout [
+
+	^self code: 504
+]
+
+{ #category : 'instance creation' }
 HTTPServerError class >> internalServerError [
 
 	^ self code: 500
@@ -28,6 +34,12 @@ HTTPServerError class >> internalServerError [
 HTTPServerError class >> serviceUnavailable [
 
 	^ self code: 503
+]
+
+{ #category : 'signalling' }
+HTTPServerError class >> signalGatewayTimeout: aMessageText [
+
+  ^ self gatewayTimeout signal: aMessageText
 ]
 
 { #category : 'signalling' }

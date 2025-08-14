@@ -59,6 +59,34 @@ HTTPServerErrorTest >> testExceptionExclusion [
 ]
 
 { #category : 'tests' }
+HTTPServerErrorTest >> testGatewayTimeout [
+
+	self
+		should: [ HTTPServerError signalGatewayTimeout: 'Zzz...' ]
+		raise: HTTPServerError
+		withExceptionDo: [ :signal | 
+			self
+				assert: signal code equals: 504;
+				assert: signal messageText equals: 'Zzz...';
+				assert: signal printString equals: 'HTTPServerError[504]: Zzz...'
+			]
+]
+
+{ #category : 'tests' }
+HTTPServerErrorTest >> testGatewayTimeoutDefaultMessageText [
+
+	self
+		should: [ HTTPServerError gatewayTimeout signal]
+		raise: HTTPServerError
+		withExceptionDo: [ :signal | 
+			self
+				assert: signal code equals: 504;
+				assert: signal messageText equals: 'Gateway Timeout';
+				assert: signal printString equals: 'HTTPServerError[504]: Gateway Timeout'
+			]
+]
+
+{ #category : 'tests' }
 HTTPServerErrorTest >> testInternalServerError [
 
 	self

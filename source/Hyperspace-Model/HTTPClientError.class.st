@@ -29,6 +29,15 @@ HTTPClientError class >> conflict [
 ]
 
 { #category : 'instance creation' }
+HTTPClientError class >> forbidden [
+
+  "The client does not have access rights to the content; that is, it is unauthorized, so the server
+  is refusing to give the requested resource. Unlike 401 Unauthorized, the client's identity is known to the server."
+
+  ^ self code: 403
+]
+
+{ #category : 'instance creation' }
 HTTPClientError class >> notFound [
 
 	"The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.
@@ -67,6 +76,15 @@ HTTPClientError class >> tooManyRequests [
 	and MAY include a Retry-After header indicating how long to wait before making a new request."
 
 	^ self code: 429
+]
+
+{ #category : 'instance creation' }
+HTTPClientError class >> unauthorized [
+
+  "Although the HTTP standard specifies `unauthorized`, semantically this response means `unauthenticated`.
+   That is, the client must authenticate itself to get the requested response."
+
+  ^ self code: 401
 ]
 
 { #category : 'instance creation' }

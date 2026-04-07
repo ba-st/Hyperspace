@@ -79,15 +79,6 @@ HTTPClientError class >> tooManyRequests [
 ]
 
 { #category : 'instance creation' }
-HTTPClientError class >> unauthorized [
-
-  "Although the HTTP standard specifies `unauthorized`, semantically this response means `unauthenticated`.
-   That is, the client must authenticate itself to get the requested response."
-
-  ^ self code: 401
-]
-
-{ #category : 'instance creation' }
 HTTPClientError class >> unprocessableEntity [
 
 	"The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate), 

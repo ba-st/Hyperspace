@@ -197,20 +197,6 @@ HTTPClientErrorTest >> testTooManyRequests [
 ]
 
 { #category : 'tests' }
-HTTPClientErrorTest >> testUnauthorized [
-
-  self
-    should: [ HTTPClientError unauthorized signal ]
-    raise: HTTPClientError
-    withExceptionDo: [ :signal |
-        self
-          assert: signal code equals: 401;
-          assert: signal messageText equals: 'Unauthorized';
-          assert: signal printString equals: 'HTTPClientError[401]: Unauthorized'
-      ]
-]
-
-{ #category : 'tests' }
 HTTPClientErrorTest >> testUnprocessableEntity [
 
 	self

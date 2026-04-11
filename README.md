@@ -13,7 +13,6 @@ Building blocks for Internet technologies on top of [Zinc HTTP Components](https
 [![Markdown Lint](https://github.com/ba-st/Hyperspace/actions/workflows/markdown-lint.yml/badge.svg)](https://github.com/ba-st/Hyperspace/actions/workflows/markdown-lint.yml)
 
 [![GitHub release](https://img.shields.io/github/release/ba-st/Hyperspace.svg)](https://github.com/ba-st/Hyperspace/releases/latest)
-[![Pharo 9.0](https://img.shields.io/badge/Pharo-9.0-informational)](https://pharo.org)
 [![Pharo 10](https://img.shields.io/badge/Pharo-10-informational)](https://pharo.org)
 [![Pharo 11](https://img.shields.io/badge/Pharo-11-informational)](https://pharo.org)
 [![Pharo 12](https://img.shields.io/badge/Pharo-12-informational)](https://pharo.org)

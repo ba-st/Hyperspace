@@ -13,13 +13,13 @@ Class {
 HTTPForbiddenTest >> testSignaling [
 
   self
-    should: [ HTTPForbidden signal: 'Forbidden' with: 'Basic realm="site"' ]
+    should: [ HTTPForbidden signal: 'Missing permissions' with: 'Basic realm="site"' ]
     raise: HTTPForbidden
     withExceptionDo: [ :signal |
         self
           assert: signal code equals: 403;
-          assert: signal messageText equals: 'Forbidden';
-          assert: signal printString equals: 'HTTPForbidden[403]: Forbidden';
+          assert: signal messageText equals: 'Missing permissions';
+          assert: signal printString equals: 'HTTPForbidden[403]: Missing permissions';
           assert: signal challenge equals: 'Basic realm="site"'
       ]
 ]
@@ -53,7 +53,7 @@ HTTPForbiddenTest >> testSignalingInsufficientScopeWithDetails [
     should: [
         HTTPForbidden
           signal: 'Deleting users requires the "admin" role.'
-          becauseScopeIsInsufficientFor: #( 'admin' 'read:data' )
+          becauseScopeIsInsufficientFor: #( 'admin' 'delete:data' )
           with: 'Bearer realm="api"'
       ]
     raise: HTTPForbidden
@@ -66,7 +66,7 @@ HTTPForbiddenTest >> testSignalingInsufficientScopeWithDetails [
           assert: signal challenge equals: 'Bearer realm="api"';
           assert: signal errorCode equals: 'insufficient_scope'.
         signal withRequiredPermissionsDo: [ :permissions |
-            self assert: permissions equals: #( 'admin' 'read:data' ) ]
+            self assert: permissions equals: #( 'admin' 'delete:data' ) ]
       ]
 ]
 

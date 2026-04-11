@@ -34,13 +34,7 @@ HTTPUnauthorized class >> messageText: aMessageText with: aChallenge [
 ]
 
 { #category : 'signalling' }
-HTTPUnauthorized class >> signal: messageText with: challenge [
-
-  ^ ( self messageText: messageText with: challenge ) signal
-]
-
-{ #category : 'signalling' }
-HTTPUnauthorized class >> signalBecauseTokenIsInvalid: messageText with: challenge [
+HTTPUnauthorized class >> signal: messageText becauseTokenIsInvalidWith: challenge [
   "The access token provided is expired, revoked, malformed, or
   invalid for other reasons.  The resource SHOULD respond with
   the HTTP 401 (Unauthorized) status code.  The client MAY
@@ -50,6 +44,12 @@ HTTPUnauthorized class >> signalBecauseTokenIsInvalid: messageText with: challen
   ^ ( self messageText: messageText with: challenge )
       errorCode: 'invalid_token';
       signal
+]
+
+{ #category : 'signalling' }
+HTTPUnauthorized class >> signal: messageText with: challenge [
+
+  ^ ( self messageText: messageText with: challenge ) signal
 ]
 
 { #category : 'accessing' }
@@ -80,5 +80,5 @@ HTTPUnauthorized >> errorCode: anErrorCode [
 HTTPUnauthorized >> initialize [
 
   super initialize.
-  challenge := ''
+  self challenge: ''
 ]

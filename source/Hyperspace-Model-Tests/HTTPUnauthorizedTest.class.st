@@ -30,8 +30,8 @@ HTTPUnauthorizedTest >> testSignalingInvalidToken [
   self
     should: [
         HTTPUnauthorized
-          signalBecauseTokenIsInvalid: 'The access token expired'
-          with: 'Bearer realm="api"' ]
+          signal: 'The access token expired'
+          becauseTokenIsInvalidWith: 'Bearer realm="api"' ]
     raise: HTTPUnauthorized
     withExceptionDo: [ :signal |
         self

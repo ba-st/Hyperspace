@@ -14,7 +14,8 @@ Class {
 	#superclass : 'HTTPClientError',
 	#instVars : [
 		'challenge',
-		'errorCode'
+		'errorCode',
+		'requiredPermissions'
 	],
 	#category : 'Hyperspace-Model-Exceptions',
 	#package : 'Hyperspace-Model',
@@ -28,6 +29,32 @@ HTTPForbidden class >> messageText: aMessageText with: aChallenge [
       messageText: aMessageText;
       challenge: aChallenge;
       yourself
+]
+
+{ #category : 'signalling' }
+HTTPForbidden class >> signal [
+
+  ^ ( self code: 403 ) signal
+]
+
+{ #category : 'signalling' }
+HTTPForbidden class >> signal: messageText becauseScopeIsInsufficientFor: permissions with: challenge [
+  "The request requires higher privileges than provided by the
+   access token.  The resource server SHOULD respond with the HTTP
+   403 (Forbidden) status code and MAY include the `scope`
+   attribute with the scope necessary to access the protected
+   resource."
+
+  ^ ( self messageText: messageText with: challenge )
+      errorCode: 'insufficient_scope';
+      requiredPermissions: permissions;
+      signal
+]
+
+{ #category : 'signalling' }
+HTTPForbidden class >> signal: messageText becauseScopeIsInsufficientWith: challenge [
+
+  ^ self signal: messageText becauseScopeIsInsufficientFor: #(  ) with: challenge
 ]
 
 { #category : 'signalling' }
@@ -64,5 +91,20 @@ HTTPForbidden >> errorCode: anErrorCode [
 HTTPForbidden >> initialize [
 
   super initialize.
-  challenge := ''
+  self
+    messageText: 'Forbidden';
+    challenge: '';
+    requiredPermissions: #(  )
+]
+
+{ #category : 'accessing' }
+HTTPForbidden >> requiredPermissions: scopeCollection [
+
+  requiredPermissions := scopeCollection
+]
+
+{ #category : 'enumerating' }
+HTTPForbidden >> withRequiredPermissionsDo: aBlock [
+
+  requiredPermissions ifNotEmpty: aBlock
 ]

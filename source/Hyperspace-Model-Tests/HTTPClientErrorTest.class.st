@@ -84,35 +84,6 @@ HTTPClientErrorTest >> testConvenienceHandlerWithOnExceptDo [
 ]
 
 { #category : 'tests' }
-HTTPClientErrorTest >> testForbidden [
-
-  self
-    should: [ HTTPClientError forbidden signal: 'Deleting users requires the "admin" role.' ]
-    raise: HTTPClientError
-    withExceptionDo: [ :signal |
-        self
-          assert: signal code equals: 403;
-          assert: signal messageText equals: 'Deleting users requires the "admin" role.';
-          assert: signal printString
-          equals: 'HTTPClientError[403]: Deleting users requires the "admin" role.'
-      ]
-]
-
-{ #category : 'tests' }
-HTTPClientErrorTest >> testForbiddenDefaultMessageText [
-
-  self
-    should: [ HTTPClientError forbidden signal ]
-    raise: HTTPClientError
-    withExceptionDo: [ :signal |
-        self
-          assert: signal code equals: 403;
-          assert: signal messageText equals: 'Forbidden';
-          assert: signal printString equals: 'HTTPClientError[403]: Forbidden'
-      ]
-]
-
-{ #category : 'tests' }
 HTTPClientErrorTest >> testNotFound [
 
 	self

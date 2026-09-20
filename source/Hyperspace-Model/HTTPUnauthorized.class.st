@@ -82,3 +82,9 @@ HTTPUnauthorized >> initialize [
   super initialize.
   self challenge: ''
 ]
+
+{ #category : 'private' }
+HTTPUnauthorized >> ownAdditionalDataKeysAndValuesDo: aBlock [
+
+  errorCode ifNotNil: [ :anErrorCode | aBlock value: 'errorCode' value: anErrorCode ]
+]

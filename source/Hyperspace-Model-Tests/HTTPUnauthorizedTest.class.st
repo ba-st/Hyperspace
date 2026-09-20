@@ -10,6 +10,23 @@ Class {
 }
 
 { #category : 'tests' }
+HTTPUnauthorizedTest >> testAdditionalData [
+
+  | error readData |
+
+  self deny: ( HTTPUnauthorized code: 401 ) hasAdditionalData.
+
+  error := HTTPUnauthorized messageText: 'The access token expired' with: 'Bearer realm="api"'.
+  error errorCode: 'invalid_token'.
+  readData := OrderedCollection new.
+  error additionalDataKeysAndValuesDo: [ :key :value | readData add: key -> value ].
+
+  self
+    assert: error hasAdditionalData;
+    assert: readData asArray equals: {( 'errorCode' -> 'invalid_token' )}
+]
+
+{ #category : 'tests' }
 HTTPUnauthorizedTest >> testSignaling [
 
   self

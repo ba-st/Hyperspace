@@ -68,3 +68,12 @@ HTTPNotAcceptable >> allowedMediaTypes: anArray [
 
 	 allowedMediaTypes := anArray
 ]
+
+{ #category : 'private' }
+HTTPNotAcceptable >> ownAdditionalDataKeysAndValuesDo: aBlock [
+
+	allowedMediaTypes ifNotNil: [ :mediaTypes |
+		mediaTypes ifNotEmpty: [ aBlock value: 'allowedMediaTypes' value: mediaTypes ] ].
+	allowedLanguageTags ifNotNil: [ :languageTags |
+		languageTags ifNotEmpty: [ aBlock value: 'allowedLanguageTags' value: languageTags ] ]
+]

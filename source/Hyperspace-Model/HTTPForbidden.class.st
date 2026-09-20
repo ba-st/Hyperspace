@@ -97,6 +97,14 @@ HTTPForbidden >> initialize [
     requiredPermissions: #(  )
 ]
 
+{ #category : 'private' }
+HTTPForbidden >> ownAdditionalDataKeysAndValuesDo: aBlock [
+
+  errorCode ifNotNil: [ :anErrorCode | aBlock value: 'errorCode' value: anErrorCode ].
+  self withRequiredPermissionsDo: [ :permissions |
+      aBlock value: 'requiredPermissions' value: permissions ]
+]
+
 { #category : 'accessing' }
 HTTPForbidden >> requiredPermissions: scopeCollection [
 

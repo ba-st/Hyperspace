@@ -7,6 +7,24 @@ Class {
 }
 
 { #category : 'tests' }
+HTTPNotAcceptableTest >> testAdditionalData [
+
+	| error readData |
+
+	error := HTTPNotAcceptable
+		         messageText: 'Cannot generate a response entity with acceptable characteristics.'
+		         accepting: { 'application/json' asMediaType }
+		         inAnyOf: #(  ).
+	readData := OrderedCollection new.
+	error additionalDataKeysAndValuesDo: [ :key :value | readData add: key -> value ].
+
+	self
+		assert: error hasAdditionalData;
+		assert: readData asArray
+		equals: { ( 'allowedMediaTypes' -> ( Array with: 'application/json' asMediaType ) ) }
+]
+
+{ #category : 'tests' }
 HTTPNotAcceptableTest >> testSignaling [
 
 	self

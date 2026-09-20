@@ -70,6 +70,12 @@ HTTPError >> additionalDataAt: aKey put: aValue [
 { #category : 'additional data' }
 HTTPError >> additionalDataKeysAndValuesDo: aBlock [
 
+	"The state my subclasses hold of their own comes first, and anything
+	attached under the same key overrides it."
+
+	self ownAdditionalDataKeysAndValuesDo: [ :key :value |
+		( additionalData notNil and: [ additionalData includesKey: key ] )
+			ifFalse: [ aBlock value: key value: value ] ].
 	additionalData ifNotNil: [ :data | data keysAndValuesDo: aBlock ]
 ]
 
@@ -94,7 +100,16 @@ HTTPError >> handles: aSignal [
 { #category : 'testing' }
 HTTPError >> hasAdditionalData [
 
-	^ additionalData notNil and: [ additionalData notEmpty ]
+	( additionalData notNil and: [ additionalData notEmpty ] ) ifTrue: [ ^ true ].
+	self ownAdditionalDataKeysAndValuesDo: [ :key :value | ^ true ].
+	^ false
+]
+
+{ #category : 'private' }
+HTTPError >> ownAdditionalDataKeysAndValuesDo: aBlock [
+
+	"Subclasses holding state of their own answer it here, so whoever renders
+	an error needs to know a single protocol instead of one per subclass."
 ]
 
 { #category : 'printing' }

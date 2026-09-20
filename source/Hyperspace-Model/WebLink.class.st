@@ -211,8 +211,10 @@ WebLink >> parameterAt: key [
 { #category : 'parameters' }
 WebLink >> parameterAt: aKey add: aValue [
 
-	self assertNotEmpty: aKey.
-	self parameters at: aKey add: ( self quoteValueWhenNeeded: aValue )
+	self
+		assertNotEmpty: aKey;
+		assertNotEmpty: aValue.
+	self parameters at: aKey add: aValue
 ]
 
 { #category : 'parameters' }
@@ -225,8 +227,10 @@ WebLink >> parameterAt: key ifAbsent: block [
 { #category : 'parameters' }
 WebLink >> parameterAt: aKey put: aString [
 
-	self assertNotEmpty: aKey.
-	self parameters at: aKey put: ( self quoteValueWhenNeeded: aString )
+	self
+		assertNotEmpty: aKey;
+		assertNotEmpty: aString.
+	self parameters at: aKey put: aString
 ]
 
 { #category : 'parameters' }
@@ -257,15 +261,14 @@ WebLink >> printOn: stream [
 						nextPut: $;;
 						nextPutAll: key;
 						nextPut: $=;
-						nextPutAll: value ] ]
+						nextPutAll: ( self quoteValueWhenNeeded: value ) ] ]
 ]
 
-{ #category : 'private' }
+{ #category : 'private - printing' }
 WebLink >> quoteValueWhenNeeded: aString [
 
 	"Values including ; or , needs to be quoted"
 
-	self assertNotEmpty: aString.
 	^ ((aString includes: $;) or: [ aString includes: $, ])
 		  then: [ '"<1s>"' expandMacrosWith: aString ]
 		  otherwise: [ aString ]

@@ -121,7 +121,9 @@ WebLinkTest >> testComplexMediaTypeHint [
 		        mediaTypeHint: mediaType;
 		        yourself.
 
-	self assert: link printString
+	self
+		assert: link mediaTypeHint equals: mediaType;
+		assert: link printString
 		equals: '<https://google.com/>;type="application/vnd.stargate.pet+json;version=2.0.0"'
 ]
 
@@ -208,7 +210,9 @@ WebLinkTest >> testMediaQueryHint [
 	self assert: link printString equals: '<https://google.com/>;media=screen'.
 
 	link mediaQueryHint: 'screen, print'.
-	self assert: link printString equals: '<https://google.com/>;media="screen, print"'
+	self
+		assert: link mediaQueryHint equals: 'screen, print';
+		assert: link printString equals: '<https://google.com/>;media="screen, print"'
 ]
 
 { #category : 'tests' }
@@ -296,6 +300,38 @@ WebLinkTest >> testPrinting [
 		assert: self googleUrl asWebLink asString equals: '<https://google.com/>';
 		assert: ( self googleUrl asWebLink relationType: 'search' ) printString
 		equals: '<https://google.com/>;rel=search'
+]
+
+{ #category : 'tests' }
+WebLinkTest >> testQuotingParameterValues [
+
+	"Values including ; or , are quoted when printed, but the accessors
+	answer them as configured, and parsing them back is symmetric."
+
+	| link parsedLink |
+
+	link := self googleUrl asWebLink
+		        title: 'Editar valores, sus nombres';
+		        mediaQueryHint: 'screen, print';
+		        parameterAt: 'range' put: 'from=1;to=10';
+		        yourself.
+
+	self
+		assert: link title equals: 'Editar valores, sus nombres';
+		assert: link mediaQueryHint equals: 'screen, print';
+		assert: ( link parameterAt: 'range' ) equals: 'from=1;to=10';
+		assert: link printString
+		equals:
+		'<https://google.com/>;title="Editar valores, sus nombres";media="screen, print";range="from=1;to=10"'.
+
+	parsedLink := link printString asWebLink.
+
+	self
+		assert: parsedLink title equals: 'Editar valores, sus nombres';
+		assert: parsedLink mediaQueryHint equals: 'screen, print';
+		assert: ( parsedLink parameterAt: 'range' ) equals: 'from=1;to=10';
+		assert: parsedLink equals: link;
+		assert: parsedLink printString equals: link printString
 ]
 
 { #category : 'tests' }

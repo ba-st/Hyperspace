@@ -1,0 +1,21 @@
+{
+  "name": "Hyperspace",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "hyperspace-tools",
+  "workspaceFolder": "/Hyperspace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "DavidAnson.vscode-markdownlint",
+        "mhutchie.git-graph",
+        "timonwong.shellcheck",
+        "fnando.linter"
+      ],
+      "settings": {
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "remoteUser": "node"
+}

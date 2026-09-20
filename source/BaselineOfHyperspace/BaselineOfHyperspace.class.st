@@ -12,7 +12,8 @@ BaselineOfHyperspace >> baseline: spec [
 	spec for: #pharo do: [ 
 		self
 			setUpDependencies: spec;
-			setUpPackages: spec.
+			setUpPackages: spec;
+			setUpDevelopmentToolsPackages: spec.
 
 		spec
 			group: 'CI' with: 'Tests';
@@ -23,9 +24,7 @@ BaselineOfHyperspace >> baseline: spec [
 			package: 'Hyperspace-Pharo-7';
 			group: 'Tests' with: 'Hyperspace-Pharo-7';
 			group: 'Deployment' with: 'Hyperspace-Pharo-7'
-		].
-
-	spec for: #'pharo10.x' do: [ self setUpPharo10Packages: spec ]
+		]
 ]
 
 { #category : 'accessing' }
@@ -50,6 +49,14 @@ BaselineOfHyperspace >> setUpDependencies: spec [
     baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:v4' ];
     project: 'Bell-Deployment' copyFrom: 'Bell' with: [ spec loads: 'Deployment' ];
     project: 'Bell-SUnit' copyFrom: 'Bell' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
+]
+
+{ #category : 'initialization' }
+BaselineOfHyperspace >> setUpDevelopmentToolsPackages: spec [
+
+	spec
+		package: 'Hyperspace-Development-Tools' with: [ spec requires: 'Hyperspace-Model' ];
+		group: 'Tools' with: 'Hyperspace-Development-Tools'
 ]
 
 { #category : 'initialization' }
@@ -79,12 +86,4 @@ BaselineOfHyperspace >> setUpPackages: spec [
     group: 'Tests' with: 'Hyperspace-SUnit-Model-Tests'.
 
   spec group: 'Tools' with: 'Buoy-Tools'
-]
-
-{ #category : 'initialization' }
-BaselineOfHyperspace >> setUpPharo10Packages: spec [
-
-	spec
-		package: 'Hyperspace-Development-Tools' with: [ spec requires: 'Hyperspace-Model' ];
-		group: 'Tools' with: 'Hyperspace-Development-Tools'
 ]

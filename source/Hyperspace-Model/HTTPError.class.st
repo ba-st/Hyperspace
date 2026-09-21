@@ -43,40 +43,35 @@ HTTPError >> additionalData [
 { #category : 'additional data' }
 HTTPError >> additionalDataAt: aKey [
 
-	^ self additionalDataAt: aKey ifAbsent: [ KeyNotFound signalFor: aKey ]
+  ^ self additionalDataAt: aKey ifAbsent: [ KeyNotFound signalFor: aKey ]
 ]
 
 { #category : 'additional data' }
 HTTPError >> additionalDataAt: aKey ifAbsent: aBlock [
 
-	additionalData ifNil: [ ^ aBlock value ].
-	^ additionalData at: aKey asString ifAbsent: aBlock
+  additionalData ifNil: [ ^ aBlock value ].
+  ^ additionalData at: aKey asString ifAbsent: aBlock
 ]
 
 { #category : 'additional data' }
 HTTPError >> additionalDataAt: aKey put: aValue [
+  "Keys are normalized to strings, so they can be used as member names when rendering the error, and symbols are accepted as well."
 
-	"Keys are normalized to strings, so they can be used as member names
-	when rendering the error, and symbols are accepted as well."
-
-	| key |
-
-	key := aKey asString.
-	AssertionChecker enforce: [ key notEmpty ]
-		because: 'The additional data key must not be empty.'.
-	^ self additionalData at: key put: aValue
+  | key |
+  key := aKey asString.
+  AssertionChecker enforce: [ key notEmpty ] because: 'The additional data key must not be empty.'.
+  ^ self additionalData at: key put: aValue
 ]
 
 { #category : 'additional data' }
 HTTPError >> additionalDataKeysAndValuesDo: aBlock [
+  "The state my subclasses hold of their own comes first, and anything attached under the same key overrides it."
 
-	"The state my subclasses hold of their own comes first, and anything
-	attached under the same key overrides it."
-
-	self ownAdditionalDataKeysAndValuesDo: [ :key :value |
-		( additionalData notNil and: [ additionalData includesKey: key ] )
-			ifFalse: [ aBlock value: key value: value ] ].
-	additionalData ifNotNil: [ :data | data keysAndValuesDo: aBlock ]
+  self ownAdditionalDataKeysAndValuesDo: [ :key :value |
+      ( additionalData notNil and: [ additionalData includesKey: key ] ) ifFalse: [
+          aBlock value: key value: value ]
+    ].
+  additionalData ifNotNil: [ :data | data keysAndValuesDo: aBlock ]
 ]
 
 { #category : 'accessing' }

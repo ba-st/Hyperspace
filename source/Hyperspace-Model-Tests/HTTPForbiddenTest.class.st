@@ -13,7 +13,6 @@ Class {
 HTTPForbiddenTest >> testAdditionalData [
 
   | error readData |
-
   self deny: ( HTTPForbidden code: 403 ) hasAdditionalData.
 
   error := HTTPForbidden messageText: 'Missing permissions' with: 'Bearer realm="api"'.
@@ -26,15 +25,14 @@ HTTPForbiddenTest >> testAdditionalData [
   self
     assert: error hasAdditionalData;
     assert: readData asArray
-    equals: {( 'errorCode' -> 'insufficient_scope' ).
-      ( 'requiredPermissions' -> #( 'admin' 'delete:data' ) )}
+    equals:
+      { 'errorCode' -> 'insufficient_scope' . 'requiredPermissions' -> #( 'admin' 'delete:data' ) }
 ]
 
 { #category : 'tests' }
 HTTPForbiddenTest >> testAdditionalDataOverridingTheOwnState [
 
   | error readData |
-
   error := HTTPForbidden messageText: 'Missing permissions' with: 'Bearer realm="api"'.
   error
     errorCode: 'insufficient_scope';
@@ -43,7 +41,7 @@ HTTPForbiddenTest >> testAdditionalDataOverridingTheOwnState [
   error additionalDataKeysAndValuesDo: [ :key :value | readData add: key -> value ].
 
   self
-    assert: readData asArray equals: {( 'errorCode' -> 'custom_code' )};
+    assert: readData asArray equals: { 'errorCode' -> 'custom_code' };
     assert: error errorCode equals: 'insufficient_scope'
 ]
 

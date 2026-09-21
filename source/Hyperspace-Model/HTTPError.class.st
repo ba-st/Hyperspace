@@ -1,11 +1,16 @@
 "
 I'm an exception expecting to be raised when there's an error processing an HTTP request.
+
+Besides the status code and the message text, I can carry additional data: key/value pairs
+whoever signals me can attach, and whoever renders the response can read back, without
+needing a subclass of mine for each case.
 "
 Class {
 	#name : 'HTTPError',
 	#superclass : 'Error',
 	#instVars : [
-		'code'
+		'code',
+		'additionalData'
 	],
 	#category : 'Hyperspace-Model-Exceptions',
 	#package : 'Hyperspace-Model',
@@ -28,6 +33,47 @@ HTTPError >> , exceptionSelector [
 	^ ExceptionSelectorSet new , self , exceptionSelector
 ]
 
+{ #category : 'private' }
+HTTPError >> additionalData [
+
+	additionalData ifNil: [ additionalData := OrderedDictionary new ].
+	^ additionalData
+]
+
+{ #category : 'additional data' }
+HTTPError >> additionalDataAt: aKey [
+
+  ^ self additionalDataAt: aKey ifAbsent: [ KeyNotFound signalFor: aKey ]
+]
+
+{ #category : 'additional data' }
+HTTPError >> additionalDataAt: aKey ifAbsent: aBlock [
+
+  additionalData ifNil: [ ^ aBlock value ].
+  ^ additionalData at: aKey asString ifAbsent: aBlock
+]
+
+{ #category : 'additional data' }
+HTTPError >> additionalDataAt: aKey put: aValue [
+  "Keys are normalized to strings, so they can be used as member names when rendering the error, and symbols are accepted as well."
+
+  | key |
+  key := aKey asString.
+  AssertionChecker enforce: [ key notEmpty ] because: 'The additional data key must not be empty.'.
+  ^ self additionalData at: key put: aValue
+]
+
+{ #category : 'additional data' }
+HTTPError >> additionalDataKeysAndValuesDo: aBlock [
+  "The state my subclasses hold of their own comes first, and anything attached under the same key overrides it."
+
+  self ownAdditionalDataKeysAndValuesDo: [ :key :value |
+      ( additionalData notNil and: [ additionalData includesKey: key ] ) ifFalse: [
+          aBlock value: key value: value ]
+    ].
+  additionalData ifNotNil: [ :data | data keysAndValuesDo: aBlock ]
+]
+
 { #category : 'accessing' }
 HTTPError >> code [
 
@@ -44,6 +90,21 @@ HTTPError >> code: anErrorCode [
 HTTPError >> handles: aSignal [
 
 	^ ( self class handles: aSignal ) and: [ aSignal code = self code ]
+]
+
+{ #category : 'testing' }
+HTTPError >> hasAdditionalData [
+
+	( additionalData notNil and: [ additionalData notEmpty ] ) ifTrue: [ ^ true ].
+	self ownAdditionalDataKeysAndValuesDo: [ :key :value | ^ true ].
+	^ false
+]
+
+{ #category : 'private' }
+HTTPError >> ownAdditionalDataKeysAndValuesDo: aBlock [
+
+	"Subclasses holding state of their own answer it here, so whoever renders
+	an error needs to know a single protocol instead of one per subclass."
 ]
 
 { #category : 'printing' }

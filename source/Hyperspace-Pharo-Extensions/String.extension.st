@@ -13,6 +13,12 @@ String >> asEntityTag [
 ]
 
 { #category : '*Hyperspace-Pharo-Extensions' }
+String >> asEntityTagList [
+
+  ^ EntityTagList fromString: self
+]
+
+{ #category : '*Hyperspace-Pharo-Extensions' }
 String >> asMediaType [
 
 	^ self asZnMimeType

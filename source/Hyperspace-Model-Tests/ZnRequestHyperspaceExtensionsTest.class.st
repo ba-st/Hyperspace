@@ -53,6 +53,17 @@ ZnRequestHyperspaceExtensionsTest >> testIfMatch [
 ]
 
 { #category : 'tests' }
+ZnRequestHyperspaceExtensionsTest >> testIfMatchList [
+
+  | request |
+  request := ( ZnRequest get: self googleUrl )
+               setIfMatchTo: ( EntityTagList fromStrings: #( '"a"' '"b"' ) );
+               yourself.
+
+  self assert: ( request headers at: 'If-Match' ) equals: '"a", "b"'
+]
+
+{ #category : 'tests' }
 ZnRequestHyperspaceExtensionsTest >> testIfNoneMatch [
 
 	| request |
@@ -62,6 +73,17 @@ ZnRequestHyperspaceExtensionsTest >> testIfNoneMatch [
 		yourself.
 		
 	self assert: (request headers at: 'If-None-Match') equals: '"12345"'
+]
+
+{ #category : 'tests' }
+ZnRequestHyperspaceExtensionsTest >> testIfNoneMatchWildcard [
+
+  | request |
+  request := ( ZnRequest get: self googleUrl )
+               setIfNoneMatchTo: EntityTagList wildcard;
+               yourself.
+
+  self assert: ( request headers at: 'If-None-Match' ) equals: '*'
 ]
 
 { #category : 'tests' }

@@ -52,8 +52,9 @@ defines it: an optional `W/`, then an opaque value in double quotes. The opaque
 value can be empty, but can only hold visible ASCII characters other than `"`,
 so a list such as `"a", "b"` is refused.
 
-`isWeak` answers whether an entity tag has the weakness indicator. Entity tags
-can be compared in the two ways the RFC defines:
+`isWeak` answers whether an entity tag has the weakness indicator, and
+`isStrong` whether it lacks it. Entity tags can be compared in the two ways the
+RFC defines:
 
 - `matchesStrongly:` is true when the opaque values are equal and neither
   entity tag is weak. `If-Match` asks for this one.

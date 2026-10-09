@@ -88,7 +88,7 @@ EntityTagList class >> withAll: anEntityTagCollection [
   ^ self basicWithAll: ( anEntityTagCollection collect: [ :entityTag | entityTag asEntityTag ] )
 ]
 
-{ #category : 'converting' }
+{ #category : 'printing' }
 EntityTagList >> asString [
 
   ^ self printString

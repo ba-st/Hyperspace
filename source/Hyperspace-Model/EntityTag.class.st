@@ -51,12 +51,12 @@ EntityTag class >> opaqueValueOf: anOpaqueTag [
   | unquotedTag |
   AssertionChecker
     enforce: [ self isEnclosedInDoubleQuotes: anOpaqueTag ]
-    because: 'Entity tags must be enclosed in double quotes.' localized
+    because: 'Entity tags must be enclosed in double quotes.'
     raising: InstanceCreationFailed.
   unquotedTag := anOpaqueTag copyFrom: 2 to: anOpaqueTag size - 1.
   AssertionChecker
     enforce: [ unquotedTag allSatisfy: [ :character | self isValidForEntityTag: character ] ]
-    because: 'Entity tags only allow visible ASCII characters other than double quotes.' localized
+    because: 'Entity tags only allow visible ASCII characters other than double quotes.'
     raising: InstanceCreationFailed.
   ^ unquotedTag
 ]

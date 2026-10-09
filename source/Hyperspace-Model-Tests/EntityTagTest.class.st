@@ -114,6 +114,16 @@ EntityTagTest >> testPrinting [
 ]
 
 { #category : 'tests' }
+EntityTagTest >> testIsStrong [
+
+  self
+    assert: ( EntityTag with: '12345' ) isStrong;
+    assert: '"12345"' asEntityTag isStrong;
+    deny: ( EntityTag weakWith: '12345' ) isStrong;
+    deny: 'W/"12345"' asEntityTag isStrong
+]
+
+{ #category : 'tests' }
 EntityTagTest >> testIsWeak [
 
   self

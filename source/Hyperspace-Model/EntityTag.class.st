@@ -40,9 +40,12 @@ EntityTag class >> isEnclosedInDoubleQuotes: anOpaqueTag [
 
 { #category : 'private - testing' }
 EntityTag class >> isValidForEntityTag: aCharacter [
-  "etagc = %x21 / %x23-7E / obs-text. obs-text is not accepted."
+  "etagc = %x21 / %x23-7E / obs-text. obs-text is not accepted.
+  Compares code points, since comparing characters doesn't follow them in GemStone/S 64."
 
-  ^ ( aCharacter between: $! and: $~ ) and: [ aCharacter ~= $" ]
+  | codePoint |
+  codePoint := aCharacter codePoint.
+  ^ codePoint = 16r21 or: [ codePoint between: 16r23 and: 16r7E ]
 ]
 
 { #category : 'private - instance creation' }

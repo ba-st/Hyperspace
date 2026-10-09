@@ -25,15 +25,21 @@ Class {
 }
 
 { #category : 'instance creation' }
-EntityTag class >> fromString: aString [
+EntityTag class >> fromString: string [
 
-  ^ ( aString beginsWith: 'W/' )
-      ifTrue: [ self weakWith: ( self opaqueValueOf: ( aString copyFrom: 3 to: aString size ) ) ]
-      ifFalse: [ self with: ( self opaqueValueOf: aString ) ]
+  ^ [ self with: ( self opaqueValueOf: string ) ]
+      unless: ( string beginsWith: 'W/' )
+      inWhichCase: [ self weakWith: ( self opaqueValueOf: ( string withoutFirst: 2 ) ) ]
 ]
 
-{ #category : 'private - instance creation' }
-EntityTag class >> isEntityTagCharacter: aCharacter [
+{ #category : 'private - testing' }
+EntityTag class >> isEnclosedInDoubleQuotes: anOpaqueTag [
+
+  ^ anOpaqueTag size >= 2 and: [ anOpaqueTag first = $" and: [ anOpaqueTag last = $" ] ]
+]
+
+{ #category : 'private - testing' }
+EntityTag class >> isValidForEntityTag: aCharacter [
   "etagc = %x21 / %x23-7E / obs-text. obs-text is not accepted."
 
   ^ ( aCharacter between: $! and: $~ ) and: [ aCharacter ~= $" ]
@@ -42,24 +48,17 @@ EntityTag class >> isEntityTagCharacter: aCharacter [
 { #category : 'private - instance creation' }
 EntityTag class >> opaqueValueOf: anOpaqueTag [
 
-  AssertionCheckerBuilder new
-    raising: InstanceCreationFailed;
-    checking: [ :asserter |
-        asserter
-          enforce: [
-              anOpaqueTag size >= 2 and: [ anOpaqueTag first = $" and: [ anOpaqueTag last = $" ] ] ]
-          because: 'Entity tags must be enclosed in double quotes.'
-          onSuccess: [ :successAsserter |
-              successAsserter
-                enforce: [
-                    ( anOpaqueTag copyFrom: 2 to: anOpaqueTag size - 1 ) allSatisfy: [ :character |
-                          self isEntityTagCharacter: character ]
-                  ]
-                because: 'Entity tags only allow visible ASCII characters other than double quotes.'
-            ]
-      ];
-    buildAndCheck.
-  ^ anOpaqueTag copyFrom: 2 to: anOpaqueTag size - 1
+  | unquotedTag |
+  AssertionChecker
+    enforce: [ self isEnclosedInDoubleQuotes: anOpaqueTag ]
+    because: 'Entity tags must be enclosed in double quotes.' localized
+    raising: InstanceCreationFailed.
+  unquotedTag := anOpaqueTag copyFrom: 2 to: anOpaqueTag size - 1.
+  AssertionChecker
+    enforce: [ unquotedTag allSatisfy: [ :character | self isValidForEntityTag: character ] ]
+    because: 'Entity tags only allow visible ASCII characters other than double quotes.' localized
+    raising: InstanceCreationFailed.
+  ^ unquotedTag
 ]
 
 { #category : 'instance creation' }
@@ -114,6 +113,12 @@ EntityTag >> initializeWith: anETagValue prefixedBy: aWeaknessIndicator [
 ]
 
 { #category : 'testing' }
+EntityTag >> isStrong [
+
+  ^ self isWeak not
+]
+
+{ #category : 'testing' }
 EntityTag >> isWeak [
 
   ^ weaknessIndicator notEmpty
@@ -122,7 +127,7 @@ EntityTag >> isWeak [
 { #category : 'comparing' }
 EntityTag >> matchesStrongly: anEntityTag [
 
-  ^ self isWeak not and: [ anEntityTag isWeak not and: [ self matchesWeakly: anEntityTag ] ]
+  ^ self isStrong and: [ anEntityTag isStrong and: [ self matchesWeakly: anEntityTag ] ]
 ]
 
 { #category : 'comparing' }

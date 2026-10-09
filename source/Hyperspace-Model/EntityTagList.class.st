@@ -19,19 +19,24 @@ Class {
 	#name : 'EntityTagList',
 	#superclass : 'Object',
 	#instVars : [
-		'entityTags',
-		'isWildcard'
+		'entityTags'
 	],
 	#category : 'Hyperspace-Model-IETF',
 	#package : 'Hyperspace-Model',
 	#tag : 'IETF'
 }
 
+{ #category : 'private - instance creation' }
+EntityTagList class >> basicWithAll: anEntityTagCollection [
+
+  ^ self new initializeWithAll: anEntityTagCollection
+]
+
 { #category : 'instance creation' }
-EntityTagList class >> fromString: aString [
+EntityTagList class >> fromString: string [
 
   | fieldValue |
-  fieldValue := aString trimBoth.
+  fieldValue := string trimBoth.
   ^ fieldValue = '*'
       ifTrue: [ self wildcard ]
       ifFalse: [ self withAll: ( self listElementsIn: fieldValue ) ]
@@ -40,12 +45,7 @@ EntityTagList class >> fromString: aString [
 { #category : 'instance creation' }
 EntityTagList class >> fromStrings: aStringCollection [
 
-  | fieldValue |
-  fieldValue := WriteStream on: String new.
-  aStringCollection
-    do: [ :string | fieldValue nextPutAll: string ]
-    separatedBy: [ fieldValue nextPut: $, ].
-  ^ self fromString: fieldValue contents
+  ^ self fromString: ( ',' join: aStringCollection )
 ]
 
 { #category : 'private - parsing' }
@@ -53,29 +53,29 @@ EntityTagList class >> listElementsIn: aFieldValue [
   "Splits on the commas outside of double quotes, since an opaque tag can hold a comma.
   Empty list elements are ignored, as RFC 9110 §5.6.1 asks recipients to do."
 
-  | elements element isQuoted |
+  | elements element isInsideDoubleQuotes |
   elements := OrderedCollection new.
-  element := WriteStream on: String new.
-  isQuoted := false.
+  element := String new writeStream.
+  isInsideDoubleQuotes := false.
   aFieldValue do: [ :character |
-      ( character = $, and: [ isQuoted not ] )
+      ( character = $, and: [ isInsideDoubleQuotes not ] )
         ifTrue: [
-            elements add: element contents.
-            element := WriteStream on: String new
+            element contents trimBoth ifNotEmpty: [ :contents | elements add: contents ].
+            element := String new writeStream
           ]
         ifFalse: [
-            character = $" ifTrue: [ isQuoted := isQuoted not ].
+            character = $" ifTrue: [ isInsideDoubleQuotes := isInsideDoubleQuotes not ].
             element nextPut: character
           ]
     ].
-  elements add: element contents.
-  ^ ( elements collect: [ :each | each trimBoth ] ) reject: [ :each | each isEmpty ]
+  element contents trimBoth ifNotEmpty: [ :contents | elements add: contents ].
+  ^ elements
 ]
 
 { #category : 'instance creation' }
 EntityTagList class >> wildcard [
 
-  ^ self new initializeWildcard
+  ^ self basicWithAll: #(  )
 ]
 
 { #category : 'instance creation' }
@@ -85,53 +85,48 @@ EntityTagList class >> withAll: anEntityTagCollection [
     refuse: [ anEntityTagCollection isEmpty ]
     because: 'An entity tag list must hold at least one entity tag.'
     raising: InstanceCreationFailed.
-  ^ self new initializeWithAll:
-      ( anEntityTagCollection collect: [ :entityTag | entityTag asEntityTag ] )
+  ^ self basicWithAll: ( anEntityTagCollection collect: [ :entityTag | entityTag asEntityTag ] )
 ]
 
-{ #category : 'printing' }
+{ #category : 'converting' }
 EntityTagList >> asString [
 
   ^ self printString
 ]
 
 { #category : 'initialization' }
-EntityTagList >> initializeWildcard [
-
-  entityTags := #(  ).
-  isWildcard := true
-]
-
-{ #category : 'initialization' }
 EntityTagList >> initializeWithAll: anEntityTagCollection [
 
-  entityTags := anEntityTagCollection asArray.
-  isWildcard := false
+  entityTags := anEntityTagCollection asArray
 ]
 
 { #category : 'testing' }
 EntityTagList >> isWildcard [
 
-  ^ isWildcard
+  ^ entityTags isEmpty
 ]
 
 { #category : 'testing' }
 EntityTagList >> matchesStrongly: anEntityTag [
 
-  ^ isWildcard or: [ entityTags anySatisfy: [ :entityTag | entityTag matchesStrongly: anEntityTag ] ]
+  ^ self isWildcard or: [
+        entityTags anySatisfy: [ :entityTag | entityTag matchesStrongly: anEntityTag ] ]
 ]
 
 { #category : 'testing' }
 EntityTagList >> matchesWeakly: anEntityTag [
 
-  ^ isWildcard or: [ entityTags anySatisfy: [ :entityTag | entityTag matchesWeakly: anEntityTag ] ]
+  ^ self isWildcard or: [
+        entityTags anySatisfy: [ :entityTag | entityTag matchesWeakly: anEntityTag ] ]
 ]
 
 { #category : 'printing' }
-EntityTagList >> printOn: aStream [
+EntityTagList >> printOn: stream [
 
-  isWildcard ifTrue: [ ^ aStream nextPut: $* ].
-  entityTags
-    do: [ :entityTag | entityTag printOn: aStream ]
-    separatedBy: [ aStream nextPutAll: ', ' ]
+  self isWildcard then: [ ^ stream nextPut: $* ].
+  entityTags do: [ :entityTag | entityTag printOn: stream ] separatedBy: [
+      stream
+        nextPut: $,;
+        space
+    ]
 ]

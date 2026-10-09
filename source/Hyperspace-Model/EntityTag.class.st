@@ -5,15 +5,19 @@ The ETag HTTP response header is an identifier for a specific version of a resou
 
 If the resource at a given URL changes, a new Etag value must be generated. Etags are therefore similar to fingerprints and might also be used for tracking purposes by some servers. A comparison of them allows to quickly determine whether two representations of a resource are the same, but they might also be set to persist indefinitely by a tracking server.
 
-References: 
-- [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232#section-2.3)
+Two entity tags can be compared in two ways. #matchesStrongly: answers true only when neither of them is weak and their opaque values are equal, and is the comparison If-Match asks for. #matchesWeakly: ignores the weakness indicator, and is the one If-None-Match asks for. #= is value equality, the same as #matchesWeakly:.
+
+The field values of If-Match and If-None-Match are lists of entity tags, or *. See EntityTagList.
+
+References:
+- [RFC 9110 §8.8.3](https://www.rfc-editor.org/rfc/rfc9110#section-8.8.3)
 "
 Class {
 	#name : 'EntityTag',
 	#superclass : 'Object',
 	#instVars : [
 		'value',
-		'suffix'
+		'weaknessIndicator'
 	],
 	#category : 'Hyperspace-Model-IETF',
 	#package : 'Hyperspace-Model',
@@ -21,72 +25,61 @@ Class {
 }
 
 { #category : 'instance creation' }
-EntityTag class >> fromString: aString [
+EntityTag class >> fromString: string [
 
-	AssertionCheckerBuilder new
-		raising: InstanceCreationFailed;
-		checking: [ :asserter | 
-			asserter
-				refuse: [ aString isEmpty ] because: 'Empty ETag values are invalid.';
-				enforce: [ aString isAsciiString ] because: 'ETags only allows ASCII characters.'
-			];
-		buildAndCheck.
+  ^ [ self with: ( self opaqueValueOf: string ) ]
+      unless: ( string beginsWith: 'W/' )
+      inWhichCase: [ self weakWith: ( self opaqueValueOf: ( string withoutFirst: 2 ) ) ]
+]
 
-	^ [ self parseStrongETagFromString: aString ]
-		unless: ( aString beginsWith: 'W' )
-		inWhichCase: [ self parseWeakETagFromString: aString ]
+{ #category : 'private - testing' }
+EntityTag class >> isEnclosedInDoubleQuotes: anOpaqueTag [
+
+  ^ anOpaqueTag size >= 2 and: [ anOpaqueTag first = $" and: [ anOpaqueTag last = $" ] ]
+]
+
+{ #category : 'private - testing' }
+EntityTag class >> isValidForEntityTag: aCharacter [
+  "etagc = %x21 / %x23-7E / obs-text. obs-text is not accepted.
+  Compares code points, since comparing characters doesn't follow them in GemStone/S 64."
+
+  | codePoint |
+  codePoint := aCharacter codePoint.
+  ^ codePoint = 16r21 or: [ codePoint between: 16r23 and: 16r7E ]
 ]
 
 { #category : 'private - instance creation' }
-EntityTag class >> parseStrongETagFromString: aString [
+EntityTag class >> opaqueValueOf: anOpaqueTag [
 
-	AssertionCheckerBuilder new
-		raising: InstanceCreationFailed;
-		checking: [ :asserter | 
-			asserter
-				enforce: [ aString size >= 3 ]
-					because: 'Empty ETag values are invalid.';
-				enforce: [ aString first = $" ]
-					because: 'ETags must be enclosed in ".';
-				enforce: [ aString last = $" ]
-					because: 'ETags must be enclosed in ".' ];
-		buildAndCheck.
-	^ self with: (aString copyFrom: 2 to: aString size - 1)
-]
-
-{ #category : 'private - instance creation' }
-EntityTag class >> parseWeakETagFromString: aString [
-
-	AssertionCheckerBuilder new
-		raising: InstanceCreationFailed;
-		checking: [ :asserter | 
-			asserter
-				enforce: [ aString size >= 5 ]
-					because: 'Empty ETag values are invalid.';
-				enforce: [ aString beginsWith: 'W/"' ]
-					because: 'Week ETags must be enclosed in W/".';
-				enforce: [ aString last = $" ]
-					because: 'ETags must be enclosed in ".' ];
-		buildAndCheck.
-	^ self weakWith: (aString copyFrom: 4 to: aString size - 1)
+  | unquotedTag |
+  AssertionChecker
+    enforce: [ self isEnclosedInDoubleQuotes: anOpaqueTag ]
+    because: 'Entity tags must be enclosed in double quotes.'
+    raising: InstanceCreationFailed.
+  unquotedTag := anOpaqueTag copyFrom: 2 to: anOpaqueTag size - 1.
+  AssertionChecker
+    enforce: [ unquotedTag allSatisfy: [ :character | self isValidForEntityTag: character ] ]
+    because: 'Entity tags only allow visible ASCII characters other than double quotes.'
+    raising: InstanceCreationFailed.
+  ^ unquotedTag
 ]
 
 { #category : 'instance creation' }
 EntityTag class >> weakWith: anETagValue [
 
-	^ self with: anETagValue suffixedBy: 'W/'
+  ^ self with: anETagValue prefixedBy: 'W/'
 ]
 
 { #category : 'instance creation' }
 EntityTag class >> with: anETagValue [
 
-	^ self with: anETagValue suffixedBy: ''
+  ^ self with: anETagValue prefixedBy: ''
 ]
 
 { #category : 'private - instance creation' }
-EntityTag class >> with: anETagValue suffixedBy: aSuffix [
+EntityTag class >> with: anETagValue prefixedBy: aWeaknessIndicator [
 
-	^ self new initializeWith: anETagValue suffixedBy: aSuffix
+  ^ self new initializeWith: anETagValue prefixedBy: aWeaknessIndicator
 ]
 
 { #category : 'comparing' }
@@ -116,20 +109,44 @@ EntityTag >> hash [
 ]
 
 { #category : 'initialization' }
-EntityTag >> initializeWith: anETagValue suffixedBy: aSuffix [ 
+EntityTag >> initializeWith: anETagValue prefixedBy: aWeaknessIndicator [
 
-	value := anETagValue.
-	suffix := aSuffix
+  value := anETagValue.
+  weaknessIndicator := aWeaknessIndicator
+]
+
+{ #category : 'testing' }
+EntityTag >> isStrong [
+
+  ^ self isWeak not
+]
+
+{ #category : 'testing' }
+EntityTag >> isWeak [
+
+  ^ weaknessIndicator notEmpty
+]
+
+{ #category : 'comparing' }
+EntityTag >> matchesStrongly: anEntityTag [
+
+  ^ self isStrong and: [ anEntityTag isStrong and: [ self matchesWeakly: anEntityTag ] ]
+]
+
+{ #category : 'comparing' }
+EntityTag >> matchesWeakly: anEntityTag [
+
+  ^ value = anEntityTag value
 ]
 
 { #category : 'printing' }
 EntityTag >> printOn: aStream [
 
-	aStream
-		nextPutAll: suffix;
-		nextPut: $";
-		nextPutAll: value;
-		nextPut: $"
+  aStream
+    nextPutAll: weaknessIndicator;
+    nextPut: $";
+    nextPutAll: value;
+    nextPut: $"
 ]
 
 { #category : 'evaluating' }

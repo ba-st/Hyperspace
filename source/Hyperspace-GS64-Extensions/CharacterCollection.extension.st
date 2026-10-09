@@ -13,6 +13,12 @@ CharacterCollection >> asEntityTag [
 ]
 
 { #category : #'*Hyperspace-GS64-Extensions' }
+CharacterCollection >> asEntityTagList [
+
+  ^ EntityTagList fromString: self
+]
+
+{ #category : #'*Hyperspace-GS64-Extensions' }
 CharacterCollection >> asMediaType [
 
 	^ self asZnMimeType

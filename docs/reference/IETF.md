@@ -35,13 +35,77 @@ a request.
 
 `EntityTag` instances can be created by:
 
-- providing the ETag value
+- providing the ETag value, for a strong or a weak entity tag
 - parsing it from its string representation
 
   ```smalltalk
   EntityTag with: '12345'.
-  EntityTag fromString: '"12345"'
+  EntityTag weakWith: '12345'.
+  EntityTag fromString: '"12345"'.
+  EntityTag fromString: 'W/"12345"'.
+  '"12345"' asEntityTag
   ```
+
+`fromString:` signals `InstanceCreationFailed` unless the string is a single
+entity tag as [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110#section-8.8.3)
+defines it: an optional `W/`, then an opaque value in double quotes. The opaque
+value can be empty, but can only hold visible ASCII characters other than `"`,
+so a list such as `"a", "b"` is refused.
+
+`isWeak` answers whether an entity tag has the weakness indicator, and
+`isStrong` whether it lacks it. Entity tags can be compared in the two ways the
+RFC defines:
+
+- `matchesStrongly:` is true when the opaque values are equal and neither
+  entity tag is weak. `If-Match` asks for this one.
+- `matchesWeakly:` is true when the opaque values are equal, weak or not.
+  `If-None-Match` asks for this one.
+
+`=` and `hash` compare only the opaque value, like `matchesWeakly:`.
+
+```smalltalk
+'W/"a"' asEntityTag matchesStrongly: '"a"' asEntityTag. "false"
+'W/"a"' asEntityTag matchesWeakly: '"a"' asEntityTag. "true"
+```
+
+### Entity Tag Lists
+
+The field value of the `If-Match` and `If-None-Match` headers is a list of
+entity tags, or `*`. `EntityTagList` represents it, and can be created by:
+
+- parsing the field value
+- parsing the collection of field values Zinc answers for a header that appears
+  more than once, which means the same as the comma-separated list of them
+- providing the entity tags
+- asking for the wildcard
+
+  ```smalltalk
+  EntityTagList fromString: 'W/"a", "b"'.
+  EntityTagList fromStrings: #( 'W/"a"' '"b"' ).
+  EntityTagList withAll: { EntityTag with: 'a' }.
+  EntityTagList wildcard.
+  ( request headers at: 'If-Match' ) asEntityTagList
+  ```
+
+`asEntityTagList` is understood by both strings and collections of strings, so
+it works whether the header appeared once or more. Parsing signals
+`InstanceCreationFailed` if the list holds no entity tags, if any of them is
+invalid, or if `*` appears together with other entity tags.
+
+`matchesStrongly:` and `matchesWeakly:` answer whether any entity tag in the list
+matches the one given, and `isWildcard` whether the list is `*`. The wildcard
+matches any entity tag, but it can only be compared when the resource has a
+current representation. When it has none, the caller decides: `If-Match: *`
+fails and `If-None-Match: *` succeeds.
+
+```smalltalk
+| entityTags |
+entityTags := ( request headers at: 'If-Match' ) asEntityTagList.
+entityTags matchesStrongly: currentEntityTag
+```
+
+`EntityTagList` instances can also be used in `setIfMatchTo:` and
+`setIfNoneMatchTo:`.
 
 ## Web Links
 

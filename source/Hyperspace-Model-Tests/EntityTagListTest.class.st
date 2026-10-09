@@ -51,9 +51,7 @@ EntityTagListTest >> testFromString [
     assert: ( EntityTagList fromString: 'W/"a"' ) printString equals: 'W/"a"';
     assert: ( EntityTagList fromString: '"a", W/"b", ""' ) printString equals: '"a", W/"b", ""';
     assert: ( EntityTagList fromString: '"a",W/"b"' ) printString equals: '"a", W/"b"';
-    assert:
-      ( EntityTagList fromString: '"a",' , ( String with: Character tab ) , '"b"' ) printString
-    equals: '"a", "b"';
+    assert: ( EntityTagList fromString: '"a",	"b"' ) printString equals: '"a", "b"';
     deny: ( EntityTagList fromString: '"a"' ) isWildcard
 ]
 

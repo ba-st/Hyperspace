@@ -71,11 +71,9 @@ EntityTagTest >> testFromStringRefusesCharactersOutsideEntityTagCharacters [
     assert: ( EntityTag fromString: '"!#~,W/"' ) value equals: '!#~,W/';
     should: [ EntityTag fromString: '"a"b"' ] raise: InstanceCreationFailed;
     should: [ EntityTag fromString: '"a b"' ] raise: InstanceCreationFailed;
-    should: [ EntityTag fromString: '"a' , ( String with: Character tab ) , '"' ]
-    raise: InstanceCreationFailed;
-    should: [ EntityTag fromString: '"a' , ( String with: ( Character value: 16r7F ) ) , '"' ]
-    raise: InstanceCreationFailed;
-    should: [ EntityTag fromString: '"a' , ( String with: ( Character value: 16rE9 ) ) , '"' ]
+    should: [ EntityTag fromString: '"a	"' ] raise: InstanceCreationFailed;
+    should: [ EntityTag fromString: '"a"' ] raise: InstanceCreationFailed;
+    should: [ EntityTag fromString: '"aé"' ]
     raise: InstanceCreationFailed
     withMessageText: 'Entity tags only allow visible ASCII characters other than double quotes.'
 ]

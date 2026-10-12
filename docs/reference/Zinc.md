@@ -45,10 +45,23 @@
 - `setIfNoneMatchTo:` configures the `If-None-Match` header
 - `query:` creates an HTTP [QUERY request](https://www.ietf.org/archive/id/draft-ietf-httpbis-safe-method-w-body-02.html)
 
+## ZnHeaders
+
+- `at:addToList:` adds a member to a list-based field ([RFC 9110 §5.6.1](https://www.rfc-editor.org/rfc/rfc9110#section-5.6.1)),
+  keeping it as a single comma-separated field line. A field stored as several
+  lines is combined into one first.
+- `fieldLinesAt:` answers the values of every field line with the given name, in
+  order, or an empty array when the field is absent
+
 ## ZnResponse
 
-- `addCachingDirective:` adds a `Cache-Control` directive
-- `cachingDirectives` provides access to the `Cache-Control` directives
+- `addCachingDirective:` adds a `Cache-Control` directive, so several directives
+  are written as one field line: `Cache-Control: public, max-age=3600`
+- `cachingDirectives` provides access to the `Cache-Control` directives, one per
+  element, whether they come in one field line or several
+- `addToVary:` adds a header name to `Vary`, written as one field line
+- `varyHeaderNames` provides access to the `Vary` header names, one per element,
+  whether they come in one field line or several
 - `addContentLanguage:` adds a `Content-Language` header
 - `contentLanguageTags` provides access to the `Content-Language` tags
 - `addLink:` adds a `Link` header

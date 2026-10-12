@@ -3,7 +3,7 @@ Extension { #name : 'ZnResponse' }
 { #category : '*Hyperspace-Extensions' }
 ZnResponse >> addCachingDirective: aDirective [
 
-	self headers at: 'Cache-Control' add: aDirective
+  self headers at: 'Cache-Control' addToList: aDirective
 ]
 
 { #category : '*Hyperspace-Extensions' }
@@ -15,18 +15,17 @@ ZnResponse >> addLink: aLink [
 { #category : '*Hyperspace-Extensions' }
 ZnResponse >> addToVary: headerName [
 
-	self headers at: 'Vary' add: headerName
+  self headers at: 'Vary' addToList: headerName
 ]
 
 { #category : '*Hyperspace-Extensions' }
 ZnResponse >> cachingDirectives [
 
   | directives |
-  directives := self headers at: 'Cache-Control' ifAbsent: [ ^ #(  ) ].
-
-  ^ directives isArray
-      ifTrue: [ directives ]
-      ifFalse: [ CachingDirectivesParser new parse: directives ]
+  directives := OrderedCollection new.
+  ( self headers fieldLinesAt: 'Cache-Control' ) do: [ :fieldLine |
+      directives addAll: ( CachingDirectivesParser new parse: fieldLine ) ].
+  ^ directives asArray
 ]
 
 { #category : '*Hyperspace-Extensions' }
@@ -61,12 +60,13 @@ ZnResponse >> setEntityTag: aStringOrEntityTag [
 { #category : '*Hyperspace-Extensions' }
 ZnResponse >> varyHeaderNames [
 
-	| headerValue |
-
-	headerValue := self headers at: 'Vary' ifAbsent: [ ^ #() ].
-	^ headerValue isArray
-		ifTrue: [ headerValue ]
-		ifFalse: [ Array with: headerValue ]
+  | headerNames |
+  headerNames := OrderedCollection new.
+  ( self headers fieldLinesAt: 'Vary' ) do: [ :fieldLine |
+      ( $, split: fieldLine ) do: [ :headerName |
+          headerName trimBoth ifNotEmpty: [ :trimmedName | headerNames add: trimmedName ] ]
+    ].
+  ^ headerNames asArray
 ]
 
 { #category : '*Hyperspace-Extensions' }

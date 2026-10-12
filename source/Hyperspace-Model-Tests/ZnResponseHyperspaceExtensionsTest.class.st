@@ -74,6 +74,20 @@ ZnResponseHyperspaceExtensionsTest >> testCachingDirectives [
 ]
 
 { #category : 'tests' }
+ZnResponseHyperspaceExtensionsTest >> testCachingDirectivesFromSeveralFieldLines [
+
+  | response |
+  response := ZnResponse noContent.
+  response headers
+    at: 'Cache-Control' add: 'public, max-age=60';
+    at: 'Cache-Control' add: 'no-cache="Set-Cookie, Authorization"'.
+
+  self
+    assert: response cachingDirectives
+    equals: #( 'public' 'max-age=60' 'no-cache="Set-Cookie, Authorization"' )
+]
+
+{ #category : 'tests' }
 ZnResponseHyperspaceExtensionsTest >> testCachingDirectivesFromString [
 
   | response |
@@ -176,18 +190,39 @@ ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithLinkHeaders [
 ]
 
 { #category : 'tests - encoding' }
+ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithCachingDirectives [
+
+  | response decodedResponse |
+  response := ZnResponse noContent
+                addCachingDirective: 'public';
+                addCachingDirective: 'max-age=3600';
+                addCachingDirective: 'no-cache="Set-Cookie, Authorization"';
+                yourself.
+
+  decodedResponse := self encodeAndDecode: response.
+
+  self
+    assert: ( decodedResponse headers fieldLinesAt: 'Cache-Control' )
+    equals: #( 'public, max-age=3600, no-cache="Set-Cookie, Authorization"' ).
+  self
+    assert: decodedResponse cachingDirectives
+    equals: #( 'public' 'max-age=3600' 'no-cache="Set-Cookie, Authorization"' )
+]
+
+{ #category : 'tests - encoding' }
 ZnResponseHyperspaceExtensionsTest >> testEncodeAndDecodeWithVaryHeaders [
 
-	| response decodedResponse |
+  | response decodedResponse |
+  response := ZnResponse noContent
+                addToVary: 'Accept';
+                addToVary: 'Accept-Language';
+                yourself.
 
-	response := ZnResponse noContent
-		addToVary: 'Accept';
-		addToVary: 'Accept-Language';
-		yourself.
+  decodedResponse := self encodeAndDecode: response.
 
-	decodedResponse := self encodeAndDecode: response.
-
-	self assert: decodedResponse varyHeaderNames equals: response varyHeaderNames
+  self
+    assert: ( decodedResponse headers fieldLinesAt: 'Vary' ) equals: #( 'Accept, Accept-Language' );
+    assert: decodedResponse varyHeaderNames equals: #( 'Accept' 'Accept-Language' )
 ]
 
 { #category : 'tests' }
@@ -243,6 +278,44 @@ ZnResponseHyperspaceExtensionsTest >> testVary [
 		yourself.
 
 	self assert: response varyHeaderNames equals: #('Accept' 'Accept-Language')
+]
+
+{ #category : 'tests' }
+ZnResponseHyperspaceExtensionsTest >> testVaryAfterSeveralFieldLines [
+
+  | response |
+  response := ZnResponse noContent.
+  response headers
+    at: 'Vary' add: 'Accept';
+    at: 'Vary' add: 'Origin'.
+  response addToVary: 'Accept-Language'.
+
+  self
+    assert: ( response headers fieldLinesAt: 'Vary' )
+    equals: #( 'Accept, Origin, Accept-Language' );
+    assert: response varyHeaderNames equals: #( 'Accept' 'Origin' 'Accept-Language' )
+]
+
+{ #category : 'tests' }
+ZnResponseHyperspaceExtensionsTest >> testVaryHeaderNamesFromSeveralFieldLines [
+
+  | response |
+  response := ZnResponse noContent.
+  response headers
+    at: 'Vary' add: 'Accept, Origin';
+    at: 'Vary' add: 'Accept-Language'.
+
+  self assert: response varyHeaderNames equals: #( 'Accept' 'Origin' 'Accept-Language' )
+]
+
+{ #category : 'tests' }
+ZnResponseHyperspaceExtensionsTest >> testVaryHeaderNamesFromString [
+
+  | response |
+  response := ZnResponse noContent.
+  response headers at: 'Vary' put: 'Accept,Origin , , Accept-Language'.
+
+  self assert: response varyHeaderNames equals: #( 'Accept' 'Origin' 'Accept-Language' )
 ]
 
 { #category : 'tests' }
